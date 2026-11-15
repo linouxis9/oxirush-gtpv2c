@@ -19,8 +19,6 @@
 //! security context (§8.38, Figure 8.38-5), byte-exact through its tree, its keys out of
 //! `Debug`.
 
-#![cfg(feature = "tree")]
-
 use oxirush_gtpv2c::*;
 use oxirush_gtpv2c::{framing, paths, tree};
 

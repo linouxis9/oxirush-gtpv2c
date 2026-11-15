@@ -1,0 +1,42 @@
+name: Mutants
+
+# The mutation testing of the crate: the jobs of crate-mutants.yml of oxirush-aper,
+# which every crate of the family calls, here with 2 shards. The workflow is run by hand
+# before a release: with `full`, every mutant; without it, the mutants of the code that
+# the commits since the last run changed, and none without such a commit; with
+# `recheck`, the mutants that a file of the repository names, as a missed.txt has them,
+# again at the head. .cargo/mutants.toml says what it leaves alone, and why.
+on:
+  workflow_dispatch:
+    inputs:
+      full:
+        description: Every mutant, rather than those of the changes since the last run
+        type: boolean
+        default: false
+      parallel:
+        description: The shards of each job that run at once, rather than one
+        type: string
+        default: ""
+      recheck:
+        description: A file of the repository that names mutants, one a line, to run again at the head
+        type: string
+        default: ""
+
+# A run is never cancelled by another: a newer one waits until it ends.
+concurrency:
+  group: mutants-${{ github.ref }}
+  cancel-in-progress: false
+
+# The plan reads the runs of the workflow, to find where the last one ended.
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  mutants:
+    uses: linouxis9/oxirush-aper/.github/workflows/crate-mutants.yml@7ff6f4df878d24cb90b62059144e728ca30beac2
+    with:
+      shards: 2
+      full: ${{ inputs.full }}
+      parallel: ${{ inputs.parallel }}
+      recheck: ${{ inputs.recheck }}

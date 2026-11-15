@@ -1,0 +1,8 @@
+# cargo-mutants 27.1.0: `cargo mutants` in the directory of the crate, or the Mutants
+# workflow, which runs it in shards.
+#
+# Every feature, so that the trees and their paths are mutated and the tests of each of
+# them run. The bodies of the macros of src/macros.rs and of oxirush-utils, which write
+# the codec of each table and layout, are not mutated: cargo-mutants leaves
+# `macro_rules!` alone.
+all_features = true

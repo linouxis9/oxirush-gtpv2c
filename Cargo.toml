@@ -10,7 +10,23 @@ rust-version = "1.88"
 keywords = ["gtp", "gtpv2", "lte", "n26", "3gpp"]
 categories = ["network-programming", "encoding", "parser-implementations", "no-std"]
 readme = "README.md"
+# On GitHub alone, not on crates.io yet.
 publish = false
+# Anchored to the root: an unanchored name is a gitignore glob, which matches a file of
+# that name in any directory. tests/README.md, which names the fixtures and the scripts
+# that write them, is named.
+include = [
+    "/src/**/*.rs",
+    "/tests/**/*.rs",
+    "/tests/**/*.tsv",
+    "/tests/**/*.py",
+    "/tests/README.md",
+    "/examples/*.rs",
+    "/README.md",
+    "/CHANGELOG.md",
+    "/SECURITY.md",
+    "/LICENSE",
+]
 
 [features]
 # The tree of a message, its paths and its edits, on the engine of oxirush-utils.
@@ -34,3 +50,11 @@ unexpected_cfgs = { level = "warn", check-cfg = ['cfg(docsrs)', 'cfg(feature, va
 [[example]]
 name = "inspect"
 required-features = ["tree"]
+
+[[test]]
+name = "n26"
+required-features = ["tree"]
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

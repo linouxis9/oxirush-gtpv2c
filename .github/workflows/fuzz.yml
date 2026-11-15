@@ -1,0 +1,57 @@
+name: Fuzz
+
+# The fuzz targets of fuzz/, longer than the minute that each has at a push: the jobs of
+# crate-fuzz.yml of oxirush-aper, which every crate of the family calls. An hour for
+# each target every day but Sunday, from 9:43 UTC, one target at a time, and four hours
+# for each on Sunday, two at a time, less when the fuzzing of a run would not
+# end within the eight hours that crate-fuzz.yml gives it; the crates of the family fuzz
+# each at an hour of its own, with few jobs at once, and each has a day of its own for
+# its long run, so that what they run at once leaves runners to the other CI (GitHub
+# starts a scheduled run hours after its time, in their order). The corpus of each
+# target is kept from one run to the next in the cache of the repository, and grows. On
+# Sunday, and when `weekly` is set by hand, each corpus is minimized and its coverage
+# kept for 30 days. A crash or a timeout fails the job, which keeps the input and the
+# log: the input goes into the seeds with its fix.
+on:
+  schedule:
+    - cron: "43 9 * * 1-6"
+    - cron: "43 9 * * 0"
+  workflow_dispatch:
+    inputs:
+      minutes:
+        description: Minutes for each target
+        type: number
+        default: 60
+      weekly:
+        description: Minimize each corpus and report its coverage, as on Sunday
+        type: boolean
+        default: false
+
+# A run is never cancelled by another: a newer one waits until it ends.
+concurrency:
+  group: fuzz-${{ github.ref }}
+  cancel-in-progress: false
+
+# The plan reads the runs of the workflow, to find where the last one ended.
+permissions:
+  actions: read
+  contents: read
+
+# A dispatch gives its minutes as text, which fromJSON makes the number that the called
+# workflow takes, as it does the boolean of `weekly`; a schedule gives neither.
+jobs:
+  fuzz:
+    uses: linouxis9/oxirush-aper/.github/workflows/crate-fuzz.yml@7ff6f4df878d24cb90b62059144e728ca30beac2
+    with:
+      weekly: "43 9 * * 0"
+      minutes: ${{ fromJSON(inputs.minutes || '0') }}
+      report: ${{ fromJSON(inputs.weekly || 'false') }}
+      weekly-parallel: 2
+      coverage-ignore: '/\.cargo/registry/|/rustc/|/fuzz/fuzz_targets/'
+      # The targets start from the seeds of fuzz/seeds: messages of each message type of
+      # the captures of tests/captures and of go-gtp's vectors (fuzz/seeds.py), and the
+      # inputs that found a fault, kept with its fix.
+      targets: >-
+        [{"target": "decode", "seeds": "fuzz/seeds"},
+         {"target": "tree", "seeds": "fuzz/seeds"},
+         {"target": "paths", "seeds": "fuzz/seeds"}]
