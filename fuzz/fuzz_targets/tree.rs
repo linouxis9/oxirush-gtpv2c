@@ -29,20 +29,21 @@ fuzz_target!(|octets: &[u8]| {
     };
     let tree = message.to_tree();
     let read = Message::from_tree(&tree).unwrap_or_else(|error| panic!("{error}: {tree}"));
-    // The same deviations, which a scope read from a tree reports in the order of its
-    // kept IEs
+    let again = read.encode().expect("a message read from a tree encodes");
+    if again == octets {
+        assert_eq!(read.check(), message.check(), "{tree}");
+        return;
+    }
+    // The IEs of a row that are apart on the wire come together in a tree: the message
+    // that it writes has its octets, with the same tree and the same deviations, in the
+    // order of its own IEs
+    let decoded = Message::decode(&again).expect("its octets decode");
+    assert_eq!(decoded.to_tree(), tree, "the tree of the octets of a tree");
+    assert_eq!(decoded.check(), read.check(), "{tree}");
     let sorted = |message: &Message| {
         let mut found: Vec<String> = message.check().iter().map(|d| format!("{d:?}")).collect();
         found.sort();
         found
     };
     assert_eq!(sorted(&read), sorted(&message), "{tree}");
-    let again = read.encode().expect("a message read from a tree encodes");
-    // The octets of a row whose IEs are apart on the wire come together in a tree
-    if again != octets {
-        let tree_again = Message::decode(&again)
-            .expect("its octets decode")
-            .to_tree();
-        assert_eq!(tree_again, tree, "the tree of the octets of a tree");
-    }
 });
