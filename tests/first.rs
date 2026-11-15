@@ -152,3 +152,28 @@ fn a_create_session_request() {
     let found = message.check();
     assert!(found.is_empty(), "{found:#?}");
 }
+
+#[test]
+fn a_rejection_names_its_offending_ie() {
+    // Create Session Response: Cause "Mandatory IE missing", of the RAT Type (82, instance 0)
+    let octets = [
+        0x48, 33, 0x00, 0x12, 0x00, 0x00, 0x10, 0x01, 0x00, 0x00, 0x02, 0x00, //
+        0x02, 0x00, 0x06, 0x00, 70, 0x00, 82, 0x00, 0x00, 0x00,
+    ];
+    let message = round_trip(&octets);
+    let Body::CreateSessionResponse(response) = &message.body else {
+        panic!("{message}")
+    };
+    let cause = response.cause.as_ref().unwrap();
+    assert_eq!(cause.value, CauseValue::MandatoryIeMissing);
+    assert_eq!(
+        cause.offending_ie.map(|ie| (ie.ie_type, ie.instance)),
+        Some((82, 0))
+    );
+    assert!(message.check().is_empty(), "{:?}", message.check());
+    #[cfg(feature = "tree")]
+    assert_eq!(
+        message.to_tree()["ies"]["Cause"].to_string(),
+        r#"{"Cause value":"Mandatory IE missing","Offending IE":{"Type":82,"Instance":0}}"#
+    );
+}

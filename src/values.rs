@@ -21,22 +21,15 @@
 use core::net::{Ipv4Addr, Ipv6Addr};
 
 use crate::Octets;
-use crate::enums::CauseValue;
 use crate::fields::{Digits, Rest, SecretRest, U40};
 use crate::ie::listed_value;
 use crate::macros::gtpv2c_layout;
 use crate::mm_context::MmContextEpsSecurityContextQuadrupletsAndQuintuplets;
 use crate::uli::Uli;
+use crate::values_hand::{Cause, FqCsid, Paa};
 use oxirush_utils::fields::{Fqdn as Labels, PlmnId as Plmn};
 
 gtpv2c_layout! {
-    /// Cause (§8.4): the Cause value, the flags of the source of an error, and the IE that
-    /// it concerns, which a rejection names after them (octets 7 to 10), kept in their
-    /// place.
-    pub struct Cause "8.4" {
-        fields { value "Cause value": CauseValue }
-        flags(u8) { pce "PCE": 3, bce "BCE": 2, cs "CS": 1 }
-    }
     /// International Mobile Subscriber Identity (IMSI) (§8.3): its digits, as TBCD.
     pub struct Imsi "8.3" { fields { value "IMSI": Digits } }
     /// Access Point Name (APN) (§8.6): its labels, each after its length (TS 23.003 clause

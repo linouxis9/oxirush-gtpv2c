@@ -7,8 +7,6 @@ gtpv2c_layout! {
     pub struct IpAddress "8.9" { fields { octets "IP Address": Rest } }
     /// Protocol Configuration Options (PCO) (§8.13): its octets, which the crate does not split.
     pub struct Pco "8.13" { fields { octets "Protocol Configuration Options (PCO)": Rest } }
-    /// PDN Address Allocation (PAA) (§8.14): its octets, which the crate does not split.
-    pub struct Paa "8.14" { fields { octets "PDN Address Allocation (PAA)": Rest } }
     /// Flow Quality of Service (Flow QoS) (§8.16): its octets, which the crate does not split.
     pub struct FlowQualityOfService "8.16" { fields { octets "Flow Quality of Service (Flow QoS)": Rest } }
     /// EPS Bearer Level Traffic Flow Template (Bearer TFT) (§8.19): its octets, which the crate does not split.
@@ -69,8 +67,6 @@ gtpv2c_layout! {
     pub struct SourceIdentification "8.59" { fields { octets "Source Identification": Rest } }
     /// Change Reporting Action (§8.61): its octets, which the crate does not split.
     pub struct ChangeReportingAction "8.61" { fields { octets "Change Reporting Action": Rest } }
-    /// Fully Qualified PDN Connection Set Identifier (FQ-CSID) (§8.62): its octets, which the crate does not split.
-    pub struct FqCsid "8.62" { fields { octets "Fully Qualified PDN Connection Set Identifier (FQ-CSID)": Rest } }
     /// Channel needed (§8.63): its octets, which the crate does not split.
     pub struct ChannelNeeded "8.63" { fields { octets "Channel needed": Rest } }
     /// eMLPP Priority (§8.64): its octets, which the crate does not split.

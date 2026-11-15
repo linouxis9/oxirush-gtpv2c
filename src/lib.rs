@@ -52,6 +52,7 @@ mod registry;
 mod table;
 mod uli;
 mod values;
+mod values_hand;
 
 use alloc::string::{String, ToString};
 use core::fmt;
@@ -71,6 +72,7 @@ pub use registry::*;
 pub use table::{Interfaces, On, Presence, Repeat, Role, Row, Table};
 pub use uli::{Location, Uli};
 pub use values::*;
+pub use values_hand::{Cause, FqCsid, NodeId, OffendingIe, Paa};
 
 /// The trees of oxirush-utils, of the version that this crate is built with: a message
 /// and each IE as JSON whose members keep the order of the specification,
