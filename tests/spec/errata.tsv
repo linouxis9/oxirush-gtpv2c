@@ -1,0 +1,11 @@
+# What the crate reads otherwise than the document (TS 29.274 V19.6.0), one line each:
+# the kind, the table, what the document writes, what the crate reads, and why.
+number	7.4.z-1	7.4.z-1	7.4.9-1	the table of clause 7.4.9, which its text names "Table 7.4.9-1"
+number	7.9.2	7.9.2	7.9.2-1	the first table of clause 7.9.2, numbered as the others
+grouped	7.3.6-5	IE Type = x	195	the SCEF PDN Connection of Table 7.3.6-1, as Table 7.3.1-5 has it
+grouped	7.2.3-4	IE Type = 181	180	the Overload Control Information of its caption, which Table 7.2.3-1 has; 181 is Load Control Information
+grouped	7.2.14-3	IE Type = 181	180	the Overload Control Information of its caption, which Table 7.2.14-1 has; 181 is Load Control Information
+ie-name	8.1-1	Local Distiguished Name (LDN)	Local Distinguished Name (LDN)	a misspelling of the name of IE type 151, which clause 8.82 spells right
+ie-type	7	PTI	100	the abbreviation of Procedure Transaction ID (§8.35), which Table 8.1-1 does not write
+ie-type	7	TWMI	174	the abbreviation of Trusted WLAN Mode Indication (§8.105), which Table 8.1-1 does not write
+ie-type	7	Local Distinguished Name (LDN)Name	151	a cell of a table of clause 7 whose words run together

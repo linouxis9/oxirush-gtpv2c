@@ -1,0 +1,36 @@
+[package]
+name = "oxirush-gtpv2c"
+version = "0.1.0"
+edition = "2024"
+description = "GTPv2-C (3GPP TS 29.274, Release 19) in Rust: decode, build, check and encode the messages and IEs of S11, S5/S8, S10 and N26, and edit them as JSON. no_std."
+license = "Apache-2.0"
+repository = "https://github.com/linouxis9/oxirush-gtpv2c"
+authors = ["Valentin D'Emmanuele"]
+rust-version = "1.88"
+keywords = ["gtp", "gtpv2", "lte", "n26", "3gpp"]
+categories = ["network-programming", "encoding", "parser-implementations", "no-std"]
+readme = "README.md"
+publish = false
+
+[features]
+# The tree of a message, its paths and its edits, on the engine of oxirush-utils.
+tree = ["oxirush-utils/tree"]
+# The layout of each value as the crate reads it, which the test `spec` compares with the
+# figures of the document: for that test alone.
+spec = []
+
+[dependencies]
+oxirush-utils = { path = "../utils", version = "0.2.2", default-features = false, features = ["alloc", "fields", "tables"] }
+
+[dev-dependencies]
+hex = "0.4.3"
+
+[lints.rust]
+# docs.rs sets `docsrs`. The table macros of oxirush-utils write the accounting of the
+# memory of a scope under `feature = "endpoint"`, a feature of PFCP that this crate does not
+# have.
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(docsrs)', 'cfg(feature, values("endpoint"))'] }
+
+[[example]]
+name = "inspect"
+required-features = ["tree"]

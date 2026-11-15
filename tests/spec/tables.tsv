@@ -1,0 +1,1547 @@
+# table|row|also	table	caption, or the name of the row	IE type of the grouped IE, or presence	IE type	instance	once or several
+table	7.1.1-1	Information Elements in Echo Request	
+row	7.1.1-1	Recovery	M	Recovery	0	once
+row	7.1.1-1	Sending Node Features	CO	Node Features	0	once
+row	7.1.1-1	Private Extension	O	Private Extension	VS	once
+table	7.1.2-1	Information Elements in Echo Response	
+row	7.1.2-1	Recovery	M	Recovery	0	once
+row	7.1.2-1	Sending Node Features	CO	Node Features	0	once
+row	7.1.2-1	Private Extension	O	Private Extension	VS	once
+table	7.2.1-1	Information Elements in a Create Session Request	
+row	7.2.1-1	IMSI	C	IMSI	0	once
+row	7.2.1-1	MSISDN	C	MSISDN	0	once
+row	7.2.1-1	MSISDN	CO	MSISDN	0	once
+row	7.2.1-1	MSISDN	CO	MSISDN	0	once
+row	7.2.1-1	ME Identity (MEI)	C	MEI	0	once
+row	7.2.1-1	ME Identity (MEI)	CO	MEI	0	once
+row	7.2.1-1	ME Identity (MEI)	CO	MEI	0	once
+row	7.2.1-1	ME Identity (MEI)	CO	MEI	0	once
+row	7.2.1-1	User Location Information (ULI)	C	ULI (NOTE 10)	0	once
+row	7.2.1-1	User Location Information (ULI)	CO	ULI (NOTE 10)	0	once
+row	7.2.1-1	User Location Information (ULI)	CO	ULI (NOTE 10)	0	once
+row	7.2.1-1	User Location Information (ULI)	CO	ULI (NOTE 10)	0	once
+row	7.2.1-1	User Location Information (ULI)	CO	ULI (NOTE 10)	0	once
+row	7.2.1-1	User Location Information (ULI)	CO	ULI (NOTE 10)	0	once
+row	7.2.1-1	Serving Network	C	Serving Network	0	once
+row	7.2.1-1	Serving Network	CO	Serving Network	0	once
+row	7.2.1-1	Serving Network	CO	Serving Network	0	once
+row	7.2.1-1	Serving Network	CO	Serving Network	0	once
+row	7.2.1-1	RAT Type	M	RAT Type	0	once
+row	7.2.1-1	Indication Flags	C	Indication	0	once
+row	7.2.1-1	Sender F-TEID for Control Plane	M	F-TEID	0	once
+row	7.2.1-1	PGW S5/S8 Address for Control Plane or PMIP	C	F-TEID	1	once
+row	7.2.1-1	Access Point Name (APN)	M	APN	0	once
+row	7.2.1-1	Selection Mode	C	Selection Mode	0	once
+row	7.2.1-1	Selection Mode	CO	Selection Mode	0	once
+row	7.2.1-1	Selection Mode	CO	Selection Mode	0	once
+row	7.2.1-1	PDN Type	C	PDN Type	0	once
+row	7.2.1-1	PDN Type	CO	PDN Type	0	once
+row	7.2.1-1	PDN Address Allocation (PAA)	C	PAA	0	once
+row	7.2.1-1	PDN Address Allocation (PAA)	CO	PAA	0	once
+row	7.2.1-1	PDN Address Allocation (PAA)	CO	PAA	0	once
+row	7.2.1-1	Maximum APN Restriction	C	APN Restriction	0	once
+row	7.2.1-1	Aggregate Maximum Bit Rate (APN-AMBR)	C	AMBR	0	once
+row	7.2.1-1	Linked EPS Bearer ID	C	EBI	0	once
+row	7.2.1-1	Trusted WLAN Mode Indication	CO	TWMI	0	once
+row	7.2.1-1	Protocol Configuration Options (PCO)	C	PCO	0	once
+row	7.2.1-1	Protocol Configuration Options (PCO)	CO	PCO	0	once
+row	7.2.1-1	Bearer Contexts to be created	M	Bearer Context	0	several
+row	7.2.1-1	Bearer Contexts to be removed	C	Bearer Context	1	several
+row	7.2.1-1	Trace Information	C	Trace Information	0	once
+row	7.2.1-1	Recovery	C	Recovery	0	once
+row	7.2.1-1	MME-FQ-CSID	C	FQ-CSID	0	once
+row	7.2.1-1	SGW-FQ-CSID	C	FQ-CSID	1	once
+row	7.2.1-1	ePDG-FQ-CSID	C	FQ-CSID	2	once
+row	7.2.1-1	TWAN-FQ-CSID	C	FQ-CSID	3	once
+row	7.2.1-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.2.1-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.2.1-1	UE Time Zone	C	UE Time Zone	0	once
+row	7.2.1-1	UE Time Zone	O	UE Time Zone	0	once
+row	7.2.1-1	User CSG Information (UCI)	CO	UCI	0	once
+row	7.2.1-1	User CSG Information (UCI)	CO	UCI	0	once
+row	7.2.1-1	Charging Characteristics	C	Charging Characteristics	0	once
+row	7.2.1-1	MME/S4-SGSN LDN	O	Local Distinguished Name (LDN)	0	once
+row	7.2.1-1	SGW LDN	O	Local Distinguished Name (LDN)	1	once
+row	7.2.1-1	ePDG LDN	O	Local Distinguished Name (LDN)	2	once
+row	7.2.1-1	TWAN LDN	O	Local Distinguished Name (LDN)	3	once
+row	7.2.1-1	Signalling Priority Indication	CO	Signalling Priority Indication	0	once
+row	7.2.1-1	UE Local IP Address	CO	IP Address	0	once
+row	7.2.1-1	UE Local IP Address	O	IP Address	0	once
+row	7.2.1-1	UE UDP Port	CO	Port Number	0	once
+row	7.2.1-1	UE UDP Port	O	Port Number	0	once
+row	7.2.1-1	Additional Protocol Configuration Options (APCO) (NOTE 29)	CO	Additional Protocol Configuration Options (APCO)	0	once
+row	7.2.1-1	Additional Protocol Configuration Options (APCO) (NOTE 29)	O	Additional Protocol Configuration Options (APCO)	0	once
+row	7.2.1-1	Additional Protocol Configuration Options (APCO) (NOTE 29)	CO	Additional Protocol Configuration Options (APCO)	0	once
+row	7.2.1-1	Additional Protocol Configuration Options (APCO) (NOTE 29)	CO	Additional Protocol Configuration Options (APCO)	0	once
+row	7.2.1-1	Additional Protocol Configuration Options (APCO) (NOTE 29)	O	Additional Protocol Configuration Options (APCO)	0	once
+row	7.2.1-1	Additional Protocol Configuration Options (APCO) (NOTE 29)	CO	Additional Protocol Configuration Options (APCO)	0	once
+row	7.2.1-1	Additional Protocol Configuration Options (APCO) (NOTE 29)	CO	Additional Protocol Configuration Options (APCO)	0	once
+row	7.2.1-1	H(e)NB Local IP Address	CO	IP Address	1	once
+row	7.2.1-1	H(e)NB Local IP Address	O	IP Address	1	once
+row	7.2.1-1	H(e)NB UDP Port	CO	Port Number	1	once
+row	7.2.1-1	H(e)NB UDP Port	O	Port Number	1	once
+row	7.2.1-1	MME/S4-SGSN Identifier	CO	IP Address	2	once
+row	7.2.1-1	TWAN Identifier	CO	TWAN Identifier	0	once
+row	7.2.1-1	ePDG IP Address	O	IP Address	3	once
+row	7.2.1-1	CN Operator Selection Entity	CO	CN Operator Selection Entity	0	once
+row	7.2.1-1	CN Operator Selection Entity	CO	CN Operator Selection Entity	0	once
+row	7.2.1-1	Presence Reporting Area Information	CO	Presence Reporting Area Information	0	several
+row	7.2.1-1	MME/S4-SGSN's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.1-1	MME/S4-SGSN's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.1-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.1-1	TWAN/ePDG's Overload Control Information	O	Overload Control Information	2	once
+row	7.2.1-1	Origination Time Stamp	CO	Millisecond Time Stamp	0	once
+row	7.2.1-1	Origination Time Stamp	CO	Millisecond Time Stamp	0	once
+row	7.2.1-1	Maximum Wait Time	CO	Integer Number	0	once
+row	7.2.1-1	Maximum Wait Time	CO	Integer Number	0	once
+row	7.2.1-1	WLAN Location Information	CO	TWAN Identifier	1	once
+row	7.2.1-1	WLAN Location Information	O	TWAN Identifier	1	once
+row	7.2.1-1	WLAN Location Timestamp	CO	TWAN Identifier Timestamp	0	once
+row	7.2.1-1	WLAN Location Timestamp	O	TWAN Identifier Timestamp	0	once
+row	7.2.1-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.1-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.1-1	Remote UE Context Connected	CO	Remote UE Context	0	several
+row	7.2.1-1	3GPP AAA Server Identifier	O	Node Identifier	0	once
+row	7.2.1-1	Extended Protocol Configuration Options (ePCO)	CO	ePCO	0	once
+row	7.2.1-1	Serving PLMN Rate Control	CO	Serving PLMN Rate Control	0	once
+row	7.2.1-1	MO Exception Data Counter	CO	Counter	0	once
+row	7.2.1-1	UE TCP Port	CO	Port Number	2	once
+row	7.2.1-1	UE TCP Port	O	Port Number	2	once
+row	7.2.1-1	Mapped UE Usage Type	CO	Mapped UE Usage Type	0	once
+row	7.2.1-1	Mapped UE Usage Type	CO	Mapped UE Usage Type	0	once
+row	7.2.1-1	User Location Information for SGW	CO	ULI	1	once
+row	7.2.1-1	SGW-U node name	CO	FQDN	0	once
+row	7.2.1-1	Secondary RAT Usage Data Report	CO	Secondary RAT Usage Data Report	0	several
+row	7.2.1-1	UP Function Selection Indication Flags	CO	UP Function Selection Indication Flags	0	once
+row	7.2.1-1	UP Function Selection Indication Flags	CO	UP Function Selection Indication Flags	0	once
+row	7.2.1-1	APN RATE Control Status	CO	APN RATE Control Status	0	once
+row	7.2.1-1	PSCell ID	CO	PSCell ID	0	once
+row	7.2.1-1	Trace Collection Entity URI	O	URI	0	once
+row	7.2.1-1	Private Extension	O	Private Extension	VS	once
+table	7.2.1-2	Bearer Context to be created within Create Session Request	93
+row	7.2.1-2	EPS Bearer ID	M	EBI	0	once
+row	7.2.1-2	TFT	O	Bearer TFT	0	once
+row	7.2.1-2	S1-U eNodeB F-TEID	C	F-TEID	0	once
+row	7.2.1-2	S1-U eNodeB F-TEID	CO	F-TEID	0	once
+row	7.2.1-2	S4-U SGSN F-TEID	C	F-TEID	1	once
+row	7.2.1-2	S5/S8-U SGW F-TEID	C	F-TEID	2	once
+row	7.2.1-2	S5/S8-U PGW F-TEID	C	F-TEID	3	once
+row	7.2.1-2	S5/S8-U PGW F-TEID	CO	F-TEID	3	once
+row	7.2.1-2	S12 RNC F-TEID	CO	F-TEID	4	once
+row	7.2.1-2	S2b-U ePDG F-TEID	C	F-TEID	5	once
+row	7.2.1-2	S2a-U TWAN F-TEID	C	F-TEID	6	once
+row	7.2.1-2	Bearer Level QoS	M	Bearer QoS	0	once
+row	7.2.1-2	S11-U MME F-TEID	CO	F-TEID	7	once
+table	7.2.1-3	Bearer Context to be removed within Create Session Request	93
+row	7.2.1-3	EPS Bearer ID	M	EBI	0	once
+row	7.2.1-3	S4-U SGSN F-TEID	C	F-TEID	0	once
+table	7.2.1-4	Overload Control Information within Create Session Request	180
+row	7.2.1-4	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.1-4	Overload Reduction Metric	M	Metric	0	once
+row	7.2.1-4	Period of Validity	M	EPC Timer	0	once
+table	7.2.1-5	Remote UE Context Connected within Create Session Request	191
+row	7.2.1-5	Remote User ID	M	Remote User ID	0	once
+row	7.2.1-5	Remote UE IP Information	M	Remote UE IP Information	0	once
+table	7.2.2-1	Information Elements in a Create Session Response	
+row	7.2.2-1	Cause	M	Cause	0	once
+row	7.2.2-1	Change Reporting Action	C	Change Reporting Action	0	once
+row	7.2.2-1	CSG Information Reporting Action	CO	CSG Information Reporting Action	0	once
+row	7.2.2-1	H(e)NB Information Reporting	CO	H(e)NB Information Reporting	0	once
+row	7.2.2-1	Sender F-TEID for Control Plane	C	F-TEID	0	once
+row	7.2.2-1	PGW S5/S8/ S2a/S2b F-TEID for PMIP based interface or for GTP based Control Plane interface	C	F-TEID	1	once
+row	7.2.2-1	PGW S5/S8/ S2a/S2b F-TEID for PMIP based interface or for GTP based Control Plane interface	CO	F-TEID	1	once
+row	7.2.2-1	PDN Address Allocation (PAA)	C	PAA	0	once
+row	7.2.2-1	PDN Address Allocation (PAA)	CO	PAA	0	once
+row	7.2.2-1	APN Restriction	C	APN Restriction	0	once
+row	7.2.2-1	Aggregate Maximum Bit Rate (APN-AMBR)	C	AMBR	0	once
+row	7.2.2-1	Linked EPS Bearer ID	C	EBI	0	once
+row	7.2.2-1	Protocol Configuration Options (PCO)	C	PCO	0	once
+row	7.2.2-1	Protocol Configuration Options (PCO)	CO	PCO	0	once
+row	7.2.2-1	Bearer Contexts created	M	Bearer Context	0	several
+row	7.2.2-1	Bearer Contexts marked for removal	C	Bearer Context	1	several
+row	7.2.2-1	Recovery	C	Recovery	0	once
+row	7.2.2-1	Charging Gateway Name	C	FQDN	0	once
+row	7.2.2-1	Charging Gateway Address	C	IP Address	0	once
+row	7.2.2-1	PGW-FQ-CSID	C	FQ-CSID	0	once
+row	7.2.2-1	SGW-FQ-CSID	C	FQ-CSID	1	once
+row	7.2.2-1	SGW LDN	O	Local Distinguished Name (LDN)	0	once
+row	7.2.2-1	PGW LDN	O	Local Distinguished Name (LDN)	1	once
+row	7.2.2-1	PGW Back-Off Time	O	EPC Timer	0	once
+row	7.2.2-1	Additional Protocol Configuration Options (APCO) (NOTE 16)	CO	Additional Protocol Configuration Options (APCO)	0	once
+row	7.2.2-1	Additional Protocol Configuration Options (APCO) (NOTE 16)	O	Additional Protocol Configuration Options (APCO)	0	once
+row	7.2.2-1	Additional Protocol Configuration Options (APCO) (NOTE 16)	O	Additional Protocol Configuration Options (APCO)	0	once
+row	7.2.2-1	Additional Protocol Configuration Options (APCO) (NOTE 16)	O	Additional Protocol Configuration Options (APCO)	0	once
+row	7.2.2-1	Trusted WLAN IPv4 Parameters	CO	IPv4 Configuration Parameters (IP4CP)	0	once
+row	7.2.2-1	Indication Flags	CO	Indication	0	once
+row	7.2.2-1	Presence Reporting Area Action	CO	Presence Reporting Area Action	0	several
+row	7.2.2-1	PGW's node level Load Control Information	O	Load Control Information	0	once
+row	7.2.2-1	PGW's node level Load Control Information	CO	Load Control Information	0	once
+row	7.2.2-1	PGW's APN level Load Control Information	O	Load Control Information	1	once
+row	7.2.2-1	PGW's APN level Load Control Information	CO	Load Control Information	1	once
+row	7.2.2-1	SGW's node level Load Control Information	O	Load Control Information	2	once
+row	7.2.2-1	PGW's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.2-1	PGW's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.2-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.2-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.2-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.2-1	PDN Connection Charging ID	CO	Charging ID	0	once
+row	7.2.2-1	Extended Protocol Configuration Options (ePCO)	CO	ePCO	0	once
+row	7.2.2-1	PGW node name	CO	FQDN	1	once
+row	7.2.2-1	SGi PtP Tunnel Address	CO	SGi PtP Tunnel Address	0	once
+row	7.2.2-1	PGW Change Info	CO	PGW Change Info	0	once
+row	7.2.2-1	Alternative PGW-C/SMF FQDN	O	FQDN	3	several
+row	7.2.2-1	Alternative PGW-C/SMF IP Address	O	IP Address	1	several
+row	7.2.2-1	UP Security Policy	CO	UP Security Policy	0	once
+row	7.2.2-1	Private Extension	O	Private Extension	VS	once
+table	7.2.2-2	Bearer Context Created within Create Session Response	93
+row	7.2.2-2	EPS Bearer ID	M	EBI	0	once
+row	7.2.2-2	Cause	M	Cause	0	once
+row	7.2.2-2	S1-U SGW F-TEID	C	F-TEID	0	once
+row	7.2.2-2	S4-U SGW F-TEID	C	F-TEID	1	once
+row	7.2.2-2	S5/S8-U PGW F-TEID	C	F-TEID	2	once
+row	7.2.2-2	S12 SGW F-TEID	C	F-TEID	3	once
+row	7.2.2-2	S2b-U PGW F-TEID	C	F-TEID	4	once
+row	7.2.2-2	S2a-U PGW F-TEID	C	F-TEID	5	once
+row	7.2.2-2	Bearer Level QoS	C	Bearer QoS	0	once
+row	7.2.2-2	Charging Id	C	Charging Id	0	once
+row	7.2.2-2	Charging Id	O	Charging Id	0	once
+row	7.2.2-2	Charging Id	CO	Charging Id	0	once
+row	7.2.2-2	Charging Id	CO	Charging Id	0	once
+row	7.2.2-2	Bearer Flags	O	Bearer Flags	0	once
+row	7.2.2-2	S11-U SGW F-TEID	C	F-TEID	6	once
+table	7.2.2-3	Bearer Context marked for removal within a Create Session Response	93
+row	7.2.2-3	EPS Bearer ID	M	EBI	0	once
+row	7.2.2-3	Cause	M	Cause	0	once
+table	7.2.2-4	Load Control Information within Create Session Response	181
+row	7.2.2-4	Load Control Sequence Number	M	Sequence Number	0	once
+row	7.2.2-4	Load Metric	M	Metric	0	once
+row	7.2.2-4	List of APN and Relative Capacity	CO	APN and Relative Capacity	0	once
+table	7.2.2-5	Overload Control Information within Create Session Response	180
+row	7.2.2-5	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.2-5	Overload Reduction Metric	M	Metric	0	once
+row	7.2.2-5	Period of Validity	M	EPC Timer	0	once
+row	7.2.2-5	List of Access Point Name (APN)	CO	APN	0	once
+table	7.2.2-6	PGW Change Info within Create Session Response	214
+row	7.2.2-6	PGW Set FQDN	C	PGW FQDN	0	once
+row	7.2.2-6	Alternative PGW-C/SMF IP Address	C	IP Address	0	several
+row	7.2.2-6	Alternative PGW-C/SMF FQDN	C	PGW FQDN	1	several
+row	7.2.2-6	Group Id	O	Group Id	0	once
+table	7.2.3-1	Information Elements in a Create Bearer Request	
+row	7.2.3-1	Procedure Transaction Id (PTI)	C	PTI	0	once
+row	7.2.3-1	Linked EPS Bearer ID (LBI)	M	EBI	0	once
+row	7.2.3-1	Protocol Configuration Options (PCO)	O	PCO	0	once
+row	7.2.3-1	Bearer Contexts	M	Bearer Context	0	several
+row	7.2.3-1	PGW-FQ-CSID	C	FQ-CSID	0	once
+row	7.2.3-1	SGW-FQ-CSID	C	FQ-CSID	1	once
+row	7.2.3-1	Change Reporting Action	C	Change Reporting Action	0	once
+row	7.2.3-1	CSG Information Reporting Action	CO	CSG Information Reporting Action	0	once
+row	7.2.3-1	H(e)NB Information Reporting	CO	H(e)NB Information Reporting	0	once
+row	7.2.3-1	Presence Reporting Area Action	CO	Presence Reporting Area Action	0	several
+row	7.2.3-1	Indication Flags	CO	Indication	0	once
+row	7.2.3-1	PGW's node level Load Control Information	O	Load Control Information	0	once
+row	7.2.3-1	PGW's node level Load Control Information	CO	Load Control Information	0	once
+row	7.2.3-1	PGW's APN level Load Control Information	O	Load Control Information	1	once
+row	7.2.3-1	PGW's APN level Load Control Information	CO	Load Control Information	1	once
+row	7.2.3-1	SGW's node level Load Control Information	O	Load Control Information	2	once
+row	7.2.3-1	PGW's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.3-1	PGW's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.3-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.3-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.3-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.3-1	PGW Change Info	CO	PGW Change Info	0	several
+row	7.2.3-1	Sender F-TEID for Control Plane	CO	F-TEID	0	once
+row	7.2.3-1	Private Extension	O	Private Extension	VS	once
+table	7.2.3-2	Bearer Context within Create Bearer Request	93
+row	7.2.3-2	EPS Bearer ID	M	EBI	0	once
+row	7.2.3-2	TFT	M	Bearer TFT	0	once
+row	7.2.3-2	S1-U SGW F-TEID	C	F-TEID	0	once
+row	7.2.3-2	S5/8-U PGW F-TEID	C	F-TEID	1	once
+row	7.2.3-2	S12 SGW F-TEID	C	F-TEID	2	once
+row	7.2.3-2	S4-U SGW F-TEID	C	F-TEID	3	once
+row	7.2.3-2	S2b-U PGW F-TEID	C	F-TEID	4	once
+row	7.2.3-2	S2a-U PGW F-TEID	C	F-TEID	5	once
+row	7.2.3-2	Bearer Level QoS	M	Bearer QoS	0	once
+row	7.2.3-2	Charging Id	C	Charging Id	0	once
+row	7.2.3-2	Charging Id	O	Charging Id	0	once
+row	7.2.3-2	Charging Id	CO	Charging Id	0	once
+row	7.2.3-2	Bearer Flags	O	Bearer Flags	0	once
+row	7.2.3-2	Protocol Configuration Options (PCO)	O	PCO	0	once
+row	7.2.3-2	Extended Protocol Configuration Options (ePCO)	O	ePCO	0	once
+row	7.2.3-2	Maximum Packet Loss Rate	O	Maximum Packet Loss Rate	0	once
+row	7.2.3-2	Maximum Packet Loss Rate	CO	Maximum Packet Loss Rate	0	once
+table	7.2.3-3	Load Control Information within Create Bearer Request	181
+row	7.2.3-3	Load Control Sequence Number	M	Sequence Number	0	once
+row	7.2.3-3	Load Metric	M	Metric	0	once
+row	7.2.3-3	List of APN and Relative Capacity	CO	APN and Relative Capacity	0	once
+table	7.2.3-4	Overload Control Information within Create Bearer Request	181
+row	7.2.3-4	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.3-4	Overload Reduction Metric	M	Metric	0	once
+row	7.2.3-4	Period of Validity	M	EPC Timer	0	once
+row	7.2.3-4	List of Access Point Name (APN)	CO	APN	0	once
+table	7.2.3-5	PGW Change Info within Create Bearer Request	214
+row	7.2.3-5	PGW Set FQDN	O	PGW FQDN	0	once
+row	7.2.3-5	Alternative PGW-C/SMF IP Address	O	IP Address	0	several
+row	7.2.3-5	Alternative PGW-C/SMF FQDN	O	PGW FQDN	1	several
+row	7.2.3-5	New PGW-C/SMF IP Address	C	IP Address	1	once
+row	7.2.3-5	New SGW-C IP Address	O	IP Address	3	once
+row	7.2.3-5	PGW-C/SMF FQ-CSID	C	FQ-CSID	0	several
+row	7.2.3-5	Group Id	C	Group Id	0	several
+row	7.2.3-5	PGW Control Plane IP Address	C	IP Address	2	several
+row	7.2.3-5	New Group Id	O	Group Id	1	once
+table	7.2.4-1	Information Elements in a Create Bearer Response	
+row	7.2.4-1	Cause	M	Cause	0	once
+row	7.2.4-1	Bearer Contexts	M	Bearer Context	0	several
+row	7.2.4-1	Recovery	C	Recovery	0	once
+row	7.2.4-1	MME-FQ-CSID	C	FQ-CSID	0	once
+row	7.2.4-1	SGW-FQ-CSID	C	FQ-CSID	1	once
+row	7.2.4-1	ePDG-FQ-CSID	C	FQ-CSID	2	once
+row	7.2.4-1	TWAN-FQ-CSID	C	FQ-CSID	3	once
+row	7.2.4-1	Protocol Configuration Options (PCO)	C	PCO	0	once
+row	7.2.4-1	UE Time Zone	O	UE Time Zone	0	once
+row	7.2.4-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.2.4-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.2.4-1	User Location Information (ULI)	CO	ULI	0	once
+row	7.2.4-1	User Location Information (ULI)	CO	ULI	0	once
+row	7.2.4-1	TWAN Identifier	CO	TWAN Identifier	0	once
+row	7.2.4-1	MME/S4-SGSN's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.4-1	MME/S4-SGSN's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.4-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.4-1	Presence Reporting Area Information	CO	Presence Reporting Area Information	0	several
+row	7.2.4-1	MME/S4-SGSN Identifier	CO	IP Address (See NOTE 2)	0	once
+row	7.2.4-1	TWAN/ePDG's Overload Control Information	O	Overload Control Information	2	once
+row	7.2.4-1	WLAN Location Information	CO	TWAN Identifier	1	once
+row	7.2.4-1	WLAN Location Timestamp	CO	TWAN Identifier Timestamp	1	once
+row	7.2.4-1	UE Local IP Address	CO	IP Address (See NOTE 2)	0	once
+row	7.2.4-1	UE UDP Port	CO	Port Number	0	once
+row	7.2.4-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.4-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.4-1	UE TCP Port	CO	Port Number	1	once
+row	7.2.4-1	PSCell ID	CO	PSCell ID	0	once
+row	7.2.4-1	Private Extension	O	Private Extension	VS	once
+table	7.2.4-2	Bearer Context within Create Bearer Response	93
+row	7.2.4-2	EPS Bearer ID	M	EBI	0	once
+row	7.2.4-2	Cause	M	Cause	0	once
+row	7.2.4-2	S1-U eNodeB F-TEID	C	F-TEID	0	once
+row	7.2.4-2	S1-U SGW F-TEID	C	F-TEID	1	once
+row	7.2.4-2	S5/8-U SGW F-TEID	C	F-TEID	2	once
+row	7.2.4-2	S5/8-U PGW F-TEID	C	F-TEID	3	once
+row	7.2.4-2	S12 RNC F-TEID	C	F-TEID	4	once
+row	7.2.4-2	S12 SGW F-TEID	C	F-TEID	5	once
+row	7.2.4-2	S4-U SGSN F-TEID	C	F-TEID	6	once
+row	7.2.4-2	S4-U SGW F-TEID	C	F-TEID	7	once
+row	7.2.4-2	S2b-U ePDG F-TEID	C	F-TEID	8	once
+row	7.2.4-2	S2b-U PGW F-TEID	C	F-TEID	9	once
+row	7.2.4-2	S2a-U TWAN F-TEID	C	F-TEID	10	once
+row	7.2.4-2	S2a-U PGW F-TEID	C	F-TEID	11	once
+row	7.2.4-2	Protocol Configuration Options (PCO)	CO	PCO	0	once
+row	7.2.4-2	RAN/NAS Cause	CO	RAN/NAS Cause	0	several
+row	7.2.4-2	RAN/NAS Cause	CO	RAN/NAS Cause	0	once
+row	7.2.4-2	RAN/NAS Cause	CO	RAN/NAS Cause	0	once
+row	7.2.4-2	Extended Protocol Configuration Options (ePCO)	CO	ePCO	0	once
+table	7.2.4-3	Overload Control Information within Create Bearer Response	180
+row	7.2.4-3	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.4-3	Overload Reduction Metric	M	Metric	0	once
+row	7.2.4-3	Period of Validity	M	EPC Timer	0	once
+table	7.2.5-1	Information Elements in a Bearer Resource Command	
+row	7.2.5-1	Linked EPS Bearer ID (LBI)	M	EBI	0	once
+row	7.2.5-1	Procedure Transaction Id (PTI)	M	PTI	0	once
+row	7.2.5-1	Flow Quality of Service (Flow QoS)	C	Flow QoS	0	once
+row	7.2.5-1	Traffic Aggregate Description (TAD)	M	TAD	0	once
+row	7.2.5-1	Traffic Aggregate Description (TAD)	CO	TAD	0	once
+row	7.2.5-1	Traffic Aggregate Description (TAD)	CO	TAD	0	once
+row	7.2.5-1	RAT Type	C	RAT Type	0	once
+row	7.2.5-1	Serving Network	O	Serving Network	0	once
+row	7.2.5-1	User Location Information (ULI)	O	ULI	0	once
+row	7.2.5-1	EPS Bearer ID	C	EBI	1	once
+row	7.2.5-1	Indication Flags	CO	Indication	0	once
+row	7.2.5-1	S4-U SGSN F-TEID	C	F-TEID	0	once
+row	7.2.5-1	S12 RNC F-TEID	C	F-TEID	1	once
+row	7.2.5-1	Protocol Configuration Options (PCO)	O	PCO	0	once
+row	7.2.5-1	Signalling Priority Indication	CO	Signalling Priority Indication	0	once
+row	7.2.5-1	MME/S4-SGSN's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.5-1	MME/S4-SGSN's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.5-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.5-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.5-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.5-1	Extended Protocol Configuration Options (ePCO)	O	ePCO	0	once
+row	7.2.5-1	Sender F-TEID for Control Plane	CO	F-TEID	2	once
+row	7.2.5-1	PSCell ID	CO	PSCell ID	0	once
+row	7.2.5-1	Private Extension	O	Private Extension	VS	once
+table	7.2.5-2	Overload Control Information within Bearer Resource Command	180
+row	7.2.5-2	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.5-2	Overload Reduction Metric	M	Metric	0	once
+row	7.2.5-2	Period of Validity	M	EPC Timer	0	once
+table	7.2.6-1	Information Elements in a Bearer Resource Failure Indication	
+row	7.2.6-1	Cause	M	Cause	0	once
+row	7.2.6-1	Linked EPS Bearer ID	M	EBI	0	once
+row	7.2.6-1	Procedure Transaction ID (PTI)	M	PTI	0	once
+row	7.2.6-1	Indication Flags	CO	Indication	0	once
+row	7.2.6-1	PGW's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.6-1	PGW's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.6-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.6-1	Recovery	O	Recovery	0	once
+row	7.2.6-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.6-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.6-1	Private Extension	O	Private Extension	VS	once
+table	7.2.6-2	Overload Control Information within Bearer Resource Failure Indication	180
+row	7.2.6-2	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.6-2	Overload Reduction Metric	M	Metric	0	once
+row	7.2.6-2	Period of Validity	M	EPC Timer	0	once
+row	7.2.6-2	List of Access Point Name (APN)	CO	APN	0	once
+table	7.2.7-1	Information Elements in a Modify Bearer Request	
+row	7.2.7-1	ME Identity (MEI)	C	MEI	0	once
+row	7.2.7-1	ME Identity (MEI)	O	MEI	0	once
+row	7.2.7-1	User Location Information (ULI)	C	ULI (NOTE 15)	0	once
+row	7.2.7-1	User Location Information (ULI)	CO	ULI (NOTE 15)	0	once
+row	7.2.7-1	User Location Information (ULI)	CO	ULI (NOTE 15)	0	once
+row	7.2.7-1	User Location Information (ULI)	CO	ULI (NOTE 15)	0	once
+row	7.2.7-1	User Location Information (ULI)	CO	ULI (NOTE 15)	0	once
+row	7.2.7-1	User Location Information (ULI)	CO	ULI (NOTE 15)	0	once
+row	7.2.7-1	User Location Information (ULI)	CO	ULI (NOTE 15)	0	once
+row	7.2.7-1	Serving Network	CO	Serving Network (NOTE 15)	0	once
+row	7.2.7-1	Serving Network	CO	Serving Network (NOTE 15)	0	once
+row	7.2.7-1	Serving Network	CO	Serving Network (NOTE 15)	0	once
+row	7.2.7-1	RAT Type	C	RAT Type	0	once
+row	7.2.7-1	RAT Type	CO	RAT Type	0	once
+row	7.2.7-1	RAT Type	CO	RAT Type	0	once
+row	7.2.7-1	RAT Type	CO	RAT Type	0	once
+row	7.2.7-1	RAT Type	CO	RAT Type	0	once
+row	7.2.7-1	Indication Flags	C	Indication	0	once
+row	7.2.7-1	Sender F-TEID for Control Plane	C	F-TEID	0	once
+row	7.2.7-1	Aggregate Maximum Bit Rate (APN-AMBR)	C	AMBR	0	once
+row	7.2.7-1	Delay Downlink Packet Notification Request	C	Delay Value	0	once
+row	7.2.7-1	Delay Downlink Packet Notification Request	CO	Delay Value	0	once
+row	7.2.7-1	Bearer Contexts to be modified	C	Bearer Context	0	several
+row	7.2.7-1	Bearer Contexts to be removed	C	Bearer Context	1	several
+row	7.2.7-1	Recovery	C	Recovery	0	once
+row	7.2.7-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.2.7-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.2.7-1	UE Time Zone	C	UE Time Zone	0	once
+row	7.2.7-1	MME-FQ-CSID	C	FQ-CSID	0	once
+row	7.2.7-1	SGW-FQ-CSID	C	FQ-CSID	1	once
+row	7.2.7-1	User CSG Information (UCI)	CO	UCI	0	once
+row	7.2.7-1	UE Local IP Address	CO	IP Address	1	once
+row	7.2.7-1	UE UDP Port	CO	Port Number	1	once
+row	7.2.7-1	MME/S4-SGSN LDN	O	Local Distinguished Name (LDN)	0	once
+row	7.2.7-1	SGW LDN	O	Local Distinguished Name (LDN)	1	once
+row	7.2.7-1	H(e)NB Local IP Address	CO	IP Address	0	once
+row	7.2.7-1	H(e)NB UDP Port	CO	Port Number	0	once
+row	7.2.7-1	MME/S4-SGSN Identifier	CO	IP Address	2	once
+row	7.2.7-1	MME/S4-SGSN Identifier	CO	IP Address	2	once
+row	7.2.7-1	CN Operator Selection Entity	CO	CN Operator Selection Entity	0	once
+row	7.2.7-1	CN Operator Selection Entity	CO	CN Operator Selection Entity	0	once
+row	7.2.7-1	Presence Reporting Area Information	CO	Presence Reporting Area Information	0	several
+row	7.2.7-1	Presence Reporting Area Information	CO	Presence Reporting Area Information	0	once
+row	7.2.7-1	MME/S4-SGSN's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.7-1	MME/S4-SGSN's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.7-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.7-1	ePDG's Overload Control Information	O	Overload Control Information	2	once
+row	7.2.7-1	Serving PLMN Rate Control	CO	Serving PLMN Rate Control	0	once
+row	7.2.7-1	MO Exception Data Counter	CO	Counter	0	once
+row	7.2.7-1	MO Exception Data Counter	CO	Counter	0	once
+row	7.2.7-1	IMSI	O	IMSI	0	once
+row	7.2.7-1	User Location Information for SGW	CO	ULI	1	once
+row	7.2.7-1	WLAN Location Information	CO	TWAN Identifier	0	once
+row	7.2.7-1	WLAN Location Timestamp	CO	TWAN Identifier Timestamp	0	once
+row	7.2.7-1	Secondary RAT Usage Data Report	CO	Secondary RAT Usage Data Report	0	several
+row	7.2.7-1	PSCell ID	CO	PSCell ID	0	once
+row	7.2.7-1	Private Extension	O	Private Extension	VS	once
+table	7.2.7-2	Bearer Context to be modified within Modify Bearer Request	93
+row	7.2.7-2	EPS Bearer ID	M	EBI	0	once
+row	7.2.7-2	S1 eNodeB F-TEID	C	F-TEID	0	once
+row	7.2.7-2	S5/8-U SGW F-TEID	C	F-TEID	1	once
+row	7.2.7-2	S12 RNC F-TEID	C	F-TEID	2	once
+row	7.2.7-2	S4-U SGSN F-TEID	C	F-TEID	3	once
+row	7.2.7-2	S11-U MME F-TEID	CO	F-TEID	4	once
+table	7.2.7-3	Bearer Context to be removed within Modify Bearer Request	93
+row	7.2.7-3	EPS Bearer ID	M	EBI	0	once
+table	7.2.7-4	Overload Control Information within Modify Bearer Request	180
+row	7.2.7-4	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.7-4	Overload Reduction Metric	M	Metric	0	once
+row	7.2.7-4	Period of Validity	M	EPC Timer	0	once
+table	7.2.8-1	Information Elements in a Modify Bearer Response	
+row	7.2.8-1	Cause	M	Cause	0	once
+row	7.2.8-1	MSISDN	C	MSISDN	0	once
+row	7.2.8-1	Linked EPS Bearer ID	C	EBI	0	once
+row	7.2.8-1	APN Restriction	C	APN Restriction	0	once
+row	7.2.8-1	Protocol Configuration Options (PCO)	C	PCO	0	once
+row	7.2.8-1	Bearer Contexts modified	C	Bearer Context	0	several
+row	7.2.8-1	Bearer Contexts marked for removal	C	Bearer Context	1	several
+row	7.2.8-1	Change Reporting Action	C	Change Reporting Action	0	once
+row	7.2.8-1	CSG Information Reporting Action	CO	CSG Information Reporting Action	0	once
+row	7.2.8-1	H(e)NB Information Reporting	CO	H(e)NB Information Reporting	0	once
+row	7.2.8-1	Charging Gateway Name	C	FQDN	0	once
+row	7.2.8-1	Charging Gateway Address	C	IP Address	0	once
+row	7.2.8-1	PGW-FQ-CSID	C	FQ-CSID	0	once
+row	7.2.8-1	SGW-FQ-CSID	C	FQ-CSID	1	once
+row	7.2.8-1	Recovery	C	Recovery	0	once
+row	7.2.8-1	SGW LDN	O	Local Distinguished Name (LDN)	0	once
+row	7.2.8-1	PGW LDN	O	Local Distinguished Name (LDN)Name	1	once
+row	7.2.8-1	Indication Flags	CO	Indication	0	once
+row	7.2.8-1	Presence Reporting Area Action	CO	Presence Reporting Area Action	0	several
+row	7.2.8-1	PGW's node level Load Control Information	O	Load Control Information	0	once
+row	7.2.8-1	PGW's node level Load Control Information	CO	Load Control Information	0	once
+row	7.2.8-1	PGW's APN level Load Control Information	O	Load Control Information	1	once
+row	7.2.8-1	PGW's APN level Load Control Information	CO	Load Control Information	1	once
+row	7.2.8-1	SGW's node level Load Control Information	O	Load Control Information	2	once
+row	7.2.8-1	PGW's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.8-1	PGW's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.8-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.8-1	PDN Connection Charging ID	CO	Charging ID	0	once
+row	7.2.8-1	PGW Change Info	CO	PGW Change Info	0	once
+row	7.2.8-1	Private Extension	O	Private Extension	VS	once
+table	7.2.8-2	Bearer Context modified within Modify Bearer Response	93
+row	7.2.8-2	EPS Bearer ID	M	EBI	0	once
+row	7.2.8-2	Cause	M	Cause	0	once
+row	7.2.8-2	S1-U SGW F-TEID	C	F-TEID	0	once
+row	7.2.8-2	S12 SGW F-TEID	C	F-TEID	1	once
+row	7.2.8-2	S4-U SGW F-TEID	C	F-TEID	2	once
+row	7.2.8-2	Charging ID	C	Charging ID	0	once
+row	7.2.8-2	Charging ID	O	Charging ID	0	once
+row	7.2.8-2	Bearer Flags	CO	Bearer Flags	0	once
+row	7.2.8-2	S11-U SGW F-TEID	C	F-TEID	3	once
+table	7.2.8-3	Bearer Context marked for removal within Modify Bearer Response	93
+row	7.2.8-3	EPS Bearer ID	M	EBI	0	once
+row	7.2.8-3	Cause	M	Cause	0	once
+table	7.2.8-4	Load Control Information within Modify Bearer Response	181
+row	7.2.8-4	Load Control Sequence Number	M	Sequence Number	0	once
+row	7.2.8-4	Load Metric	M	Metric	0	once
+row	7.2.8-4	List of APN and Relative Capacity	CO	APN and Relative Capacity	0	once
+table	7.2.8-5	Overload Control Information within Modify Bearer Response	180
+row	7.2.8-5	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.8-5	Overload Reduction Metric	M	Metric	0	once
+row	7.2.8-5	Period of Validity	M	EPC Timer	0	once
+row	7.2.8-5	List of Access Point Name (APN)	CO	APN	0	once
+table	7.2.8-6	PGW Change Info within Modify Bearer Response	214
+row	7.2.8-6	PGW Set FQDN	C	PGW FQDN	0	once
+row	7.2.8-6	Alternative PGW-C/SMF IP Address	C	IP Address	0	several
+row	7.2.8-6	Alternative PGW-C/SMF FQDN	C	PGW FQDN	1	several
+row	7.2.8-6	Group Id	O	Group Id	0	once
+table	7.2.9.1-1	Information Elements in a Delete Session Request	
+row	7.2.9.1-1	Cause	C	Cause	0	once
+row	7.2.9.1-1	Cause	CO	Cause		once
+row	7.2.9.1-1	Linked EPS Bearer ID (LBI)	C	EBI	0	once
+row	7.2.9.1-1	User Location Information (ULI)	C	ULI (NOTE 7)	0	once
+row	7.2.9.1-1	User Location Information (ULI)	CO	ULI (NOTE 7)	0	once
+row	7.2.9.1-1	Indication Flags	C	Indication	0	once
+row	7.2.9.1-1	Protocol Configuration Options (PCO)	C	PCO	0	once
+row	7.2.9.1-1	Protocol Configuration Options (PCO)	CO	PCO	0	once
+row	7.2.9.1-1	Originating Node	C	Node Type	0	once
+row	7.2.9.1-1	Sender F-TEID for Control Plane	O	F-TEID	0	once
+row	7.2.9.1-1	Sender F-TEID for Control Plane	O	F-TEID	0	once
+row	7.2.9.1-1	Sender F-TEID for Control Plane	CO	F-TEID	0	once
+row	7.2.9.1-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.2.9.1-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.2.9.1-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.2.9.1-1	ULI Timestamp	CO	ULI Timestamp	0	once
+row	7.2.9.1-1	RAN/NAS Release Cause	CO	RAN/NAS Cause	0	once
+row	7.2.9.1-1	RAN/NAS Release Cause	CO	RAN/NAS Cause	0	once
+row	7.2.9.1-1	RAN/NAS Release Cause	CO	RAN/NAS Cause	0	once
+row	7.2.9.1-1	TWAN Identifier	CO	TWAN Identifier	0	once
+row	7.2.9.1-1	TWAN Identifier Timestamp	CO	TWAN Identifier Timestamp	0	once
+row	7.2.9.1-1	MME/S4-SGSN's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.9.1-1	MME/S4-SGSN's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.9.1-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.9.1-1	TWAN/ePDG's Overload Control Information	O	Overload Control Information	2	once
+row	7.2.9.1-1	WLAN Location Information	CO	TWAN Identifier	1	once
+row	7.2.9.1-1	WLAN Location Timestamp	CO	TWAN Identifier Timestamp	1	once
+row	7.2.9.1-1	UE Local IP Address	CO	IP Address	0	once
+row	7.2.9.1-1	UE UDP Port	CO	Port Number	0	once
+row	7.2.9.1-1	Extended Protocol Configuration Options (ePCO)	CO	ePCO	0	once
+row	7.2.9.1-1	UE TCP Port	CO	Port Number	1	once
+row	7.2.9.1-1	Secondary RAT Usage Data Report	CO	Secondary RAT Usage Data Report	0	several
+row	7.2.9.1-1	Secondary RAT Usage Data Report	O	Secondary RAT Usage Data Report	0	several
+row	7.2.9.1-1	PSCell ID	CO	PSCell ID	0	once
+row	7.2.9.1-1	Private Extension	O	Private Extension	VS	once
+table	7.2.9.1-2	Overload Control Information within Delete Session Request	180
+row	7.2.9.1-2	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.9.1-2	Overload Reduction Metric	M	Metric	0	once
+row	7.2.9.1-2	Period of Validity	M	EPC Timer	0	once
+table	7.2.9.2-1	Information Elements in a Delete Bearer Request	
+row	7.2.9.2-1	Linked EPS Bearer ID (LBI)	C	EBI	0	once
+also	7.2.9.2-1	Linked EPS Bearer ID (LBI)	CO	EBI	0	several
+row	7.2.9.2-1	EPS Bearer IDs	C	EBI	1	several
+row	7.2.9.2-1	Failed Bearer Contexts	O	Bearer Context	0	once
+row	7.2.9.2-1	Procedure Transaction Id (PTI)	C	PTI	0	once
+row	7.2.9.2-1	Protocol Configuration Options (PCO)	C	PCO	0	once
+row	7.2.9.2-1	Protocol Configuration Options (PCO)	CO	PCO	0	once
+row	7.2.9.2-1	PGW-FQ-CSID	C	FQ-CSID	0	once
+row	7.2.9.2-1	SGW-FQ-CSID	C	FQ-CSID	1	once
+row	7.2.9.2-1	Cause	C	Cause	0	once
+row	7.2.9.2-1	Cause	CO	Cause	0	once
+row	7.2.9.2-1	Cause	O	Cause	0	once
+row	7.2.9.2-1	Cause	O	Cause	0	once
+row	7.2.9.2-1	Cause	CO	Cause	0	once
+row	7.2.9.2-1	Cause	CO	Cause		once
+row	7.2.9.2-1	Cause	CO	Cause		once
+row	7.2.9.2-1	Indication Flags	CO	Indication	0	once
+row	7.2.9.2-1	PGW's node level Load Control Information	O	Load Control Information	0	once
+row	7.2.9.2-1	PGW's node level Load Control Information	CO	Load Control Information	0	once
+row	7.2.9.2-1	PGW's APN level Load Control Information	O	Load Control Information	1	once
+row	7.2.9.2-1	PGW's APN level Load Control Information	CO	Load Control Information	1	once
+row	7.2.9.2-1	SGW's node level Load Control Information	O	Load Control Information	2	once
+row	7.2.9.2-1	PGW's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.9.2-1	PGW's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.9.2-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.9.2-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.9.2-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.9.2-1	APN RATE Control Status	CO	APN RATE Control Status	0	once
+row	7.2.9.2-1	Extended Protocol Configuration Options (ePCO)	CO	ePCO	0	once
+row	7.2.9.2-1	PGW Change Info	CO	PGW Change Info	0	several
+row	7.2.9.2-1	Sender F-TEID for Control Plane	CO	F-TEID	0	once
+row	7.2.9.2-1	Private Extension	O	Private Extension	VS	once
+table	7.2.9.2-2	Bearer Context within Delete Bearer Request	93
+row	7.2.9.2-2	EPS Bearer ID	M	EBI	0	once
+row	7.2.9.2-2	Cause	M	Cause	0	once
+table	7.2.9.2-3	Load Control Information within Delete Bearer Request	181
+row	7.2.9.2-3	Load Control Sequence Number	M	Sequence Number	0	once
+row	7.2.9.2-3	Load Metric	M	Metric	0	once
+row	7.2.9.2-3	List of APN and Relative Capacity	CO	APN and Relative Capacity	0	once
+table	7.2.9.2-4	Overload Control Information within Delete Bearer Request	180
+row	7.2.9.2-4	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.9.2-4	Overload Reduction Metric	M	Metric	0	once
+row	7.2.9.2-4	Period of Validity	M	EPC Timer	0	once
+row	7.2.9.2-4	List of Access Point Name (APN)	CO	APN	0	once
+table	7.2.9.2-5	PGW Change Info within Delete Bearer Request	214
+row	7.2.9.2-5	PGW Set FQDN	O	PGW FQDN	0	once
+row	7.2.9.2-5	Alternative PGW-C/SMF IP Address	O	IP Address	0	several
+row	7.2.9.2-5	Alternative PGW-C/SMF FQDN	O	PGW FQDN	1	several
+row	7.2.9.2-5	New PGW-C/SMF IP Address	C	IP Address	1	once
+row	7.2.9.2-5	New SGW-C IP Address	O	IP Address	3	once
+row	7.2.9.2-5	PGW-C/SMF FQ-CSID	C	FQ-CSID	0	several
+row	7.2.9.2-5	Group Id	C	Group Id	0	several
+row	7.2.9.2-5	PGW Control Plane IP Address	C	IP Address	2	several
+row	7.2.9.2-5	New Group Id	O	Group Id	1	once
+table	7.2.10.1-1	Information Elements in a Delete Session Response	
+row	7.2.10.1-1	Cause	M	Cause	0	once
+row	7.2.10.1-1	Recovery	C	Recovery	0	once
+row	7.2.10.1-1	Protocol Configuration Options (PCO)	C	PCO	0	once
+row	7.2.10.1-1	Protocol Configuration Options (PCO)	CO	PCO	0	once
+row	7.2.10.1-1	Indication Flags	CO	Indication	0	once
+row	7.2.10.1-1	PGW's node level Load Control Information	O	Load Control Information	0	once
+row	7.2.10.1-1	PGW's node level Load Control Information	CO	Load Control Information	0	once
+row	7.2.10.1-1	PGW's APN level Load Control Information	O	Load Control Information	1	once
+row	7.2.10.1-1	PGW's APN level Load Control Information	CO	Load Control Information	1	once
+row	7.2.10.1-1	SGW's node level Load Control Information	O	Load Control Information	2	once
+row	7.2.10.1-1	PGW's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.10.1-1	PGW's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.10.1-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.10.1-1	Extended Protocol Configuration Options (ePCO)	CO	ePCO	0	once
+row	7.2.10.1-1	APN RATE Control Status	CO	APN RATE Control Status	0	once
+row	7.2.10.1-1	Private Extension	O	Private Extension	VS	once
+table	7.2.10.1-2	Load Control Information within Delete Session Response	181
+row	7.2.10.1-2	Load Control Sequence Number	M	Sequence Number	0	once
+row	7.2.10.1-2	Load Metric	M	Metric	0	once
+row	7.2.10.1-2	List of APN and Relative Capacity	CO	APN and Relative Capacity	0	once
+table	7.2.10.1-3	Overload Control Information within Delete Session Response	180
+row	7.2.10.1-3	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.10.1-3	Overload Reduction Metric	M	Metric	0	once
+row	7.2.10.1-3	Period of Validity	M	EPC Timer	0	once
+row	7.2.10.1-3	List of Access Point Name (APN)	CO	APN	0	once
+table	7.2.10.2-1	Information Elements in Delete Bearer Response	
+row	7.2.10.2-1	Cause	M	Cause	0	once
+row	7.2.10.2-1	Linked EPS Bearer ID (LBI)	C	EBI	0	once
+row	7.2.10.2-1	Linked EPS Bearer ID (LBI)	CO	EBI	0	several
+row	7.2.10.2-1	Bearer Contexts	C	Bearer Context	0	several
+row	7.2.10.2-1	Recovery	C	Recovery	0	once
+row	7.2.10.2-1	MME-FQ-CSID	C	FQ-CSID	0	once
+row	7.2.10.2-1	SGW-FQ-CSID	C	FQ-CSID	1	once
+row	7.2.10.2-1	ePDG-FQ-CSID	C	FQ-CSID	2	once
+row	7.2.10.2-1	TWAN-FQ-CSID	C	FQ-CSID	3	once
+row	7.2.10.2-1	Protocol Configuration Options (PCO)	CO	PCO	0	once
+row	7.2.10.2-1	Protocol Configuration Options (PCO)	CO	PCO	0	once
+row	7.2.10.2-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.2.10.2-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.2.10.2-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.2.10.2-1	User Location Information (ULI)	CO	ULI	0	once
+row	7.2.10.2-1	User Location Information (ULI)	CO	ULI	0	once
+row	7.2.10.2-1	ULI Timestamp	CO	ULI Timestamp	0	once
+row	7.2.10.2-1	TWAN Identifier	CO	TWAN Identifier	0	once
+row	7.2.10.2-1	TWAN Identifier Timestamp	CO	TWAN Identifier Timestamp	0	once
+row	7.2.10.2-1	MME/S4-SGSN's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.10.2-1	MME/S4-SGSN's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.10.2-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.10.2-1	MME/S4-SGSN Identifier	CO	IP Address	0	once
+row	7.2.10.2-1	TWAN/ePDG's Overload Control Information	O	Overload Control Information	2	once
+row	7.2.10.2-1	WLAN Location Information	CO	TWAN Identifier	1	once
+row	7.2.10.2-1	WLAN Location Timestamp	CO	TWAN Identifier Timestamp	1	once
+row	7.2.10.2-1	UE Local IP Address	CO	IP Address	0	once
+row	7.2.10.2-1	UE UDP Port	CO	Port Number	0	once
+row	7.2.10.2-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.10.2-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.10.2-1	UE TCP Port	CO	Port Number	1	once
+row	7.2.10.2-1	Secondary RAT Usage Data Report	CO	Secondary RAT Usage Data Report	0	several
+row	7.2.10.2-1	Secondary RAT Usage Data Report	O	Secondary RAT Usage Data Report	0	several
+row	7.2.10.2-1	PSCell ID	CO	PSCell ID	0	once
+row	7.2.10.2-1	Private Extension	O	Private Extension	VS	once
+table	7.2.10.2-2	Bearer Context within Delete Bearer Response	93
+row	7.2.10.2-2	EPS Bearer ID	M	EBI	0	once
+row	7.2.10.2-2	Cause	M	Cause	0	once
+row	7.2.10.2-2	Protocol Configuration Options (PCO)	CO	PCO	0	once
+row	7.2.10.2-2	RAN/NAS Cause	CO	RAN/NAS Cause	0	several
+row	7.2.10.2-2	Extended Protocol Configuration Options (ePCO)	CO	ePCO	0	once
+table	7.2.10.2-3	Overload Control Information within Delete Bearer Response	180
+row	7.2.10.2-3	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.10.2-3	Overload Reduction Metric	M	Metric	0	once
+row	7.2.10.2-3	Period of Validity	M	EPC Timer	0	once
+table	7.2.11.1-1	Information Elements in a Downlink Data Notification	
+row	7.2.11.1-1	Cause	CO	Cause	0	once
+row	7.2.11.1-1	EPS Bearer ID	CO	EBI	0	several
+row	7.2.11.1-1	Allocation/Retention Priority	CO	ARP	0	once
+row	7.2.11.1-1	IMSI	CO	IMSI	0	once
+row	7.2.11.1-1	Sender F-TEID for Control Plane	O	F-TEID	0	once
+row	7.2.11.1-1	Indication Flags	CO	Indication	0	once
+row	7.2.11.1-1	SGW's node level Load Control Information	O	Load Control Information	0	once
+row	7.2.11.1-1	SGW's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.11.1-1	Paging and Service Information	CO	Paging and Service Information	0	once
+row	7.2.11.1-1	DL Data Packets Size	CO	Integer Number	0	once
+row	7.2.11.1-1	Private Extension	O	Private Extension	VS	once
+table	7.2.11.1-2	Load Control Information within Downlink Data Notification	181
+row	7.2.11.1-2	Load Control Sequence Number	M	Sequence Number	0	once
+row	7.2.11.1-2	Load Metric	M	Metric	0	once
+table	7.2.11.1-3	Overload Control Information within Downlink Data Notification	180
+row	7.2.11.1-3	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.11.1-3	Overload Reduction Metric	M	Metric	0	once
+row	7.2.11.1-3	Period of Validity	M	EPC Timer	0	once
+table	7.2.11.2-1	Information Elements in a Downlink Data Notification Acknowledge	
+row	7.2.11.2-1	Cause	M	Cause	0	once
+row	7.2.11.2-1	Data Notification Delay	C	Delay Value	0	once
+row	7.2.11.2-1	Recovery	C	Recovery	0	once
+row	7.2.11.2-1	DL low priority traffic Throttling	O	Throttling	0	once
+row	7.2.11.2-1	IMSI	CO	IMSI	0	once
+row	7.2.11.2-1	DL Buffering Duration	CO	EPC Timer	0	once
+row	7.2.11.2-1	DL Buffering Suggested Packet Count	O	Integer Number	0	once
+row	7.2.11.2-1	Private Extension	O	Private Extension	VS	once
+table	7.2.11.3-1	Information Elements in a Downlink Data Notification Failure Indication	
+row	7.2.11.3-1	Cause	M	Cause	0	once
+row	7.2.11.3-1	Originating Node	CO	Node Type	0	once
+row	7.2.11.3-1	IMSI	CO	IMSI	0	once
+row	7.2.11.3-1	Private Extension	O	Private Extension	VS	once
+table	7.2.12-1	Information Element in Delete Indirect Data Forwarding Tunnel Request	
+row	7.2.12-1	Private Extension	O	Private Extension	VS	once
+table	7.2.13-1	Information Element in Delete Indirect Data Forwarding Tunnel Response	
+row	7.2.13-1	Cause	M	Cause	0	once
+row	7.2.13-1	Recovery	C	Recovery	0	once
+row	7.2.13-1	Private Extension	O	Private Extension	VS	once
+table	7.2.14.1-1	Information Elements in a Modify Bearer Command	
+row	7.2.14.1-1	APN-Aggregate Maximum Bit Rate (APN-AMBR)	M	AMBR	0	once
+row	7.2.14.1-1	Bearer Context	M	Bearer Context	0	once
+row	7.2.14.1-1	MME/S4-SGSN's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.14.1-1	MME/S4-SGSN's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.14.1-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.14.1-1	TWAN/ePDG's Overload Control Information	O	Overload Control Information	2	once
+row	7.2.14.1-1	Sender F-TEID for Control Plane	CO	F-TEID	0	once
+row	7.2.14.1-1	Private Extension	O	Private Extension	VS	once
+table	7.2.14.1-2	Bearer Context within Modify Bearer Command	93
+row	7.2.14.1-2	EPS Bearer ID	M	EBI	0	once
+row	7.2.14.1-2	Bearer Level QoS	C	Bearer QoS	0	once
+row	7.2.14.1-2	Bearer Level QoS	CO	Bearer QoS	0	once
+table	7.2.14-3	Overload Control Information within Modify Bearer Command	181
+row	7.2.14-3	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.14-3	Overload Reduction Metric	M	Metric	0	once
+row	7.2.14-3	Period of Validity	M	EPC Timer	0	once
+table	7.2.14.2-1	Information Elements in a Modify Bearer Failure Indication	
+row	7.2.14.2-1	Cause	M	Cause	0	once
+row	7.2.14.2-1	Recovery	C	Recovery	0	once
+row	7.2.14.2-1	Indication Flags	CO	Indication	0	once
+row	7.2.14.2-1	PGW's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.14.2-1	PGW's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.14.2-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.14.2-1	Private Extension	O	Private Extension	VS	once
+table	7.2.14-2	Overload Control Information within Modify Bearer Failure Indication	180
+row	7.2.14-2	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.14-2	Overload Reduction Metric	M	Metric	0	once
+row	7.2.14-2	Period of Validity	M	EPC Timer	0	once
+row	7.2.14-2	List of Access Point Name (APN)	CO	APN	0	once
+table	7.2.15-1	Information Elements in an Update Bearer Request	
+row	7.2.15-1	Bearer Contexts	M	Bearer Context	0	several
+row	7.2.15-1	Procedure Transaction Id (PTI)	C	PTI	0	once
+row	7.2.15-1	Protocol Configuration Options (PCO)	C	PCO	0	once
+row	7.2.15-1	Protocol Configuration Options (PCO)	CO	PCO	0	once
+row	7.2.15-1	Aggregate Maximum Bit Rate (APN-AMBR)	M	AMBR	0	once
+row	7.2.15-1	Change Reporting Action	C	Change Reporting Action	0	once
+row	7.2.15-1	CSG Information Reporting Action	CO	CSG Information Reporting Action	0	once
+row	7.2.15-1	H(e)NB Information Reporting	CO	H(e)NB Information Reporting	0	once
+row	7.2.15-1	Indication flags	CO	Indication	0	once
+row	7.2.15-1	PGW-FQ-CSID	C	FQ-CSID	0	once
+row	7.2.15-1	SGW-FQ-CSID	C	FQ-CSID	1	once
+row	7.2.15-1	Presence Reporting Area Action	CO	Presence Reporting Area Action	0	several
+row	7.2.15-1	PGW's node level Load Control Information	O	Load Control Information	0	once
+row	7.2.15-1	PGW's node level Load Control Information	CO	Load Control Information	0	once
+row	7.2.15-1	PGW's APN level Load Control Information	O	Load Control Information	1	once
+row	7.2.15-1	PGW's APN level Load Control Information	CO	Load Control Information	1	once
+row	7.2.15-1	SGW's node level Load Control Information	O	Load Control Information	2	once
+row	7.2.15-1	PGW's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.15-1	PGW's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.15-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.15-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.15-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.15-1	PGW Change Info	CO	PGW Change Info	0	several
+row	7.2.15-1	Sender F-TEID for Control Plane	CO	F-TEID	0	once
+row	7.2.15-1	Private Extension	O	Private Extension	VS	once
+table	7.2.15-2	Bearer Context within Update Bearer Request	93
+row	7.2.15-2	EPS Bearer ID	M	EBI	0	once
+row	7.2.15-2	TFT	C	Bearer TFT	0	once
+row	7.2.15-2	Bearer Level QoS	C	Bearer QoS	0	once
+row	7.2.15-2	Bearer Flags	O	Bearer Flags	0	once
+row	7.2.15-2	Protocol Configuration Options (PCO)	CO	PCO	0	once
+row	7.2.15-2	Protocol Configuration Options (PCO)	CO	PCO	0	once
+row	7.2.15-2	Additional Protocol Configuration Options (APCO)	CO	Additional Protocol Configuration Options (APCO)	0	once
+row	7.2.15-2	Extended Protocol Configuration Options (ePCO)	CO	ePCO	0	once
+row	7.2.15-2	Maximum Packet Loss Rate	O	Maximum Packet Loss Rate	0	once
+row	7.2.15-2	Maximum Packet Loss Rate	CO	Maximum Packet Loss Rate	0	once
+table	7.2.15-3	Load Control Information within Update Bearer Request	181
+row	7.2.15-3	Load Control Sequence Number	M	Sequence Number	0	once
+row	7.2.15-3	Load Metric	M	Metric	0	once
+row	7.2.15-3	List of APN and Relative Capacity	CO	APN and Relative Capacity	0	once
+table	7.2.15-4	Overload Control Information within Update Bearer Request	180
+row	7.2.15-4	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.15-4	Overload Reduction Metric	M	Metric	0	once
+row	7.2.15-4	Period of Validity	M	EPC Timer	0	once
+row	7.2.15-4	List of Access Point Name (APN)	CO	APN	0	once
+table	7.2.15-5	PGW Change Info within Update Bearer Request	214
+row	7.2.15-5	PGW Set FQDN	O	PGW FQDN	0	once
+row	7.2.15-5	Alternative PGW-C/SMF IP Address	O	IP Address	0	several
+row	7.2.15-5	Alternative PGW-C/SMF FQDN	O	PGW FQDN	1	several
+row	7.2.15-5	New PGW-C/SMF IP Address	C	IP Address	1	once
+row	7.2.15-5	New SGW-C IP Address	O	IP Address	3	once
+row	7.2.15-5	PGW-C/SMF FQ-CSID	C	FQ-CSID	0	several
+row	7.2.15-5	Group Id	C	Group Id	0	several
+row	7.2.15-5	PGW Control Plane IP Address	C	IP Address	2	several
+row	7.2.15-5	New Group Id	O	Group Id	1	once
+table	7.2.16-1	Information Elements in an Update Bearer Response	
+row	7.2.16-1	Cause	M	Cause	0	once
+row	7.2.16-1	Bearer Contexts	M	Bearer Context	0	several
+row	7.2.16-1	Protocol Configuration Options (PCO)	CO	PCO	0	once
+row	7.2.16-1	Recovery	C	Recovery	0	once
+row	7.2.16-1	MME-FQ-CSID	C	FQ-CSID	0	once
+row	7.2.16-1	SGW-FQ-CSID	C	FQ-CSID	1	once
+row	7.2.16-1	ePDG-FQ-CSID	C	FQ-CSID	2	once
+row	7.2.16-1	TWAN-FQ-CSID	C	FQ-CSID	3	once
+row	7.2.16-1	Indication Flags	CO	Indication	0	once
+row	7.2.16-1	UE Time Zone	O	UE Time Zone	0	once
+row	7.2.16-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.2.16-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.2.16-1	User Location Information (ULI)	CO	ULI	0	once
+row	7.2.16-1	User Location Information (ULI)	CO	ULI	0	once
+row	7.2.16-1	TWAN Identifier	CO	TWAN Identifier	0	once
+row	7.2.16-1	MME/S4-SGSN's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.16-1	MME/S4-SGSN's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.16-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.16-1	Presence Reporting Area Information	CO	Presence Reporting Area Information	0	several
+row	7.2.16-1	MME/S4-SGSN Identifier	CO	IP Address	0	once
+row	7.2.16-1	MME/S4-SGSN Identifier	CO	IP Address	0	once
+row	7.2.16-1	TWAN/ePDG's Overload Control Information	O	Overload Control Information	2	once
+row	7.2.16-1	WLAN Location Information	CO	TWAN Identifier	1	once
+row	7.2.16-1	WLAN Location Timestamp	CO	TWAN Identifier Timestamp	1	once
+row	7.2.16-1	UE Local IP Address	CO	IP Address	0	once
+row	7.2.16-1	UE UDP Port	CO	Port Number	0	once
+row	7.2.16-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.16-1	NBIFOM Container	CO	F-Container	0	once
+row	7.2.16-1	UE TCP Port	CO	Port Number	1	once
+row	7.2.16-1	PSCell ID	CO	PSCell ID	0	once
+row	7.2.16-1	Private Extension	O	Private Extension	VS	once
+table	7.2.16-2	Bearer Context within Update Bearer Response	93
+row	7.2.16-2	EPS Bearer ID	M	EBI	0	once
+row	7.2.16-2	Cause	M	Cause	0	once
+row	7.2.16-2	S4-U SGSN F-TEID	C	F-TEID	0	once
+row	7.2.16-2	S12 RNC F-TEID	C	F-TEID	1	once
+row	7.2.16-2	Protocol Configuration Options (PCO)	CO	PCO	0	once
+row	7.2.16-2	RAN/NAS Cause	CO	RAN/NAS Cause	0	several
+row	7.2.16-2	RAN/NAS Cause	CO	RAN/NAS Cause	0	once
+row	7.2.16-2	RAN/NAS Cause	CO	RAN/NAS Cause	0	once
+row	7.2.16-2	Extended Protocol Configuration Options (ePCO)	CO	ePCO	0	once
+table	7.2.16-3	Overload Control Information within Update Bearer Response	180
+row	7.2.16-3	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.16-3	Overload Reduction Metric	M	Metric	0	once
+row	7.2.16-3	Period of Validity	M	EPC Timer	0	once
+table	7.2.17.1-1	Information Elements in Delete Bearer Command	
+row	7.2.17.1-1	Bearer Contexts	M	Bearer Context	0	several
+row	7.2.17.1-1	User Location Information (ULI)	CO	ULI	0	once
+row	7.2.17.1-1	ULI Timestamp	CO	ULI Timestamp	0	once
+row	7.2.17.1-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.2.17.1-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.2.17.1-1	MME/S4-SGSN's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.17.1-1	MME/S4-SGSN's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.17.1-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.17.1-1	Sender F-TEID for Control Plane	CO	F-TEID	0	once
+row	7.2.17.1-1	Secondary RAT Usage Data Report	CO	Secondary RAT Usage Data Report	0	several
+row	7.2.17.1-1	Secondary RAT Usage Data Report	O	Secondary RAT Usage Data Report	0	several
+row	7.2.17.1-1	PSCell ID	CO	PSCell ID	0	once
+row	7.2.17.1-1	Private Extension	O	Private Extension	VS	once
+table	7.2.17.1-2	Bearer Context within Delete Bearer Command	93
+row	7.2.17.1-2	EPS Bearer ID	M	EBI	0	once
+row	7.2.17.1-2	Bearer Flags	CO	Bearer Flags	0	once
+row	7.2.17.1-2	RAN/NAS Release Cause	CO	RAN/NAS Cause	0	several
+table	7.2.17.1-3	Overload Control Information within Delete Bearer Command	180
+row	7.2.17.1-3	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.17.1-3	Overload Reduction Metric	M	Metric	0	once
+row	7.2.17.1-3	Period of Validity	M	EPC Timer	0	once
+table	7.2.17.2-1	Information Elements in a Delete Bearer Failure Indication	
+row	7.2.17.2-1	Cause	M	Cause	0	once
+row	7.2.17.2-1	Bearer Context	M	Bearer Context	0	several
+row	7.2.17.2-1	Recovery	C	Recovery	0	once
+row	7.2.17.2-1	Indication Flags	CO	Indication	0	once
+row	7.2.17.2-1	PGW's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.17.2-1	PGW's Overload Control Information	CO	Overload Control Information	0	once
+row	7.2.17.2-1	SGW's Overload Control Information	O	Overload Control Information	1	once
+row	7.2.17.2-1	Private Extension	O	Private Extension	VS	once
+table	7.2.17.2-2	Bearer Context within Delete Bearer Failure Indication	93
+row	7.2.17.2-2	EPS Bearer ID	M	EBI	0	once
+row	7.2.17.2-2	Cause	M	Cause	0	once
+table	7.2.17-3	Overload Control Information within Delete Bearer Failure Indication	180
+row	7.2.17-3	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.17-3	Overload Reduction Metric	M	Metric	0	once
+row	7.2.17-3	Period of Validity	M	EPC Timer	0	once
+row	7.2.17-3	List of Access Point Name (APN)	CO	APN	0	once
+table	7.2.18-1	Information Elements in a Create Indirect Data Forwarding Tunnel Request	
+row	7.2.18-1	IMSI	C	IMSI	0	once
+row	7.2.18-1	ME Identity (MEI)	C	MEI	0	once
+row	7.2.18-1	Indication Flags	CO	Indication	0	once
+row	7.2.18-1	Sender F-TEID for Control Plane	C	F-TEID	0	once
+row	7.2.18-1	Bearer Contexts	M	Bearer Context	0	several
+row	7.2.18-1	Recovery	CO	Recovery	0	once
+row	7.2.18-1	Private Extension	O	Private Extension	VS	once
+table	7.2.18-2	Bearer Context within Create Indirect Data Forwarding Tunnel Request	93
+row	7.2.18-2	EPS Bearer ID	M	EBI	0	once
+row	7.2.18-2	eNodeB F-TEID for DL data forwarding	C	F-TEID	0	once
+row	7.2.18-2	eNodeB F-TEID for DL data forwarding	CO	F-TEID	0	once
+row	7.2.18-2	SGW/UPF F-TEID for DL data forwarding	C	F-TEID	1	once
+row	7.2.18-2	SGW/UPF F-TEID for DL data forwarding	CO	F-TEID		once
+row	7.2.18-2	SGSN F-TEID for DL data forwarding	C	F-TEID	2	once
+row	7.2.18-2	SGSN F-TEID for DL data forwarding	CO	F-TEID	2	once
+row	7.2.18-2	RNC F-TEID for DL data forwarding	C	F-TEID	3	once
+row	7.2.18-2	RNC F-TEID for DL data forwarding	CO	F-TEID	3	once
+row	7.2.18-2	eNodeB F-TEID for UL data forwarding	O	F-TEID	4	once
+row	7.2.18-2	SGW F-TEID for UL data forwarding	O	F-TEID	5	once
+row	7.2.18-2	MME F-TEID for DL data forwarding	CO	F-TEID	6	once
+table	7.2.19-1	Information Elements in a Create Indirect Data Forwarding Tunnel Response	
+row	7.2.19-1	Cause	M	Cause	0	once
+row	7.2.19-1	Sender F-TEID for Control Plane	C	F-TEID	0	once
+row	7.2.19-1	Bearer Contexts	M	Bearer Context	0	several
+row	7.2.19-1	Recovery	CO	Recovery	0	once
+row	7.2.19-1	Private Extension	O	Private Extension	VS	once
+table	7.2.19-2	Bearer Context within Create Indirect Data Forwarding Tunnel Response	93
+row	7.2.19-2	EPS Bearer ID	M	EBI	0	once
+row	7.2.19-2	Cause	M	Cause	0	once
+row	7.2.19-2	S1-U SGW F-TEID for DL data forwarding	C	F-TEID	0	once
+row	7.2.19-2	S12 SGW F-TEID for DL data forwarding	C	F-TEID	1	once
+row	7.2.19-2	S4-U SGW F-TEID for DL data forwarding	C	F-TEID	2	once
+row	7.2.19-2	SGW F-TEID for DL data forwarding	C	F-TEID	3	once
+row	7.2.19-2	S1-U SGW F-TEID for UL data forwarding	O	F-TEID	4	once
+row	7.2.19-2	SGW F-TEID for UL data forwarding	O	F-TEID	5	once
+table	7.2.21-1	Information Element in Release Access Bearers Request	
+row	7.2.21-1	List of RABs	C	EBI	0	several
+row	7.2.21-1	Originating Node	CO	Node Type	0	once
+row	7.2.21-1	Indication Flags	CO	Indication	0	once
+row	7.2.21-1	Secondary RAT Usage Data Report	CO	Secondary RAT Usage Data Report	0	several
+row	7.2.21-1	PSCell ID	CO	PSCell ID	0	once
+row	7.2.21-1	Private Extension	O	Private Extension	VS	once
+table	7.2.22-1	Information Element in Release Access Bearers Response	
+row	7.2.22-1	Cause	M	Cause	0	once
+row	7.2.22-1	Recovery	O	Recovery	0	once
+row	7.2.22-1	Indication Flags	CO	Indication	0	once
+row	7.2.22-1	SGW's node level Load Control Information	O	Load Control Information	0	once
+row	7.2.22-1	SGW's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.22-1	Private Extension	O	Private Extension	VS	once
+table	7.2.22-2	Load Control Information within Release Access Bearers Response	181
+row	7.2.22-2	Load Control Sequence Number	M	Sequence Number	0	once
+row	7.2.22-2	Load Metric	M	Metric	0	once
+table	7.2.22-3	Overload Control Information within Release Access Bearers Response	180
+row	7.2.22-3	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.22-3	Overload Reduction Metric	M	Metric	0	once
+row	7.2.22-3	Period of Validity	M	EPC Timer	0	once
+table	7.2.23-1	Information Elements in a Stop Paging Indication	
+row	7.2.23-1	IMSI	CO	IMSI	0	once
+row	7.2.23-1	Private Extension	O	Private Extension	VS	once
+table	7.2.24-1	Information Elements in a Modify Access Bearers Request	
+row	7.2.24-1	Indication Flags	C	Indication	0	once
+row	7.2.24-1	Sender F-TEID for Control Plane	C	F-TEID	0	once
+row	7.2.24-1	Delay Downlink Packet Notification Request	C	Delay Value	0	once
+row	7.2.24-1	Bearer Contexts to be modified	C	Bearer Context	0	several
+row	7.2.24-1	Bearer Contexts to be removed	C	Bearer Context	1	several
+row	7.2.24-1	Recovery	C	Recovery	0	once
+row	7.2.24-1	Secondary RAT Usage Data Report	CO	Secondary RAT Usage Data Report	0	several
+row	7.2.24-1	PSCell ID	CO	PSCell ID	0	once
+row	7.2.24-1	Private Extension	O	Private Extension	VS	once
+table	7.2.24-2	Bearer Context to be modified within Modify Access Bearers Request	93
+row	7.2.24-2	EPS Bearer ID	M	EBI	0	once
+row	7.2.24-2	S1-U eNodeB F-TEID	C	F-TEID	0	once
+row	7.2.24-2	S11-U MME F-TEID	CO	F-TEID	1	once
+table	7.2.24-3	Bearer Context to be removed within Modify Access Bearers Request	93
+row	7.2.24-3	EPS Bearer ID	M	EBI	0	once
+table	7.2.25-1	Information Elements in a Modify Access Bearers Response	
+row	7.2.25-1	Cause	M	Cause	0	once
+row	7.2.25-1	Bearer Contexts modified	C	Bearer Context	0	several
+row	7.2.25-1	Bearer Contexts marked for removal	C	Bearer Context	1	several
+row	7.2.25-1	Recovery	C	Recovery	0	once
+row	7.2.25-1	Indication Flags	CO	Indication	0	once
+row	7.2.25-1	SGW's node level Load Control Information	O	Load Control Information	0	once
+row	7.2.25-1	SGW's Overload Control Information	O	Overload Control Information	0	once
+row	7.2.25-1	Private Extension	O	Private Extension	VS	once
+table	7.2.25-2	Bearer Context modified within Modify Access Bearers Response	93
+row	7.2.25-2	EPS Bearer ID	M	EBI	0	once
+row	7.2.25-2	Cause	M	Cause	0	once
+row	7.2.25-2	S1-U SGW F-TEID	C	F-TEID	0	once
+row	7.2.25-2	S11-U SGW F-TEID	C	F-TEID	1	once
+table	7.2.25-3	Bearer Context marked for removal within Modify Access Bearers Response	93
+row	7.2.25-3	EPS Bearer ID	M	EBI	0	once
+row	7.2.25-3	Cause	M	Cause	0	once
+table	7.2.25-4	Load Control Information within Modify Access Bearers Response	181
+row	7.2.25-4	Load Control Sequence Number	M	Sequence Number	0	once
+row	7.2.25-4	Load Metric	M	Metric	0	once
+table	7.2.25-5	Overload Control Information within Modify Access Bearers Response	180
+row	7.2.25-5	Overload Control Sequence Number	M	Sequence Number	0	once
+row	7.2.25-5	Overload Reduction Metric	M	Metric	0	once
+row	7.2.25-5	Period of Validity	M	EPC Timer	0	once
+table	7.2.26-1	Information Elements in Remote UE Report Notification	
+row	7.2.26-1	Remote UE Context Connected	C	Remote UE Context	0	several
+row	7.2.26-1	Remote UE Context Disconnected	C	Remote UE Context	1	several
+row	7.2.26-1	Private Extension	O	Private Extension	VS	once
+table	7.2.26-2	Remote UE Context Connected within Remote UE Report Notification	191
+row	7.2.26-2	Remote User ID	M	Remote User ID	0	once
+row	7.2.26-2	Remote UE IP Information	M	Remote UE IP Information	0	once
+table	7.2.26-3	Remote UE Context Disconnected with Remote UE Report Notification	191
+row	7.2.26-3	Remote User ID	M	Remote User ID	0	once
+table	7.2.27-1	Information Elements in Remote UE Report Acknowledge	
+row	7.2.27-1	Cause	M	Cause	0	once
+row	7.2.27-1	Private Extension	O	Private Extension	VS	once
+table	7.3.1-1	Information Elements in a Forward Relocation Request	
+row	7.3.1-1	IMSI	C	IMSI	0	once
+row	7.3.1-1	Sender's F-TEID for Control Plane	M	F-TEID	0	once
+row	7.3.1-1	MME/SGSN/AMF UE EPS PDN Connections	C	PDN Connection	0	several
+row	7.3.1-1	SGW S11/S4 IP Address and TEID for Control Plane	C	F-TEID	1	once
+row	7.3.1-1	SGW node name	C	FQDN	0	once
+row	7.3.1-1	MME/SGSN/AMF UE MM Context	M	MM Context	0	once
+row	7.3.1-1	Indication Flags	C	Indication	0	once
+row	7.3.1-1	E-UTRAN Transparent Container	C	F-Container	0	once
+row	7.3.1-1	UTRAN Transparent Container	C	F-Container	1	once
+row	7.3.1-1	BSS Container	C	F-Container	2	once
+row	7.3.1-1	Target Identification	C	Target Identification	0	once
+row	7.3.1-1	Target Identification	CO	Target Identification	0	once
+row	7.3.1-1	HRPD access node S101 IP address	C	IP-Address	0	once
+row	7.3.1-1	1xIWS S102 IP address	C	IP-Address	1	once
+row	7.3.1-1	S1-AP Cause	C	F-Cause	0	once
+row	7.3.1-1	RANAP Cause	C	F-Cause	1	once
+row	7.3.1-1	BSSGP Cause	C	F-Cause	2	once
+row	7.3.1-1	Source Identification	C	Source Identification	0	once
+row	7.3.1-1	Selected PLMN ID	C	PLMN ID	0	once
+row	7.3.1-1	Recovery	C	Recovery	0	once
+row	7.3.1-1	Trace Information	C	Trace Information	0	once
+row	7.3.1-1	Subscribed RFSP Index	CO	RFSP Index	0	once
+row	7.3.1-1	RFSP Index in Use	CO	RFSP Index	1	once
+row	7.3.1-1	RFSP Index in Use Validity Time	O	Timer in Seconds	0	once
+row	7.3.1-1	CSG ID	CO	CSG ID	0	once
+row	7.3.1-1	CSG Membership Indication	CO	CMI	0	once
+row	7.3.1-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.3.1-1	Serving Network	CO	Serving Network	0	once
+row	7.3.1-1	MME/S4-SGSN LDN	O	Local Distinguished Name (LDN)	0	once
+row	7.3.1-1	Additional MM context for SRVCC	CO	Additional MM context for SRVCC	0	once
+row	7.3.1-1	Additional flags for SRVCC	CO	Additional flags for SRVCC	0	once
+row	7.3.1-1	STN-SR	CO	STN-SR	0	once
+row	7.3.1-1	C-MSISDN	CO	MSISDN	0	once
+row	7.3.1-1	MDT Configuration	CO	MDT Configuration	0	once
+row	7.3.1-1	SGSN node name	CO	FQDN	1	once
+row	7.3.1-1	MME node name	CO	FQDN	2	once
+row	7.3.1-1	User CSG Information (UCI)	CO	UCI	0	once
+row	7.3.1-1	Monitoring Event Information	CO	Monitoring Event Information	0	several
+row	7.3.1-1	Monitoring Event Extension Information	CO	Monitoring Event Extension Information	0	several
+row	7.3.1-1	UE Usage Type	CO	Integer Number	0	once
+row	7.3.1-1	MME/SGSN UE SCEF PDN Connections	CO	SCEF PDN Connection	0	several
+row	7.3.1-1	MSISDN	CO	MSISDN	1	once
+row	7.3.1-1	MSISDN	CO	MSISDN	1	once
+row	7.3.1-1	Source UDP Port Number	CO	Port Number	0	once
+row	7.3.1-1	Serving PLMN Rate Control	CO	Serving PLMN Rate Control	0	once
+row	7.3.1-1	Extended Trace Information	C	Extended Trace Information	0	once
+row	7.3.1-1	Subscribed Additional RRM Policy Index	CO	Additional RRM Policy Index	0	once
+row	7.3.1-1	Additional RRM Policy Index in Use	CO	Additional RRM Policy Index	1	once
+row	7.3.1-1	Subscribed V2X Information	CO	V2X Context	0	once
+row	7.3.1-1	IWK SCEF ID for Monitoring Event	CO	Node Identifier	0	once
+row	7.3.1-1	Alternative IMSI	CO	Alternative IMSI	0	once
+row	7.3.1-1	MDT Configuration NR	CO	MDT Configuration NR	0	once
+row	7.3.1-1	Trace Collection Entity URI	O	URI	0	once
+row	7.3.1-1	Disaster PLMN	C	PLMN ID	1	once
+row	7.3.1-1	Private Extension	O	Private Extension	VS	once
+table	7.3.1-2	MME/SGSN/AMF UE EPS PDN Connections within Forward Relocation Request	109
+row	7.3.1-2	APN	M	APN	0	once
+row	7.3.1-2	APN Restriction	C	APN Restriction	0	once
+row	7.3.1-2	Selection Mode	CO	Selection Mode	0	once
+row	7.3.1-2	IPv4 Address	C	IP Address	0	once
+row	7.3.1-2	IPv6 Address	C	IP Address	1	once
+row	7.3.1-2	Linked EPS Bearer ID	M	EBI	0	once
+row	7.3.1-2	PGW S5/S8 IP Address for Control Plane or PMIP	M	F-TEID	0	once
+row	7.3.1-2	PGW node name	C	FQDN	0	once
+row	7.3.1-2	PGW node name	CO	FQDN		once
+row	7.3.1-2	Bearer Contexts	C	Bearer Context	0	several
+row	7.3.1-2	Aggregate Maximum Bit Rate (APN-AMBR)	M	AMBR	0	once
+row	7.3.1-2	Charging characteristics	C	Charging characteristics	0	once
+row	7.3.1-2	Change Reporting Action	C	Change Reporting Action	0	once
+row	7.3.1-2	CSG Information Reporting Action	CO	CSG Information Reporting Action	0	once
+row	7.3.1-2	H(e)NB Information Reporting	CO	H(e)NB Information Reporting	0	once
+row	7.3.1-2	Indication Flags	CO	Indication	0	once
+row	7.3.1-2	Signalling Priority Indication	CO	Signalling Priority Indication	0	once
+row	7.3.1-2	Change to Report Flags	CO	Change to Report Flags	0	once
+row	7.3.1-2	Local Home Network ID	CO	FQDN	1	once
+row	7.3.1-2	Presence Reporting Area Action	CO	Presence Reporting Area Action	0	several
+row	7.3.1-2	WLAN Offloadability Indication	CO	WLAN Offloadability Indication	0	once
+row	7.3.1-2	Remote UE Context Connected	CO	Remote UE Context	0	several
+row	7.3.1-2	PDN Type	CO	PDN Type	0	once
+row	7.3.1-2	Header Compression Configuration	CO	Header Compression Configuration	0	once
+row	7.3.1-2	PGW Change Info	CO	PGW Change Info	0	once
+row	7.3.1-2	New PGW-C/SMF IP Address	CO	IP Address	2	once
+row	7.3.1-2	New PGW Node Name	CO	FQDN	2	once
+row	7.3.1-2	UP Security Policy	CO	UP Security Policy	0	once
+table	7.3.1-3	Bearer Context within MME/SGSN/AMF UE EPS PDN Connections within Forward Relocation Request	93
+row	7.3.1-3	EPS Bearer ID	M	EBI	0	once
+row	7.3.1-3	TFT	C	Bearer TFT	0	once
+row	7.3.1-3	SGW S1/S4/S12 IP Address and TEID for user plane	M	F-TEID	0	once
+row	7.3.1-3	PGW S5/S8 IP Address and TEID for user plane	C	F-TEID	1	once
+row	7.3.1-3	PGW S5/S8 IP Address and TEID for user plane	CO	F-TEID	1	once
+row	7.3.1-3	Bearer Level QoS	M	Bearer QoS	0	once
+row	7.3.1-3	BSS Container	CO	F-Container	0	once
+row	7.3.1-3	Transaction Identifier	C	TI	0	once
+row	7.3.1-3	Bearer Flags	CO	Bearer Flags	0	once
+row	7.3.1-3	SGW S11 IP Address and TEID for user plane	CO	F-TEID	2	once
+table	7.3.1-4	Remote UE Context Connected within MME/SGSN UE EPS PDN Connections within Forward Relocation Request	191
+row	7.3.1-4	Remote User ID	M	Remote User ID	0	once
+row	7.3.1-4	Remote UE IP Information	M	Remote UE IP Information	0	once
+table	7.3.1-5	MME UE SCEF PDN Connections within Forward Relocation Request	195
+row	7.3.1-5	APN	M	APN	0	once
+row	7.3.1-5	Default EPS Bearer ID	M	EBI	0	once
+row	7.3.1-5	SCEF ID	M	Node Identifier	0	once
+table	7.3.1-6	Subscribed V2X Information within Forward Relocation Request	208
+row	7.3.1-6	LTE V2X Services Authorized	C	Services Authorized	0	once
+row	7.3.1-6	NR V2X Services Authorized	C	Services Authorized	1	once
+row	7.3.1-6	LTE UE Sidelink Aggregate Maximum Bit Rate	C	Bit Rate	0	once
+row	7.3.1-6	NR UE Sidelink Aggregate Maximum Bit Rate	C	Bit Rate	1	once
+row	7.3.1-6	PC5 QoS Parameters	C	PC5 QoS Parameters	0	once
+table	7.3.1-7	PC5 QoS Parameters within Forward Relocation Request	209
+row	7.3.1-7	PC5 QoS Flows	M	PC5 QoS Flow	0	several
+row	7.3.1-7	PC5 Link Aggregated Bit Rates	O	Bit Rate	0	once
+table	7.3.1-8	PGW Change Info with Forward Relocation Request	214
+row	7.3.1-8	PGW Set FQDN	CO	PGW FQDN	0	once
+row	7.3.1-8	Alternative PGW-C/SMF IP Address	CO	IP Address	0	several
+row	7.3.1-8	Alternative PGW-C/SMF FQDN	CO	PGW FQDN	1	several
+row	7.3.1-8	Group Id	CO	Group Id	0	once
+table	7.3.2-1	Information Elements in a Forward Relocation Response	
+row	7.3.2-1	Cause	M	Cause	0	once
+row	7.3.2-1	Sender's F-TEID for Control Plane	C	F-TEID	0	once
+row	7.3.2-1	Indication Flags	C	Indication	0	once
+row	7.3.2-1	List of Set-up Bearers	C	Bearer Context	0	several
+row	7.3.2-1	List of Set-up RABs	C	Bearer Context	1	several
+row	7.3.2-1	List of Set-up PFCs	O	Bearer Context	2	several
+row	7.3.2-1	S1-AP Cause	C	F-Cause	0	once
+row	7.3.2-1	RANAP Cause	C	F-Cause	1	once
+row	7.3.2-1	BSSGP Cause	C	F-Cause	2	once
+row	7.3.2-1	E-UTRAN Transparent Container	C	F-Container	0	once
+row	7.3.2-1	UTRAN Transparent Container	C	F-Container	1	once
+row	7.3.2-1	BSS Container	C	F-Container	2	once
+row	7.3.2-1	MME/S4-SGSN LDN	O	Local Distinguished Name (LDN)	0	once
+row	7.3.2-1	SGSN node name	CO	FQDN	0	once
+row	7.3.2-1	MME node name	CO	FQDN	1	once
+row	7.3.2-1	SGSN Number	O	Node Number	0	once
+row	7.3.2-1	SGSN Number	CO	Node Number	0	once
+row	7.3.2-1	SGSN Identifier	O	Node Identifier	0	once
+row	7.3.2-1	MME Identifier	O	Node Identifier	1	once
+row	7.3.2-1	MME number for MT SMS	CO	Node Number	1	once
+row	7.3.2-1	SGSN Identifier for MT-SMS	CO	Node Identifier	2	once
+row	7.3.2-1	MME Identifier for MT SMS	CO	Node Identifier	3	once
+row	7.3.2-1	List of Set-up Bearers for SCEF PDN Connections	CO	Bearer Context	3	several
+row	7.3.2-1	(v)SRVCC rejected Cause	CO	SRVCC Cause	0	once
+row	7.3.2-1	MSC Number	O	Node Number	2	once
+row	7.3.2-1	AMF Identifier	O	NF Instance ID	0	once
+row	7.3.2-1	Private Extension	O	Private Extension	VS	once
+table	7.3.2-2	Bearer Context	93
+row	7.3.2-2	EPS Bearer ID	C	EBI	0	once
+row	7.3.2-2	Packet Flow ID	C	Packet Flow ID	0	once
+row	7.3.2-2	eNodeB/gNodeB F-TEID for DL data forwarding	C	F-TEID	0	once
+row	7.3.2-2	eNodeB F-TEID for UL data forwarding	O	F-TEID	1	once
+row	7.3.2-2	SGW/UPF F-TEID for DL data forwarding	C	F-TEID	2	once
+row	7.3.2-2	SGW/UPF F-TEID for DL data forwarding	CO	F-TEID	2	once
+row	7.3.2-2	RNC F-TEID for DL data forwarding	C	F-TEID	3	once
+row	7.3.2-2	SGSN F-TEID for DL data forwarding	C	F-TEID	4	once
+row	7.3.2-2	SGW F-TEID for UL data forwarding	O	F-TEID	5	once
+table	7.3.3-1	Information Elements in a Forward Relocation Complete Notification	
+row	7.3.3-1	Indication Flags	C	Indication	0	once
+row	7.3.3-1	Private Extension	O	Private Extension	VS	once
+table	7.3.4-1	Information Elements in a Forward Relocation Complete Acknowledge	
+row	7.3.4-1	Cause	M	Cause	0	once
+row	7.3.4-1	Recovery	O	Recovery	0	once
+row	7.3.4-1	Secondary RAT Usage Data Report	CO	Secondary RAT Usage Data Report	0	several
+row	7.3.4-1	Secondary RAT Usage Data Report from NG-RAN	CO	Secondary RAT Usage Data Report	1	several
+row	7.3.4-1	Private Extension	O	Private Extension	VS	once
+table	7.3.5-1	Information Elements in a Context Request	
+row	7.3.5-1	IMSI	C	IMSI	0	once
+row	7.3.5-1	GUTI	C	GUTI	0	once
+row	7.3.5-1	GUTI	CO	GUTI	0	once
+row	7.3.5-1	Routeing Area Identity(RAI)	C	ULI (NOTE 4)	0	once
+row	7.3.5-1	Routeing Area Identity(RAI)	CO	ULI (NOTE 4)	0	once
+row	7.3.5-1	Packet TMSI(P-TMSI)	C	P-TMSI	0	once
+row	7.3.5-1	Packet TMSI(P-TMSI)	CO	P-TMSI	0	once
+row	7.3.5-1	P-TMSI Signature	C	P-TMSI Signature	0	once
+row	7.3.5-1	P-TMSI Signature	CO	P-TMSI Signature	0	once
+row	7.3.5-1	Complete TAU request message	C	Complete Request Message	0	once
+row	7.3.5-1	S3/S16/S10/N26 Address and TEID for Control Plane	C	F-TEID	0	once
+row	7.3.5-1	UDP Source Port Number	C	Port Number	0	once
+row	7.3.5-1	RAT Type	C	RAT Type	0	once
+row	7.3.5-1	Indication	CO	Indication	0	once
+row	7.3.5-1	Hop Counter	O	Hop Counter	0	once
+row	7.3.5-1	Target PLMN ID	CO	Serving Network	0	once
+row	7.3.5-1	MME/S4-SGSN LDN	O	Local Distinguished Name (LDN)	0	once
+row	7.3.5-1	SGSN node name	CO	FQDN	0	once
+row	7.3.5-1	MME node name	CO	FQDN	1	once
+row	7.3.5-1	SGSN Number	O	Node Number	0	once
+row	7.3.5-1	SGSN Identifier	O	Node Identifier	0	once
+row	7.3.5-1	MME Identifier	O	Node Identifier	1	once
+row	7.3.5-1	CIoT Optimizations Support Indication	CO	CIoT Optimizations Support Indication	0	once
+row	7.3.5-1	Private Extension	O	Private Extension	VS	once
+table	7.3.6-1	Information Elements in a Context Response	
+row	7.3.6-1	Cause	M	Cause	0	once
+row	7.3.6-1	IMSI	C	IMSI	0	once
+row	7.3.6-1	MME/SGSN/AMF UE MM Context	C	MM Context	0	once
+row	7.3.6-1	MME/SGSN/AMF UE EPS PDN Connections	C	PDN Connection	0	several
+row	7.3.6-1	Sender F-TEID for Control Plane	C	F-TEID	0	once
+row	7.3.6-1	SGW S11/S4 IP Address and TEID for Control Plane	C	F-TEID	1	once
+row	7.3.6-1	SGW node name	C	FQDN	0	once
+row	7.3.6-1	Indication Flags	C	Indication	0	once
+row	7.3.6-1	Trace Information	C	Trace Information	0	once
+row	7.3.6-1	HRPD access node S101 IP address	C	IP-Address	0	once
+row	7.3.6-1	1xIWS S102 IP address	C	IP-Address	1	once
+row	7.3.6-1	Subscribed RFSP Index	CO	RFSP Index	0	once
+row	7.3.6-1	RFSP Index in Use	CO	RFSP Index	1	once
+row	7.3.6-1	RFSP Index in Use Validity Time	O	Timer in seconds	0	once
+row	7.3.6-1	UE Time Zone	CO	UE Time Zone	0	once
+row	7.3.6-1	MME/S4-SGSN LDN	O	Local Distinguished Name (LDN)	0	once
+row	7.3.6-1	MDT Configuration	CO	MDT Configuration	0	once
+row	7.3.6-1	SGSN node name	CO	FQDN	1	once
+row	7.3.6-1	MME node name	CO	FQDN	2	once
+row	7.3.6-1	User CSG Information (UCI)	CO	UCI	0	once
+row	7.3.6-1	Monitoring Event Information	CO	Monitoring Event Information	0	several
+row	7.3.6-1	Monitoring Event Extension Information	CO	Monitoring Event Extension Information	0	several
+row	7.3.6-1	UE Usage Type	CO	Integer Number	0	once
+row	7.3.6-1	MME/SGSN UE SCEF PDN Connections	C	SCEF PDN Connection	0	several
+row	7.3.6-1	RAT Type	CO	RAT Type	0	once
+row	7.3.6-1	Serving PLMN Rate Control	CO	Serving PLMN Rate Control	0	once
+row	7.3.6-1	MO Exception Data Counter	CO	Counter	0	once
+row	7.3.6-1	Remaining Running Service Gap Timer	CO	Integer Number	1	once
+row	7.3.6-1	Extended Trace Information	C	Extended Trace Information	0	once
+row	7.3.6-1	Subscribed Additional RRM Policy Index	CO	Additional RRM Policy Index	0	once
+row	7.3.6-1	Additional RRM Policy Index in Use	CO	Additional RRM Policy Index	1	once
+row	7.3.6-1	IWK SCEF ID for Monitoring Event	CO	Node Identifier	0	once
+row	7.3.6-1	Alternative IMSI	CO	Alternative IMSI	0	once
+row	7.3.6-1	MSISDN	CO	MSISDN	0	once
+row	7.3.6-1	MDT Configuration NR	CO	MDT Configuration NR	0	once
+row	7.3.6-1	Trace Collection Entity URI	O	URI	0	once
+row	7.3.6-1	Disaster PLMN	C	PLMN ID	0	once
+row	7.3.6-1	Private Extension	O	Private Extension	VS	once
+table	7.3.6-2	MME/SGSN/AMF UE EPS PDN Connections within Context Response	109
+row	7.3.6-2	APN	M	APN	0	once
+row	7.3.6-2	APN Restriction	C	APN Restriction	0	once
+row	7.3.6-2	Selection Mode	CO	Selection Mode	0	once
+row	7.3.6-2	IPv4 Address	C	IP Address	0	once
+row	7.3.6-2	IPv6 Address	C	IP Address	1	once
+row	7.3.6-2	Linked EPS Bearer ID	M	EBI	0	once
+row	7.3.6-2	PGW S5/S8 IP Address for Control Plane or PMIP	M	F-TEID	0	once
+row	7.3.6-2	PGW node name	C	FQDN	0	once
+row	7.3.6-2	PGW node name	CO	FQDN	0	once
+row	7.3.6-2	Bearer Contexts	M	Bearer Context	0	several
+row	7.3.6-2	Aggregate Maximum Bit Rate (APN-AMBR)	M	AMBR	0	once
+row	7.3.6-2	Charging characteristics	C	Charging characteristics	0	once
+row	7.3.6-2	Change Reporting Action	C	Change Reporting Action	0	once
+row	7.3.6-2	CSG Information Reporting Action	CO	CSG Information Reporting Action	0	once
+row	7.3.6-2	H(e)NB Information Reporting	CO	H(e)NB Information Reporting	0	once
+row	7.3.6-2	Indication flags	CO	Indication	0	once
+row	7.3.6-2	Signalling Priority Indication	CO	Signalling Priority Indication	0	once
+row	7.3.6-2	Change to Report Flags	CO	Change To Report Flags	0	once
+row	7.3.6-2	Local Home Network ID	CO	FQDN	1	once
+row	7.3.6-2	Presence Reporting Area Action	CO	Presence Reporting Area Action	0	several
+row	7.3.6-2	WLAN Offloadability Indication	CO	WLAN Offloadability Indication	0	once
+row	7.3.6-2	Remote UE Context Connected	CO	Remote UE Context	0	several
+row	7.3.6-2	PDN Type	CO	PDN Type	0	once
+row	7.3.6-2	Header Compression Configuration	CO	Header Compression Configuration	0	once
+row	7.3.6-2	PGW Change Info	CO	PGW Change Info	0	once
+row	7.3.6-2	New PGW-C/SMF IP Address	CO	IP Address	2	once
+row	7.3.6-2	New PGW Node Name	CO	FQDN	2	once
+row	7.3.6-2	UP Security Policy	CO	UP Security Policy	0	once
+table	7.3.6-3	Bearer Context within MME/SGSN/AMF UE EPS PDN Connections within Context Response	93
+row	7.3.6-3	EPS Bearer ID	M	EBI	0	once
+row	7.3.6-3	TFT	C	Bearer TFT	0	once
+row	7.3.6-3	SGW S1/S4/S12/S11 IP Address and TEID for user plane	C	F-TEID	0	once
+row	7.3.6-3	PGW S5/S8 IP Address and TEID for user plane	C	F-TEID	1	once
+row	7.3.6-3	PGW S5/S8 IP Address and TEID for user plane	CO	F-TEID	1	once
+row	7.3.6-3	Bearer Level QoS	M	Bearer QoS	0	once
+row	7.3.6-3	BSS Container	CO	F-Container	0	once
+row	7.3.6-3	Transaction Identifier	C	TI	0	once
+row	7.3.6-3	SGW S11 IP Address and TEID for user plane	CO	F-TEID	2	once
+table	7.3.6-4	Remote UE Context Connected within MME/SGSN UE EPS PDN Connections within Context Response	191
+row	7.3.6-4	Remote User ID	M	Remote User ID	0	once
+row	7.3.6-4	Remote UE IP Information	M	Remote UE IP Information	0	once
+table	7.3.6-5	MME/SGSN UE SCEF PDN Connections within Context Response	x
+row	7.3.6-5	APN	M	APN	0	once
+row	7.3.6-5	Default EPS Bearer ID	M	EBI	0	once
+row	7.3.6-5	SCEF ID	M	Node Identifier	0	once
+table	7.3.6-6	PGW Change Info with Context Response	214
+row	7.3.6-6	PGW Set FQDN	CO	PGW FQDN	0	once
+row	7.3.6-6	Alternative PGW-C/SMF IP Address	CO	IP Address	0	several
+row	7.3.6-6	Alternative PGW-C/SMF FQDN	CO	PGW FQDN	1	several
+row	7.3.6-6	Group Id	CO	Group Id	0	once
+table	7.3.7-1	Information Elements in a Context Acknowledge	
+row	7.3.7-1	Cause	M	Cause	0	once
+row	7.3.7-1	Indication flags	C	Indication	0	once
+row	7.3.7-1	Forwarding F-TEID	CO	F-TEID	0	once
+row	7.3.7-1	Bearer Contexts	CO	Bearer Context	0	several
+row	7.3.7-1	SGSN Number	CO	Node Number	0	once
+row	7.3.7-1	MME number for MT SMS	CO	Node Number	1	once
+row	7.3.7-1	SGSN Identifier for MT SMS	CO	Node Identifier	0	once
+row	7.3.7-1	MME Identifier for MT SMS	CO	Node Identifier	1	once
+row	7.3.7-1	Private Extension	O	Private Extension	VS	once
+table	7.3.7-2	Bearer Context within Context Acknowledge	93
+row	7.3.7-2	EPS Bearer ID	M	EBI	0	once
+row	7.3.7-2	Forwarding F-TEID	M	F-TEID	0	once
+table	7.3.8-1	Information Elements in an Identification Request	
+row	7.3.8-1	GUTI	C	GUTI	0	once
+row	7.3.8-1	Routeing Area Identity(RAI)	C	ULI (NOTE 1)	0	once
+row	7.3.8-1	Packet TMSI(P-TMSI)	C	P-TMSI	0	once
+row	7.3.8-1	P-TMSI Signature	C	P-TMSI Signature	0	once
+row	7.3.8-1	Complete Attach Request Message	C	Complete Request Message	0	once
+row	7.3.8-1	Address for Control Plane	O	IP Address	0	once
+row	7.3.8-1	UDP Source Port Number	C	Port Number	0	once
+row	7.3.8-1	Hop Counter	O	Hop Counter	0	once
+row	7.3.8-1	Target PLMN ID	CO	Serving Network	0	once
+row	7.3.8-1	Private Extension	O	Private Extension	VS	once
+table	7.3.9-1	Information Elements in an Identification Response	
+row	7.3.9-1	Cause	M	Cause	0	once
+row	7.3.9-1	IMSI	C	IMSI	0	once
+row	7.3.9-1	MME/SGSN UE MM Context	C	MM Context	0	once
+row	7.3.9-1	Trace Information	CO	Trace Information	0	once
+row	7.3.9-1	UE Usage Type	CO	Integer Number	0	once
+row	7.3.9-1	Monitoring Event Information	CO	Monitoring Event Information	0	several
+row	7.3.9-1	Monitoring Event Extension Information	CO	Monitoring Event Extension Information	0	several
+row	7.3.9-1	Extended Trace Information	C	Extended Trace Information	0	once
+row	7.3.9-1	Trace Collection Entity URI	O	URI	0	once
+row	7.3.9-1	Private Extension	O	Private Extension	VS	once
+table	7.3.10-1	Information Elements in a Forward Access Context Notification	
+row	7.3.10-1	RAB Contexts	C	RAB Context	0	several
+row	7.3.10-1	Source RNC PDCP context Info	C	Source RNC PDCP context Info	0	once
+row	7.3.10-1	PDU Numbers	C	PDU Numbers	0	once
+row	7.3.10-1	E-UTRAN Transparent Container	C	F-Container	0	once
+row	7.3.10-1	E-UTRAN Transparent Container	C	F-Container	1	once
+row	7.3.10-1	Private Extension	O	Private Extension	VS	once
+table	7.3.11-1	Information Elements in a Forward Access Context Acknowledge	
+row	7.3.11-1	Cause	M	Cause	0	once
+row	7.3.11-1	Private Extension	O	Private Extension	VS	once
+table	7.3.12-1	Information Elements in a Detach Notification	
+row	7.3.12-1	Cause	M	Cause	0	once
+row	7.3.12-1	Detach Type	CO	Detach Type	0	once
+row	7.3.12-1	Private Extension	O	Private Extension	VS	once
+table	7.3.13-1	Information Elements in a Detach Acknowledge	
+row	7.3.13-1	Cause	M	Cause	0	once
+row	7.3.13-1	Recovery	O	Recovery	0	once
+row	7.3.13-1	Private Extension	O	Private Extension	VS	once
+table	7.3.14-1	Information Element in Change Notification Request	
+row	7.3.14-1	IMSI	C	IMSI	0	once
+row	7.3.14-1	ME Identity (MEI)	C	MEI	0	once
+row	7.3.14-1	Indication Flags	CO	Indication	0	once
+row	7.3.14-1	RAT Type	M	RAT Type	0	once
+row	7.3.14-1	User Location Information (ULI)	C	ULI (NOTE 1)	0	once
+row	7.3.14-1	User Location Information (ULI)	CO	ULI (NOTE 1)	0	once
+row	7.3.14-1	User Location Information (ULI)	CO	ULI (NOTE 1)	0	once
+row	7.3.14-1	User CSG Information (UCI)	CO	UCI	0	once
+row	7.3.14-1	PGW S5/S8 GTP-C IP Address	C	IP Address	0	once
+row	7.3.14-1	PGW S5/S8 GTP-C IP Address	CO	IP Address	0	once
+row	7.3.14-1	LBI	CO	EBI	0	once
+row	7.3.14-1	Presence Reporting Area Information	CO	Presence Reporting Area Information	0	several
+row	7.3.14-1	Presence Reporting Area Information	CO	Presence Reporting Area Information	0	once
+row	7.3.14-1	MO Exception Data Counter	CO	Counter	0	once
+row	7.3.14-1	MO Exception Data Counter	CO	Counter	0	once
+row	7.3.14-1	Secondary RAT Usage Data Report	CO	Secondary RAT Usage Data Report	0	several
+row	7.3.14-1	Secondary RAT Usage Data Report	O	Secondary RAT Usage Data Report	0	several
+row	7.3.14-1	PSCell ID	CO	PSCell ID	0	once
+row	7.3.14-1	Private Extension	O	Private Extension	VS	once
+table	7.3.15-1	Information Element in Change Notification Response	
+row	7.3.15-1	IMSI	C	IMSI	0	once
+row	7.3.15-1	ME Identity (MEI)	C	MEI	0	once
+row	7.3.15-1	Cause	M	Cause	0	once
+row	7.3.15-1	Change Reporting Action	C	Change Reporting Action	0	once
+row	7.3.15-1	CSG Information Reporting Action	CO	CSG Information Reporting Action	0	once
+row	7.3.15-1	Presence Reporting Area Action	CO	Presence Reporting Area Action	0	several
+row	7.3.15-1	Private Extension	O	Private Extension	VS	once
+table	7.3.16-1	Information Elements in Relocation Cancel Request	
+row	7.3.16-1	IMSI	C	IMSI	0	once
+row	7.3.16-1	ME Identity (MEI)	C	MEI	0	once
+row	7.3.16-1	Indication Flags	CO	Indication	0	once
+row	7.3.16-1	RANAP Cause	C	F-Cause	0	once
+row	7.3.16-1	Private Extension	O	Private Extension	VS	once
+table	7.3.17-1	Information Elements in Relocation Cancel Response	
+row	7.3.17-1	Cause	M	Cause	0	once
+row	7.3.17-1	Private Extension	O	Private Extension	VS	once
+table	7.3.18-1	Information Elements in a Configuration Transfer Tunnel Message	
+row	7.3.18-1	E-UTRAN Transparent Container / EN-DC Container / Inter-system SON Container	M	F-Container	0	once
+row	7.3.18-1	Target eNodeB ID / en-gNB ID / gnB ID	M	Target Identification	0	once
+row	7.3.18-1	Connected Target eNodeB ID	CO	Target Identification	1	once
+table	7.3.19-1	Information Elements in a RAN Information Relay	
+row	7.3.19-1	BSS Container	M	F-Container	0	once
+row	7.3.19-1	RIM Routing Address	C	Target Identification	0	once
+row	7.3.19-1	Private Extension	O	Private Extension	VS	once
+table	7.3.20-1	Information Elements in an ISR Status Indication	
+row	7.3.20-1	Action Indication	M	Action Indication	0	once
+row	7.3.20-1	Private Extension	O	Private Extension	VS	once
+table	7.3.21-1	Information Elements in UE Registration Query Request	
+row	7.3.21-1	IMSI	M	IMSI	0	once
+row	7.3.21-1	Private Extension	O	Private Extension	VS	once
+table	7.3.22-1	Information Elements in UE Registration Query Response	
+row	7.3.22-1	Cause	M	Cause	0	once
+row	7.3.22-1	IMSI	M	IMSI	0	once
+row	7.3.22-1	Selected Core Network Operator Identifier	M	PLMN ID	0	once
+row	7.3.22-1	Private Extension	O	Private Extension	VS	once
+table	7.4.1-1	Information Element in Suspend Notification	
+row	7.4.1-1	IMSI	C	IMSI	0	once
+row	7.4.1-1	Routeing Area Identity(RAI)	C	ULI (NOTE 3)	0	once
+row	7.4.1-1	Routeing Area Identity(RAI)	CO	ULI (NOTE 3)	0	once
+row	7.4.1-1	Linked EPS Bearer ID (LBI)	CO	EBI	0	once
+row	7.4.1-1	Packet TMSI(P-TMSI)	C	P-TMSI	0	once
+row	7.4.1-1	Packet TMSI(P-TMSI)	CO	P-TMSI	0	once
+row	7.4.1-1	Originating Node	CO	Node Type	0	once
+row	7.4.1-1	Address for Control Plane	CO	IP Address	0	once
+row	7.4.1-1	UDP Source Port Number	CO	Port Number	0	once
+row	7.4.1-1	Hop Counter	O	Hop Counter	0	once
+row	7.4.1-1	Sender F-TEID for Control Plane	CO	F-TEID	0	once
+row	7.4.1-1	Private Extension	O	Private Extension	VS	once
+table	7.4.2-1	Information Element in Suspend Acknowledge	
+row	7.4.2-1	Cause	M	Cause	0	once
+row	7.4.2-1	Private Extension	O	Private Extension	VS	once
+table	7.4.3-1	Information Element in Resume Notification	
+row	7.4.3-1	IMSI	M	IMSI	0	once
+row	7.4.3-1	Linked EPS Bearer ID (LBI)	CO	EBI	0	once
+row	7.4.3-1	Originating Node	CO	Node Type	0	once
+row	7.4.3-1	Sender F-TEID for Control Plane	CO	F-TEID	0	once
+row	7.4.3-1	Private Extension	O	Private Extension	VS	once
+table	7.4.4-1	Information Element in Resume Acknowledge	
+row	7.4.4-1	Cause	M	Cause	0	once
+row	7.4.4-1	Private Extension	O	Private Extension	VS	once
+table	7.4.5-1	Information Element in CS Paging Indication	
+row	7.4.5-1	IMSI	M	IMSI	0	once
+row	7.4.5-1	VLR Name	M	FQDN	0	once
+row	7.4.5-1	TMSI	O	TMSI	0	once
+row	7.4.5-1	Location area identifier	O	ULI	0	once
+row	7.4.5-1	Global CN-Id	O	Global CN-Id	0	once
+row	7.4.5-1	Channel needed	O	Channel needed	0	once
+row	7.4.5-1	eMLPP Priority	O	eMLPP Priority	0	once
+row	7.4.5-1	Service Indicator	CO	Service Indicator	0	once
+row	7.4.5-1	Private Extension	O	Private Extension	VS	once
+table	7.4.6-1	Information Element in Alert MME Notification	
+row	7.4.6-1	Private Extension	O	Private Extension	VS	once
+table	7.4.7-1	Information Elements in Alert MME Acknowledge	
+row	7.4.7-1	Cause	M	Cause	0	once
+row	7.4.7-1	Private Extension	O	Private Extension	VS	once
+table	7.4.8-1	Information Element in UE Activity Notification	
+row	7.4.8-1	Private Extension	O	Private Extension	VS	once
+table	7.4.z-1	Information Elements in UE Activity Acknowledge	
+row	7.4.z-1	Cause	M	Cause	0	once
+row	7.4.z-1	Private Extension	O	Private Extension	VS	once
+table	7.5.1-1	Information Elements in a Create Forwarding Tunnel Request	
+row	7.5.1-1	S103 PDN Data Forwarding Info	M	S103PDF	0	several
+row	7.5.1-1	Private Extension	O	Private Extension	VS	once
+table	7.5.2-1	Information Elements in a Create Forwarding Tunnel Response	
+row	7.5.2-1	Cause	M	Cause	0	once
+row	7.5.2-1	S1-U Data Forwarding Info	C	S1UDF	0	several
+row	7.5.2-1	Private Extension	O	Private Extension	VS	once
+table	7.9.1-1	Information Elements in a Delete PDN Connection Set Request	
+row	7.9.1-1	MME-FQ-CSID	C	FQ-CSID	0	once
+row	7.9.1-1	SGW-FQ-CSID	C	FQ-CSID	1	once
+row	7.9.1-1	PGW-FQ-CSID	C	FQ-CSID	2	once
+row	7.9.1-1	ePDG-FQ-CSID	C	FQ-CSID	3	once
+row	7.9.1-1	TWAN-FQ-CSID	C	FQ-CSID	4	once
+row	7.9.1-1	Private Extension	O	Private Extension	VS	once
+table	7.9.2	Information Elements in a Delete PDN Connection Set Response	
+row	7.9.2	Cause	M	Cause	0	once
+row	7.9.2	Recovery	CO	Recovery	0	once
+row	7.9.2	Private Extension	O	Private Extension	VS	once
+table	7.9.3-1	Information Elements in a Update PDN Connection Set Request	
+row	7.9.3-1	MME-FQ-CSID	C	FQ-CSID	0	once
+row	7.9.3-1	SGW-FQ-CSID	C	FQ-CSID	1	once
+row	7.9.3-1	Private Extension	O	Private Extension	VS	once
+table	7.9.4-1	Information Elements in a Update PDN Connection Set Response	
+row	7.9.4-1	Cause	M	Cause	0	once
+row	7.9.4-1	PGW-FQ-CSID	C	FQ-CSID	0	once
+row	7.9.4-1	Recovery	CO	Recovery	0	once
+row	7.9.4-1	Private Extension	O	Private Extension	VS	once
+table	7.9.5-1	Information Elements in PGW Restart Notification	
+row	7.9.5-1	PGW S5/S8 IP Address for Control Plane or PMIP	M	IP Address	0	once
+row	7.9.5-1	SGW S11/S4 IP Address for Control Plane	M	IP Address	1	once
+row	7.9.5-1	Cause	CO	Cause	0	once
+row	7.9.5-1	Private Extension	O	Private Extension	VS	once
+table	7.9.6-1	Information Elements in PGW Restart Notification Acknowledge	
+row	7.9.6-1	Cause	M	Cause	0	once
+row	7.9.6-1	Private Extension	O	Private Extension	VS	once
+table	7.9.7-1	Information Elements in PGW Downlink Triggering Notification	
+row	7.9.7-1	IMSI	M	IMSI	0	once
+row	7.9.7-1	MME/S4-SGSN identifier	C	IP Address	0	once
+row	7.9.7-1	PGW S5 F-TEID for GTP or PMIP Control Plane (NOTE 2)	O	F-TEID	0	once
+row	7.9.7-1	PGW S5 F-TEID for GTP or PMIP Control Plane (NOTE 2)	CO	F-TEID	0	once
+row	7.9.7-1	PGW S5 F-TEID for GTP or PMIP Control Plane (NOTE 2)	CO	F-TEID	0	once
+row	7.9.7-1	Private Extension	O	Private Extension	VS	once
+table	7.9.8-1	Information Elements in PGW Downlink Triggering Acknowledge	
+row	7.9.8-1	Cause	M	Cause	0	once
+row	7.9.8-1	IMSI	C	IMSI	0	once
+row	7.9.8-1	MME/S4-SGSN identifier	C	IP Address	0	once
+row	7.9.8-1	Private Extension	O	Private Extension	VS	once
+table	7.12.1-1	Information Elements in a Trace Session Activation	
+row	7.12.1-1	IMSI	C	IMSI	0	once
+row	7.12.1-1	Trace Information	M	Trace Information	0	once
+row	7.12.1-1	ME Identity (MEI)	C	MEI	0	once
+row	7.12.1-1	ME Identity (MEI)	CO	MEI	0	once
+row	7.12.1-1	ME Identity (MEI)	CO	MEI	0	once
+row	7.12.1-1	Trace Collection Entity URI	O	URI	0	once
+table	7.12.2-1	Information Elements in a Trace Session Deactivation	
+row	7.12.2-1	Trace Reference	M	Trace Reference	0	once
+table	7.13.1-1	Information Elements in a MBMS Session Start Request	
+row	7.13.1-1	Sender F-TEID for Control Plane	M	F-TEID	0	once
+row	7.13.1-1	Temporary Mobile Group Identity (TMGI)	M	TMGI	0	once
+row	7.13.1-1	MBMS Session Duration	M	MBMS Session Duration	0	once
+row	7.13.1-1	MBMS Service Area	M	MBMS Service Area	0	once
+row	7.13.1-1	MBMS Session Identifier	C	MBMS Session Identifier	0	once
+row	7.13.1-1	MBMS Flow Identifier	C	MBMS Flow Identifier	0	once
+row	7.13.1-1	QoS profile	M	Bearer QoS	0	once
+row	7.13.1-1	MBMS IP Multicast Distribution	M	MBMS IP Multicast Distribution	0	once
+row	7.13.1-1	Recovery	C	Recovery	0	once
+row	7.13.1-1	MBMS Time to Data Transfer	CO	MBMS Time to Data Transfer	0	once
+row	7.13.1-1	MBMS Data Transfer Start	CO	Absolute Time of MBMS Data Transfer	0	once
+row	7.13.1-1	MBMS Flags	CO	MBMS Flags	0	once
+row	7.13.1-1	MBMS Alternative IP Multicast Distribution	CO	MBMS IP Multicast Distribution	1	once
+row	7.13.1-1	MBMS Cell List	CO	ECGI-List	0	once
+row	7.13.1-1	Private Extension	O	Private Extension	VS	once
+table	7.13.2-1	Information Elements in a MBMS Session Start Response	
+row	7.13.2-1	Cause	M	Cause	0	once
+row	7.13.2-1	Sender F-TEID for Control Plane	M	F-TEID	0	once
+row	7.13.2-1	MBMS Distribution Acknowledge	C	MBMS Distribution Acknowledge	0	once
+row	7.13.2-1	Sn-U SGSN F-TEID	C	F-TEID	1	once
+row	7.13.2-1	Recovery	C	Recovery	0	once
+row	7.13.2-1	Private Extension	O	Private Extension	VS	once
+table	7.13.3-1	Information Elements in a MBMS Session Update Request	
+row	7.13.3-1	MBMS Service Area	C	MBMS Service Area	0	once
+row	7.13.3-1	Temporary Mobile Group Identity (TMGI)	M	TMGI	0	once
+row	7.13.3-1	Sender F-TEID for Control Plane	O	F-TEID	0	once
+row	7.13.3-1	MBMS Session Duration	M	MBMS Session Duration	0	once
+row	7.13.3-1	QoS profile	M	Bearer QoS	0	once
+row	7.13.3-1	MBMS Session Identifier	C	MBMS Session Identifier	0	once
+row	7.13.3-1	MBMS Flow Identifier	C	MBMS Flow Identifier	0	once
+row	7.13.3-1	MBMS Time to Data Transfer	CO	MBMS Time to Data Transfer	0	once
+row	7.13.3-1	MBMS Data Transfer Start / Update / Stop	CO	Absolute Time of MBMS Data Transfer	0	once
+row	7.13.3-1	MBMS Cell List	CO	ECGI List	0	once
+row	7.13.3-1	Private Extension	O	Private Extension	VS	once
+table	7.13.4-1	Information Elements in a MBMS Session Update Response	
+row	7.13.4-1	Cause	M	Cause	0	once
+row	7.13.4-1	MBMS Distribution Acknowledge	C	MBMS Distribution Acknowledge	0	once
+row	7.13.4-1	Sn-U SGSN F-TEID	C	F-TEID	0	once
+row	7.13.4-1	Recovery	C	Recovery	0	once
+row	7.13.4-1	Private Extension	O	Private Extension	VS	once
+table	7.13.5-1	Information Elements in a MBMS Session Stop Request	
+row	7.13.5-1	MBMS Flow Identifier	C	MBMS Flow Identifier	0	once
+row	7.13.5-1	MBMS Data Transfer Stop	CO	Absolute Time of MBMS Data Transfer	0	once
+row	7.13.5-1	MBMS Flags	CO	MBMS Flags	0	once
+row	7.13.5-1	Private Extension	O	Private Extension	VS	once
+table	7.13.6-1	Information Elements in a MBMS Session Stop Response	
+row	7.13.6-1	Cause	M	Cause	0	once
+row	7.13.6-1	Recovery	CO	Recovery	0	once
+row	7.13.6-1	Private Extension	O	Private Extension	VS	once

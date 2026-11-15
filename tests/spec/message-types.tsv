@@ -1,0 +1,87 @@
+# type	name	initial	triggered	S3	S10	S16	N26
+0	Reserved						
+1	Echo Request	X					
+2	Echo Response		X				
+3	Version Not Supported Indication		X				
+32	Create Session Request	X					
+33	Create Session Response		X				
+36	Delete Session Request	X					
+37	Delete Session Response		X				
+34	Modify Bearer Request	X					
+35	Modify Bearer Response		X				
+40	Remote UE Report Notification	X					
+41	Remote UE Report Acknowledge		X				
+38	Change Notification Request	X					
+39	Change Notification Response		X				
+164	Resume Notification	X					
+165	Resume Acknowledge		X				
+64	Modify Bearer Command (MME/SGSN/ TWAN/ePDG to PGW – S11/S4, S5/S8, S2a, S2b)	X					
+65	Modify Bearer Failure Indication (PGW to MME/SGSN/ TWAN/ePDG – S5/S8, S11/S4, S2a, S2b)		X				
+66	Delete Bearer Command (MME/SGSN to PGW – S11/S4, S5/S8)	X					
+67	Delete Bearer Failure Indication (PGW to MME/SGSN – S5/S8, S11/S4))		X				
+68	Bearer Resource Command (MME/SGSN/TWAN/ePDG to PGW – S11/S4, S5/S8, S2a, S2b)	X					
+69	Bearer Resource Failure Indication (PGW to MME/SGSN/TWAN/ePDG – S5/S8, S11/S4, S2a, S2b)		X				
+70	Downlink Data Notification Failure Indication (SGSN/MME to SGW – S4/S11)	X					
+71	Trace Session Activation (MME/SGSN/ TWAN/ePDG to PGW – S11/S4, S5/S8, S2a, S2b)	X					
+72	Trace Session Deactivation (MME/SGSN/ TWAN/ePDG to PGW – S11/S4, S5/S8, S2a, S2b)	X					
+73	Stop Paging Indication (SGW to MME/SGSN – S11/S4)	X					
+95	Create Bearer Request	X	X				
+96	Create Bearer Response		X				
+97	Update Bearer Request	X	X				
+98	Update Bearer Response		X				
+99	Delete Bearer Request	X	X				
+100	Delete Bearer Response		X				
+101	Delete PDN Connection Set Request	X					
+102	Delete PDN Connection Set Response		X				
+103	PGW Downlink Triggering Notification	X					
+104	PGW Downlink Triggering Acknowledge		X				
+128	Identification Request	X		X	X	X	X
+129	Identification Response		X	X	X	X	X
+130	Context Request	X		X	X	X	X
+131	Context Response		X	X	X	X	X
+132	Context Acknowledge		X	X	X	X	X
+133	Forward Relocation Request	X		X	X	X	X
+134	Forward Relocation Response		X	X	X	X	X
+135	Forward Relocation Complete Notification	X		X	X	X	X
+136	Forward Relocation Complete Acknowledge		X	X	X	X	X
+137	Forward Access Context Notification	X		-	X	X	-
+138	Forward Access Context Acknowledge		X	-	X	X	-
+139	Relocation Cancel Request	X		X	X	X	X
+140	Relocation Cancel Response		X	X	X	X	X
+141	Configuration Transfer Tunnel	X		-	X	-	X
+152	RAN Information Relay	X		X	-	X	-
+149	Detach Notification	X					
+150	Detach Acknowledge		X				
+151	CS Paging Indication	X					
+153	Alert MME Notification	X					
+154	Alert MME Acknowledge		X				
+155	UE Activity Notification	X					
+156	UE Activity Acknowledge		X				
+157	ISR Status Indication	X					
+158	UE Registration Query Request	X					
+159	UE Registration Query Response		X				
+162	Suspend Notification	X					
+163	Suspend Acknowledge		X				
+160	Create Forwarding Tunnel Request	X					
+161	Create Forwarding Tunnel Response		X				
+166	Create Indirect Data Forwarding Tunnel Request	X					
+167	Create Indirect Data Forwarding Tunnel Response		X				
+168	Delete Indirect Data Forwarding Tunnel Request	X					
+169	Delete Indirect Data Forwarding Tunnel Response		X				
+170	Release Access Bearers Request	X					
+171	Release Access Bearers Response		X				
+176	Downlink Data Notification	X					
+177	Downlink Data Notification Acknowledge		X				
+179	PGW Restart Notification	X					
+180	PGW Restart Notification Acknowledge		X				
+178	Reserved. Allocated in earlier version of the specification.						
+200	Update PDN Connection Set Request	X					
+201	Update PDN Connection Set Response		X				
+211	Modify Access Bearers Request	X					
+212	Modify Access Bearers Response		X				
+231	MBMS Session Start Request	X					
+232	MBMS Session Start Response		X				
+233	MBMS Session Update Request	X					
+234	MBMS Session Update Response		X				
+235	MBMS Session Stop Request	X					
+236	MBMS Session Stop Response		X				
