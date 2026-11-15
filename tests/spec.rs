@@ -211,6 +211,19 @@ fn expected_tables() -> Vec<(String, String, Option<u16>, Vec<Expected>)> {
                 }
                 let rows = &mut tables.last_mut().unwrap().3;
                 let name = without_notes(name);
+                // A row of "MM Context" is one conditional row per MM Context type
+                if let Some(expanded) = errata("expand").get(cell) {
+                    for ie_type in expanded.split(' ').map(|t| t.parse::<u16>().unwrap()) {
+                        let kind = short(ie_type_info(ie_type).unwrap().name).1.unwrap();
+                        rows.push(Expected {
+                            name: format!("{name} ({kind})"),
+                            key: (ie_type, instance.parse().unwrap()),
+                            presences: vec!["C"],
+                            list: several == "several",
+                        });
+                    }
+                    continue;
+                }
                 let ie_type = ie_type_of(cell).unwrap_or_else(|| panic!("no IE type of {cell:?}"));
                 let instance = match instance.parse::<u8>() {
                     Ok(instance) => instance,

@@ -14,3 +14,7 @@
 - `vectors.rs`: the messages of the tests of go-gtp v0.8.12 (`vectors/go-gtp.tsv`, which
   `vectors/extract.py` writes from its module), each byte-exact through its tree, with
   what the check finds in them.
+- `n26.rs`: a Forward Relocation Request of N26 with an MM Context of an EPS security
+  context, written as a tree, byte-exact through it, its keys out of `Debug`. Wireshark
+  4.6.4 reads its octets field by field as the crate writes them (`GTPV2C_PRINT=1` prints
+  them).

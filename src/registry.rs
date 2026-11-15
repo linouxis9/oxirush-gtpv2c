@@ -20,6 +20,7 @@
 //! crate. A grouped IE has a type of the crate for each place, of its table there.
 
 use crate::macros::{gtpv2c_ies, gtpv2c_table};
+use crate::mm_context::*;
 use crate::values::*;
 
 pub use oxirush_utils::tables::Form;

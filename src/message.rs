@@ -281,6 +281,17 @@ impl Message {
             ..Context::message()
         };
         let mut found = self.header_deviations(context);
+        // A mandatory row of "MM Context" is one row per type (errata.tsv): one of them is
+        // there. The answer names the EPS one, of N26 and S10.
+        if self.body.lacks_mm_context() {
+            let mut deviation = Deviation::new(
+                "/gtpv2c",
+                "7.7.6",
+                DeviationKind::MandatoryMissing { ie: (107, 0) },
+            );
+            deviation.cause = context.cause(true);
+            found.push(deviation);
+        }
         self.body.check(
             &crate::check::Path::Root(crate::check::ROOT),
             context,

@@ -57,6 +57,16 @@ impl Body {
     }
 }
 
+impl Body {
+    /// Whether the message lacks its mandatory MM Context, of whichever type (§8.38).
+    pub(crate) fn lacks_mm_context(&self) -> bool {
+        match self {
+            Self::ForwardRelocationRequest(body) => body.mme_sgsn_amf_ue_mm_context_gsm_triplets.is_none() && body.mme_sgsn_amf_ue_mm_context_umts_cipher_quintuplets.is_none() && body.mme_sgsn_amf_ue_mm_context_gsm_cipher_quintuplets.is_none() && body.mme_sgsn_amf_ue_mm_context_umts_quintuplets.is_none() && body.mme_sgsn_amf_ue_mm_context_eps.is_none() && body.mme_sgsn_amf_ue_mm_context_umts_quadruplets_quintuplets.is_none(),
+            _ => false,
+        }
+    }
+}
+
 gtpv2c_messages! {
     1 EchoRequest [],
     2 EchoResponse [],

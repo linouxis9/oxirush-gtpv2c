@@ -44,6 +44,7 @@ def norm(text):
 errata = {(kind, table): read for kind, table, _, read, _ in tsv('errata.tsv') if kind in ('number', 'grouped')}
 names = {written: read for kind, _, written, read, _ in tsv('errata.tsv') if kind == 'ie-name'}
 aliases = {written: int(read) for kind, _, written, read, _ in tsv('errata.tsv') if kind == 'ie-type'}
+expanded = {written: [int(t) for t in read.split()] for kind, _, written, read, _ in tsv('errata.tsv') if kind == 'expand'}
 
 # The IE types of Table 8.1-1
 types = OrderedDict()
@@ -89,11 +90,16 @@ def type_of(cell):
     sys.exit(f'no IE type of the name {cell!r}')
 
 
+# The field of each MM Context type of an expanded row
+MM_SUFFIX = {103: 'gsm_triplets', 104: 'umts_cipher_quintuplets', 105: 'gsm_cipher_quintuplets',
+             106: 'umts_quintuplets', 107: 'eps', 108: 'umts_quadruplets_quintuplets'}
+
 PRESENCE_RANK = {'M': 0, 'C': 1, 'CO': 2, 'O': 3}
 
 # The tables of clause 7, a row of several lines (the presences of other interfaces) once,
 # of its weakest presence where the lines differ, and mandatory where each line is
 tables = OrderedDict()
+one_of = {}  # the tables of a mandatory row of "MM Context", and the fields of its types
 for line in tsv('tables.tsv'):
     if line[0] == 'table':
         _, number, caption, prelude = line[:4]
@@ -107,6 +113,14 @@ for line in tsv('tables.tsv'):
         name = re.sub(r'\s*\((?:See )?NOTE[^)]*\)', '', name).strip()
         rows = current['rows']
         if instance == 'VS':
+            continue
+        if ie_type in expanded:
+            if presence == 'M':
+                one_of.setdefault(current['number'], []).extend(snake(name) + '_' + MM_SUFFIX[t] for t in expanded[ie_type])
+            for t in expanded[ie_type]:
+                kind = re.search(r'\(([^)]*)\)', types[t]['name']).group(1)
+                rows.append(dict(name=f'{name} ({kind})', presences=['C'], type=t, instance=instance, several=several == 'several',
+                                 field=snake(name) + '_' + MM_SUFFIX[t]))
             continue
         t = type_of(ie_type)
         last = rows[-1] if rows else None
@@ -197,7 +211,7 @@ for number in order:
     lines = ['gtpv2c_table! {', f'    /// {table["caption"]} (Table {number}).', head]
     fields = set()
     for row in table['rows']:
-        field = snake(re.sub(r'\s*\([^)]*\)', '', row['name']))
+        field = row.get('field') or snake(re.sub(r'\s*\([^)]*\)', '', row['name']))
         if field in fields:
             field = f'{field}_{row["instance"]}'
         while field in fields:
@@ -263,6 +277,11 @@ listed += ['impl Body {', '    /// The Cause of the message at its level, of ins
            '    pub fn cause(&self) -> Option<CauseValue> {', '        let cause = match self {']
 listed += [f'            Self::{ty}(body) => &body.{field},' for ty, field in with_cause]
 listed += ['            _ => return None,', '        };', '        cause.as_ref().map(|cause| cause.value)', '    }', '}', '']
+listed += ['impl Body {', '    /// Whether the message lacks its mandatory MM Context, of whichever type (§8.38).',
+           '    pub(crate) fn lacks_mm_context(&self) -> bool {', '        match self {']
+for number, fields in one_of.items():
+    listed.append(f'            Self::{rust_names[number]}(body) => ' + ' && '.join(f'body.{f}.is_none()' for f in fields) + ',')
+listed += ['            _ => false,', '        }', '    }', '}', '']
 listed += ['gtpv2c_messages! {'] + [f'    {code} {name} [],' for code, name in sorted(messages)] + ['}']
 open(f'{crate}/src/message_types.rs', 'w').write('\n'.join(listed) + '\n')
 

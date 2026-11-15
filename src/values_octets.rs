@@ -41,8 +41,6 @@ gtpv2c_layout! {
     pub struct MmContextGsmKeyUsedCipherAndQuintuplets "8.38" { fields { octets "MM Context (GSM Key, Used Cipher and Quintuplets)": SecretRest } }
     /// MM Context (UMTS Key and Quintuplets) (§8.38): its octets, which the crate does not split.
     pub struct MmContextUmtsKeyAndQuintuplets "8.38" { fields { octets "MM Context (UMTS Key and Quintuplets)": SecretRest } }
-    /// MM Context (EPS Security Context, Quadruplets and Quintuplets) (§8.38): its octets, which the crate does not split.
-    pub struct MmContextEpsSecurityContextQuadrupletsAndQuintuplets "8.38" { fields { octets "MM Context (EPS Security Context, Quadruplets and Quintuplets)": SecretRest } }
     /// MM Context (UMTS Key, Quadruplets and Quintuplets) (§8.38): its octets, which the crate does not split.
     pub struct MmContextUmtsKeyQuadrupletsAndQuintuplets "8.38" { fields { octets "MM Context (UMTS Key, Quadruplets and Quintuplets)": SecretRest } }
     /// PDU Numbers (§8.40): its octets, which the crate does not split.
