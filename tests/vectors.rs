@@ -56,9 +56,15 @@ fn each_vector_is_byte_exact() {
 /// and some are no messages to send. A Bearer Context of a Delete Bearer Command with two
 /// Delay Values, of a Create Bearer Response with a Bearer QoS and no Cause, of an Update
 /// Bearer Request with an F-TEID, a Release Access Bearers Request with Bearer Contexts,
-/// a message of path management with a TEID (generic_test.go), and a Create Session
-/// Request of none of its mandatory IEs (header_test.go).
+/// a message of path management with a TEID (generic_test.go), a Create Session Request
+/// of none of its mandatory IEs (header_test.go), and a ULI whose Macro and Extended Macro
+/// eNodeB IDs are wider than their 20 and 21 bits, which go into the spare bits.
 const EXPECTED: &[(&str, &str, &str)] = &[
+    (
+        "change-notification-req_test.go",
+        "Normal",
+        "spare bits are not zero (TS 29.274 8.21), at /gtpv2c/User Location Information (ULI)",
+    ),
     (
         "create-bearer-res_test.go",
         "Normal",

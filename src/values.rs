@@ -26,6 +26,7 @@ use crate::fields::{Digits, Rest, SecretRest, U40};
 use crate::ie::listed_value;
 use crate::macros::gtpv2c_layout;
 use crate::mm_context::MmContextEpsSecurityContextQuadrupletsAndQuintuplets;
+use crate::uli::Uli;
 use oxirush_utils::fields::{Fqdn as Labels, PlmnId as Plmn};
 
 gtpv2c_layout! {

@@ -50,6 +50,7 @@ mod mm_context;
 pub mod paths;
 mod registry;
 mod table;
+mod uli;
 mod values;
 
 use alloc::string::{String, ToString};
@@ -68,6 +69,7 @@ pub use mm_context::{
 pub use oxirush_utils::fields::Octets;
 pub use registry::*;
 pub use table::{Interfaces, On, Presence, Repeat, Role, Row, Table};
+pub use uli::{Location, Uli};
 pub use values::*;
 
 /// The trees of oxirush-utils, of the version that this crate is built with: a message

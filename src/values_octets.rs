@@ -15,8 +15,6 @@ gtpv2c_layout! {
     pub struct EpsBearerLevelTrafficFlowTemplate "8.19" { fields { octets "EPS Bearer Level Traffic Flow Template (Bearer TFT)": Rest } }
     /// Traffic Aggregation Description (TAD) (§8.20): its octets, which the crate does not split.
     pub struct Tad "8.20" { fields { octets "Traffic Aggregation Description (TAD)": Rest } }
-    /// User Location Information (ULI) (§8.21): its octets, which the crate does not split.
-    pub struct Uli "8.21" { fields { octets "User Location Information (ULI)": Rest } }
     /// TMSI (§8.23): its octets, which the crate does not split.
     pub struct Tmsi "8.23" { fields { octets "TMSI": Rest } }
     /// Global CN-Id (§8.24): its octets, which the crate does not split.
