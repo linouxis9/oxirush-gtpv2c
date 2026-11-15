@@ -2222,3 +2222,9 @@ gtpv2c_table! {
     }
 }
 
+gtpv2c_table! {
+    /// Version Not Supported Indication (§7.1.3): the header alone.
+    message VersionNotSupportedIndication = 3, "Version Not Supported Indication", "7.1.3" {
+    }
+}
+

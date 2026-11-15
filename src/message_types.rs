@@ -60,6 +60,7 @@ impl Body {
 gtpv2c_messages! {
     1 EchoRequest [],
     2 EchoResponse [],
+    3 VersionNotSupportedIndication [],
     32 CreateSessionRequest [],
     33 CreateSessionResponse [],
     34 ModifyBearerRequest [],

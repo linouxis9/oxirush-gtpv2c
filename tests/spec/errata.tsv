@@ -9,3 +9,4 @@ ie-name	8.1-1	Local Distiguished Name (LDN)	Local Distinguished Name (LDN)	a mis
 ie-type	7	PTI	100	the abbreviation of Procedure Transaction ID (§8.35), which Table 8.1-1 does not write
 ie-type	7	TWMI	174	the abbreviation of Trusted WLAN Mode Indication (§8.105), which Table 8.1-1 does not write
 ie-type	7	Local Distinguished Name (LDN)Name	151	a cell of a table of clause 7 whose words run together
+message	7.1.3	(no table)	3	Version Not Supported Indication has the header alone (§7.1.3): a table of no rows

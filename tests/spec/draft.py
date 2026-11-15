@@ -217,6 +217,16 @@ for number in order:
     lines += ['    }', '}', '']
     blocks.append('\n'.join(lines))
 
+# A message of the header alone, of errata.tsv: a table of no rows
+for kind, clause, _, code, _ in tsv('errata.tsv'):
+    if kind == 'message':
+        name = next(n for c, n, *_ in tsv('message-types.tsv') if c == code)
+        name = re.sub(r'\s*\(.*$', '', name)
+        rust = pascal(name)
+        messages.append((int(code), rust))
+        blocks.append('\n'.join(['gtpv2c_table! {', f'    /// {name} (§{clause}): the header alone.',
+                                  f'    message {rust} = {code}, "{name}", "{clause}" {{', '    }', '}', '']))
+
 unplaced = [n for n in order if tables[n]['prelude'].isdigit() and n not in placed]
 for number in unplaced:
     print('a table of no row:', number, tables[number]['caption'], file=sys.stderr)

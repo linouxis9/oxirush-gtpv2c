@@ -11,3 +11,6 @@
   127.0.0.2, the SGW-C at 127.0.0.3 and the PGW-C at 127.0.0.4, S11 and S5 on UDP port
   2123. The IMSIs are those of the lab's test PLMN 208/93.
 - `first.rs`: a first message of each kind, written octet by octet.
+- `vectors.rs`: the messages of the tests of go-gtp v0.8.12 (`vectors/go-gtp.tsv`, which
+  `vectors/extract.py` writes from its module), each byte-exact through its tree, with
+  what the check finds in them.

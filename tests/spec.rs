@@ -331,7 +331,16 @@ fn tables() {
             }
         }
     }
-    for id in tables.keys() {
+    // A message of the header alone has a table of no rows, of the number of its clause
+    let headers_alone: Vec<&str> = records(ERRATA_TSV)
+        .iter()
+        .filter(|line| line[0] == "message")
+        .map(|line| line[1])
+        .collect();
+    for (id, table) in &tables {
+        if headers_alone.contains(id) && table.rows.is_empty() {
+            continue;
+        }
         if !seen.contains(id) {
             problems.push(format!("Table {id}: not in the document"));
         }
