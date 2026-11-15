@@ -1,0 +1,139 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    name: Test (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      # With every feature, and with none
+      - run: cargo test --all-features
+      - run: cargo test
+
+  # Targets without the standard library: the crate and its trees build there.
+  no-std:
+    name: Build without std (${{ matrix.target }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [thumbv7em-none-eabihf, aarch64-unknown-none]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo build --target ${{ matrix.target }}
+      - run: cargo build --target ${{ matrix.target }} --features tree
+
+  msrv:
+    name: MSRV (1.88)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.88.0
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo test --all-features
+
+  fmt:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # The rustfmt of the MSRV: a new stable release must not change what is formatted.
+      - uses: dtolnay/rust-toolchain@1.88
+        with:
+          components: rustfmt
+      - run: cargo fmt --check
+
+  lint:
+    name: Clippy and documentation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo clippy --all-features --all-targets -- -D warnings
+      - run: cargo doc --no-deps --all-features
+        env:
+          RUSTDOCFLAGS: -D warnings
+
+  # The fixtures of the test `spec`, as tests/spec/extract.py writes them from the
+  # document in the 3GPP archive, whose SHA-256 it checks, with the reader of the
+  # oxirush-utils that the crate builds with (cargo metadata finds it).
+  fixtures:
+    name: The fixtures of the specification
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo fetch
+      - run: python3 tests/spec/extract.py --fetch
+      - run: git diff --exit-code tests/spec
+
+  # The changes of tests/spec/mutations.tsv, each of which the test `spec` must fail on.
+  mutations:
+    name: The test of the specification fails on what differs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: python3 tests/spec/mutate.py
+
+  # The messages of go-gtp's tests, at the version that tests/README.md names, as
+  # tests/vectors/extract.py writes them from its module: the file is the same.
+  vectors:
+    name: The vectors of go-gtp
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - run: |
+          dir=$(go mod download -json github.com/wmnsk/go-gtp@v0.8.12 | python3 -c 'import json, sys; print(json.load(sys.stdin)["Dir"])')
+          python3 tests/vectors/extract.py "$dir" > tests/vectors/go-gtp.tsv
+          git diff --exit-code tests/vectors
+
+  fuzz:
+    name: Fuzz (a minute each)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@nightly
+      - run: cargo install cargo-fuzz@0.13.2 --locked
+      # From the seeds of fuzz/seeds: messages of each message type of the captures and
+      # of go-gtp's vectors.
+      - run: |
+          for target in decode tree paths; do
+            mkdir -p "fuzz/corpus/$target"
+            cp fuzz/seeds/* "fuzz/corpus/$target/"
+            cargo fuzz run "$target" -- -max_total_time=60
+          done
+      # The input that failed, to reproduce it: `cargo fuzz run TARGET FILE`
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: fuzz-artifacts
+          path: fuzz/artifacts

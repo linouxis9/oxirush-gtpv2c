@@ -1,0 +1,44 @@
+[package]
+name = "oxirush-gtpv2c-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2024"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+
+[dependencies.oxirush-gtpv2c]
+path = ".."
+features = ["tree"]
+
+[workspace]
+members = ["."]
+
+[[bin]]
+name = "decode"
+path = "fuzz_targets/decode.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "tree"
+path = "fuzz_targets/tree.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "paths"
+path = "fuzz_targets/paths.rs"
+test = false
+doc = false
+bench = false
+
+# The fields and the tables of oxirush-utils are not released yet: every crate of the build
+# takes oxirush-utils from this revision until its next release.
+[patch.crates-io]
+oxirush-utils = { git = "https://github.com/linouxis9/oxirush-utils", rev = "afeef3376716bb29ac8d3972755a71477281ff6c" }
