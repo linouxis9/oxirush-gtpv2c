@@ -15,9 +15,39 @@
    limitations under the License.
 */
 
-//! GTPv2-C (TS 29.274 V19.6.0): the messages of S11, S5/S8, S3, S10, S16 and N26, their
-//! IEs, the tables of clause 7 that say which IEs each message and grouped IE has, and a
-//! check of a message against them.
+//! Decode, build, check and encode GTPv2-C, the control protocol between the MME, the SGW
+//! and the PGW of 4G cores and of N26 between an MME and an AMF (3GPP TS 29.274 V19.6.0):
+//! every message and IE of S11, S5/S8, S3, S10, S16 and N26, byte for byte, and their
+//! trees as JSON.
+//!
+//! ```rust
+//! use oxirush_gtpv2c::*;
+//!
+//! fn main() -> Result<(), Box<dyn std::error::Error>> {
+//!     // An MME asks its SGW whether it is alive: an Echo Request with its Restart Counter
+//!     let octets = Message::path(1, EchoRequest::new(Recovery::new(5))).encode()?;
+//!     assert_eq!(hex::encode(&octets), "40010009000001000300010005");
+//!
+//!     // The SGW decodes it and reads its IEs as typed fields
+//!     let message = Message::decode(&octets)?;
+//!     assert_eq!(message.to_string(), "Echo Request (sequence 1)");
+//!     let Body::EchoRequest(echo) = &message.body else { unreachable!() };
+//!     assert_eq!(echo.recovery.as_ref().map(|recovery| recovery.value), Some(5));
+//!     Ok(())
+//! }
+//! ```
+//!
+//! # Tasks
+//!
+//! The examples of the [README](https://github.com/linouxis9/oxirush-gtpv2c#readme) show
+//! these tasks.
+//!
+//! | Task | Items |
+//! |------|-------|
+//! | Decode a message and read its IEs | [`Message::decode`], [`Body`], [`Message::path`], [`Message::tunnel`] |
+//! | Check a message, and answer a faulty one | [`Message::check`], [`Deviation`], [`DeviationKind`], [`CauseValue`] |
+//! | Edit a message as JSON | [`Message::to_tree`], [`Message::from_tree`], [`paths`] |
+//! | Carry an MM Context on N26 | [`MmContextEpsSecurityContextQuadrupletsAndQuintuplets`] |
 //!
 //! The facts of the specification are tables of macros: one line per IE type (Table
 //! 8.1-1), one row per IE of a table of clause 7, one layout per value. The codec, the
@@ -26,9 +56,23 @@
 //! A message decodes and encodes byte-exact: an IE that its table does not have, of an
 //! instance that it does not have, with spare bits set, or that does not decode as its
 //! type, is kept as its octets in its place.
+//!
+//! # The OxiRush family
+//!
+//! - [oxirush-utils](https://docs.rs/oxirush-utils): the 3GPP identities, the JSON tree with its paths, and the fields and tables that the codecs are laid out on.
+//! - [oxirush-aper](https://docs.rs/oxirush-aper): aligned PER, the runtime of the NGAP and S1AP codecs.
+//! - [oxirush-nas](https://docs.rs/oxirush-nas): the NAS messages of 5GS and EPS.
+//! - [oxirush-security](https://docs.rs/oxirush-security): NAS security, AKA and the derivation of keys.
+//! - [oxirush-ngap](https://docs.rs/oxirush-ngap): NGAP, between a gNB and an AMF.
+//! - [oxirush-s1ap](https://docs.rs/oxirush-s1ap): S1AP, between an eNB and an MME.
+//! - [oxirush-gtp-u](https://docs.rs/oxirush-gtp-u): GTP-U tunnels, with a user-plane test peer.
+//! - [oxirush-gtpv2c](https://github.com/linouxis9/oxirush-gtpv2c): GTPv2-C, between the MME, the SGW and the PGW, and on N26.
+//! - [oxirush-pfcp](https://docs.rs/oxirush-pfcp): PFCP, between the control plane and the user plane.
+//! - [oxirush-sctp](https://docs.rs/oxirush-sctp): SCTP sockets, which carry NGAP and S1AP.
 
 #![no_std]
 #![deny(unsafe_code)]
+#![warn(missing_docs)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![cfg_attr(not(feature = "tree"), allow(rustdoc::broken_intra_doc_links))]
 
