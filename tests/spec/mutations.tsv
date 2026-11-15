@@ -1,0 +1,14 @@
+# The changes of the crate that the test `spec` must fail on: each a presence, an instance,
+# a list, a name, an IE type, a table, an erratum or a form of the crate made other than the
+# document has it. tests/spec/mutate.py applies each in turn to a copy of the crate and runs
+# the test, which must fail in the test named. Old and new text have \n for their lines.
+a-presence	the RAT Type of a Create Session Request is mandatory (Table 7.2.1-1)	src/registry_tables.rs	ServingNetwork 0 [],\n        rat_type: "RAT Type" M RatType 0 [],\n        indication_flags	ServingNetwork 0 [],\n        rat_type: "RAT Type" C RatType 0 [],\n        indication_flags	tables
+an-instance	the PGW S5/S8 Address of a Create Session Request is of instance 1 (Table 7.2.1-1)	src/registry_tables.rs	"PGW S5/S8 Address for Control Plane or PMIP" C FTeid 1 [],	"PGW S5/S8 Address for Control Plane or PMIP" C FTeid 2 [],	tables
+a-list	the Bearer Contexts to be created of a Create Session Request are several (Table 7.2.1-1)	src/registry_tables.rs	"Bearer Contexts to be created" M* 	"Bearer Contexts to be created" M 	tables
+a-row-name	the row of the Sender F-TEID of a Create Session Request (Table 7.2.1-1)	src/registry_tables.rs	"Sender F-TEID for Control Plane" M FTeid 0 [],\n        pgw_s5_s8_address_for_control_plane_or_pmip	"Sender F-TEID for C-Plane" M FTeid 0 [],\n        pgw_s5_s8_address_for_control_plane_or_pmip	tables
+a-weaker-presence	a CO row of a Create Session Request (Table 7.2.1-1)	src/registry_tables.rs	Apn 0 [],\n        selection_mode: "Selection Mode" CO SelectionMode 0 [],\n        pdn_type: "PDN Type" CO PdnType 0 [],\n        pdn_address_allocation	Apn 0 [],\n        selection_mode: "Selection Mode" O SelectionMode 0 [],\n        pdn_type: "PDN Type" CO PdnType 0 [],\n        pdn_address_allocation	tables
+an-ie-type-name	the name of IE type 87 (Table 8.1-1)	src/registry_tables.rs	87 "Fully Qualified Tunnel Endpoint Identifier (F-TEID)"	87 "Fully Qualified TEID (F-TEID)"	ie_types
+a-form	IE type 73 is extendable (Table 8.1-1)	src/registry_tables.rs	73 "EPS Bearer ID (EBI)" extendable(1)	73 "EPS Bearer ID (EBI)" fixed(1)	ie_types
+a-fixed-length	IE type 72 has 8 fixed octets (Table 8.1-1)	src/registry_tables.rs	72 "Aggregate Maximum Bit Rate (AMBR)" fixed(8)	72 "Aggregate Maximum Bit Rate (AMBR)" fixed(9)	ie_types
+an-erratum	the Overload Control Information of Table 7.2.3-4 is of type 180	tests/spec/errata.tsv	grouped\t7.2.3-4\tIE Type = 181\t180	grouped\t7.2.3-4\tIE Type = 181\t181	tables
+an-initial-message	Create Session Request is an initial message (Table 6.1-1)	src/message_types.rs	1 | 32 | 34	1 | 34	message_types

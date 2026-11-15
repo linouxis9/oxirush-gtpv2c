@@ -20,7 +20,7 @@ tree = ["oxirush-utils/tree"]
 spec = []
 
 [dependencies]
-oxirush-utils = { path = "../utils", version = "0.2.2", default-features = false, features = ["alloc", "fields", "tables"] }
+oxirush-utils = { version = "0.2.2", default-features = false, features = ["alloc", "fields", "tables"] }
 
 [dev-dependencies]
 hex = "0.4.3"
@@ -34,3 +34,8 @@ unexpected_cfgs = { level = "warn", check-cfg = ['cfg(docsrs)', 'cfg(feature, va
 [[example]]
 name = "inspect"
 required-features = ["tree"]
+
+# The fields and the tables of oxirush-utils are not released yet: the crate builds with the
+# oxirush-utils beside it until its next release.
+[patch.crates-io]
+oxirush-utils = { path = "../utils" }
