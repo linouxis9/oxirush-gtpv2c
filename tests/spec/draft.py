@@ -259,7 +259,8 @@ for number in order:
         name = row['name'].replace('"', '\\"')
         condition = ''
         for table_of, row_name, kind, expression, _ in conditions:
-            if table_of in ('*', number) and row_name == row['name']:
+            # The first line of the row, one condition for each
+            if table_of in ('*', number) and row_name == row['name'] and not condition:
                 expression = expression.replace('{field}', field)
                 condition = f' if |s| {expression}' if kind == 'if' else f' absent(|s| {expression})'
         lines.append(f'        {field}: "{name}" {row["presence"]}{repeat} {ty} {row["instance"]} []{roles}{condition},')

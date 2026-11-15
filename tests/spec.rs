@@ -40,6 +40,8 @@ const IE_TYPES_TSV: &str = include_str!("spec/ie-types.tsv");
 const MESSAGE_TYPES_TSV: &str = include_str!("spec/message-types.tsv");
 const TABLES_TSV: &str = include_str!("spec/tables.tsv");
 const ERRATA_TSV: &str = include_str!("spec/errata.tsv");
+const COMMENTS_TSV: &str = include_str!("spec/comments.tsv");
+const CONDITIONS_TSV: &str = include_str!("spec/conditions.tsv");
 
 fn errata(kind: &str) -> BTreeMap<&'static str, &'static str> {
     records(ERRATA_TSV)
@@ -440,5 +442,64 @@ fn message_types() {
             ));
         }
     }
+    report(problems);
+}
+
+/// Each condition that the crate checks is one that the table says: the words of its line
+/// of conditions.tsv are in the condition of the row of that table (comments.tsv), spaces
+/// and the case of the letters aside; and a row of a table that a line names, its
+/// condition checked.
+#[test]
+fn conditions() {
+    let words = |text: &str| {
+        text.split_whitespace()
+            .collect::<Vec<_>>()
+            .join(" ")
+            .to_lowercase()
+    };
+    let mut comments: BTreeMap<(&str, &str), Vec<String>> = BTreeMap::new();
+    for line in records(COMMENTS_TSV) {
+        comments
+            .entry((line[0], line[1]))
+            .or_default()
+            .push(words(line[3]));
+    }
+    let conditions = records(CONDITIONS_TSV);
+    let says = |table: &str, row: &str, sentence: &str| {
+        comments
+            .get(&(table, row))
+            .is_some_and(|lines| lines.iter().any(|line| line.contains(&words(sentence))))
+    };
+    let mut problems = Vec::new();
+    let mut checked = 0;
+    for (id, table) in crate_tables() {
+        for row in table.rows.iter().filter(|row| row.checked) {
+            checked += 1;
+            let lines = conditions
+                .iter()
+                .filter(|line| (line[0] == "*" || line[0] == id) && line[1] == row.name);
+            let found: Vec<_> = lines.collect();
+            if found.is_empty() {
+                problems.push(format!(
+                    "Table {id} {}: a condition of no line of conditions.tsv",
+                    row.name
+                ));
+            } else if !found.iter().any(|line| says(id, row.name, line[4])) {
+                problems.push(format!(
+                    "Table {id} {}: the table does not say {:?}",
+                    row.name, found[0][4]
+                ));
+            }
+        }
+    }
+    for line in &conditions {
+        if line[0] != "*" && !says(line[0], line[1], line[4]) {
+            problems.push(format!(
+                "Table {} {}: the table does not say {:?}",
+                line[0], line[1], line[4]
+            ));
+        }
+    }
+    assert!(checked > 30, "{checked} rows checked");
     report(problems);
 }

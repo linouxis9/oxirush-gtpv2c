@@ -1,8 +1,10 @@
 # The conditions of rows that a message shows alone, which check() reports: a table (*
 # for each), the name of a row, `absent` where the row must not be there when the
 # condition holds, or `if` where it must, the condition over the scope `s` ({field} is
-# the field of the row), and the words of the table that say it.
+# the field of the row), and the words of the table that say it, which the test spec finds
+# in the condition of the row in each table where the crate checks it (comments.tsv).
 *	Indication Flags	absent	s.{field}.as_ref().is_some_and(|flags| flags.none_set())	This IE shall be included if any one of the applicable flags is set to 1.
 *	Indication flags	absent	s.{field}.as_ref().is_some_and(|flags| flags.none_set())	This IE shall be included if any one of the applicable flags is set to 1.
+*	Indication Flags	absent	s.{field}.as_ref().is_some_and(|flags| flags.none_set())	This IE shall be included if any of the flags are set to 1.
 7.3.2-1	Sender's F-TEID for Control Plane	if	accepted(&s.cause)	If the Cause IE contains the value "Request accepted", the target MME/SGSN/AMF shall include this IE in the Forward Relocation Response message.
 7.2.2-1	PGW Back-Off Time	absent	!cause_is(&s.cause, CauseValue::ApnCongestion)	This IE may be included on the S5/S8 and S4/S11 interfaces when the PDN GW rejects the Create Session Request with the cause "APN congestion".

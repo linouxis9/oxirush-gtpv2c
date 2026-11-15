@@ -12,3 +12,5 @@ a-form	IE type 73 is extendable (Table 8.1-1)	src/registry_tables.rs	73 "EPS Bea
 a-fixed-length	IE type 72 has 8 fixed octets (Table 8.1-1)	src/registry_tables.rs	72 "Aggregate Maximum Bit Rate (AMBR)" fixed(8)	72 "Aggregate Maximum Bit Rate (AMBR)" fixed(9)	ie_types
 an-erratum	the Overload Control Information of Table 7.2.3-4 is of type 180	tests/spec/errata.tsv	grouped\t7.2.3-4\tIE Type = 181\t180	grouped\t7.2.3-4\tIE Type = 181\t181	tables
 an-initial-message	Create Session Request is an initial message (Table 6.1-1)	src/message_types.rs	1 | 32 | 34	1 | 34	message_types
+a-condition-sentence	the words of the condition of the PGW Back-Off Time (Table 7.2.2-1)	tests/spec/conditions.tsv	when the PDN GW rejects the Create Session Request	when the PGW rejects the Create Session Request	conditions
+a-condition-of-no-line	the 7.3 tables write the condition of the Indication otherwise	tests/spec/conditions.tsv	*\tIndication Flags\tabsent\ts.{field}.as_ref().is_some_and(|flags| flags.none_set())\tThis IE shall be included if any of the flags are set to 1.\n		conditions

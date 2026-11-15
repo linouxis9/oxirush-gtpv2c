@@ -12,6 +12,9 @@ script:
                         triggered, and the S3, S10, S16 and N26 columns of those that have
                         them
     ie-types.tsv        Table 8.1-1: the IE types, their references and their lengths
+    comments.tsv        the condition or comment of each line of a row of clause 7, by its
+                        table and the name of its row, which the conditions that the crate
+                        checks (conditions.tsv) are compared with
     tables.tsv          the tables of clause 7, one row each: a table by its number, its
                         caption and, for a grouped IE, the IE type of its first lines; a
                         row by its name, its presence, its IE type and its instance, and
@@ -102,8 +105,8 @@ def ie_types(rows):
     return out
 
 
-def table_rows(number, caption, prelude, rows):
-    """A table of clause 7 and its rows."""
+def table_rows(number, caption, prelude, rows, comments):
+    """A table of clause 7 and its rows, and the comment of each line of a row."""
     out = [['table', number, caption, prelude]]
     last = None
     for row in rows:
@@ -112,6 +115,8 @@ def table_rows(number, caption, prelude, rows):
             continue
         name, presence, comment, ie_type, instance = cells[:5]
         several = 'several' if SEVERAL.search(comment) else 'once'
+        if name or last is not None:
+            comments.append([number, name or last, presence, comment])
         if name:
             out.append(['row', number, name, presence, ie_type, instance, several])
             last = name
@@ -123,7 +128,7 @@ def table_rows(number, caption, prelude, rows):
 def main():
     body = archive()
     caption, heading = '', ''
-    messages, types, tables = [], [], []
+    messages, types, tables, comments = [], [], [], []
     for kind, block in blocks(body):
         if kind == 'p':
             style, value = block
@@ -155,9 +160,10 @@ def main():
             continue
         number = found.group(1) if found else f'(no caption) after {heading.split()[0]}'
         title = found.group(2) if found else ''
-        tables.extend(table_rows(number, title, prelude, rows))
+        tables.extend(table_rows(number, title, prelude, rows, comments))
     write('message-types.tsv', ['type', 'name', 'initial', 'triggered', 'S3', 'S10', 'S16', 'N26'], messages)
     write('ie-types.tsv', ['type', 'name', 'reference', 'number of fixed octets'], types)
+    write('comments.tsv', ['table', 'row', 'presence', 'condition or comment'], comments)
     write('tables.tsv', ['table|row|also', 'table', 'caption, or the name of the row', 'IE type of the grouped IE, or presence', 'IE type', 'instance', 'once or several'], tables)
 
 
