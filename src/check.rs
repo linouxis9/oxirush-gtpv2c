@@ -30,7 +30,7 @@ use crate::table::{Interfaces, Presence, Row, Scope, Table};
 use oxirush_utils::tables::TableFinding;
 
 pub(crate) use oxirush_utils::fields::Path;
-pub(crate) use oxirush_utils::tables::{as_read, taken};
+pub(crate) use oxirush_utils::tables::{as_read, condition_absent, condition_missing, taken};
 
 /// One deviation: where, which clause, what, and the Cause of the answer.
 #[derive(Debug, Clone, PartialEq, Eq)]

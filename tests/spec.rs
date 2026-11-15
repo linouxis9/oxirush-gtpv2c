@@ -183,6 +183,28 @@ struct Expected {
     key: (u16, u8),
     presences: Vec<&'static str>,
     list: bool,
+    /// The rows of one type and instance that this row holds, which the wire does not
+    /// tell apart (errata.tsv, `shared`): their names and presences.
+    roles: Vec<(String, Vec<&'static str>)>,
+}
+
+/// The rows of a table with those of one type and instance as one row of their roles,
+/// named by their type.
+fn shared(rows: Vec<Expected>) -> Vec<Expected> {
+    let mut merged: Vec<Expected> = Vec::new();
+    for row in rows {
+        match merged.iter_mut().find(|m| m.key == row.key) {
+            Some(same) => {
+                if same.roles.is_empty() {
+                    same.roles.push((same.name.clone(), same.presences.clone()));
+                    same.name = short(ie_type_info(same.key.0).unwrap().name).0;
+                }
+                same.roles.push((row.name, row.presences));
+            }
+            None => merged.push(row),
+        }
+    }
+    merged
 }
 
 /// The tables of the document, by the number that the crate gives them, with the IE type
@@ -220,6 +242,7 @@ fn expected_tables() -> Vec<(String, String, Option<u16>, Vec<Expected>)> {
                             key: (ie_type, instance.parse().unwrap()),
                             presences: vec!["C"],
                             list: several == "several",
+                            roles: Vec::new(),
                         });
                     }
                     continue;
@@ -242,6 +265,7 @@ fn expected_tables() -> Vec<(String, String, Option<u16>, Vec<Expected>)> {
                         key: (ie_type, instance),
                         presences: vec![presence],
                         list: several == "several",
+                        roles: Vec::new(),
                     }),
                 }
             }
@@ -291,6 +315,7 @@ fn tables() {
     let tables = crate_tables();
     let mut seen = Vec::new();
     for (number, caption, grouped, rows) in expected_tables() {
+        let rows = shared(rows);
         let Some(table) = tables.get(&number[..]) else {
             problems.push(format!("Table {number} ({caption}): not in the crate"));
             continue;
@@ -313,6 +338,25 @@ fn tables() {
             continue;
         }
         for (row, expected) in table.rows.iter().zip(&rows) {
+            if !expected.roles.is_empty() {
+                let roles: Vec<(&str, Presence)> = row
+                    .roles
+                    .iter()
+                    .map(|role| (role.name, role.presence))
+                    .collect();
+                let wanted: Vec<(&str, Presence)> = expected
+                    .roles
+                    .iter()
+                    .map(|(name, ps)| (&name[..], presence_of(ps)))
+                    .collect();
+                if roles != wanted {
+                    problems.push(format!(
+                        "Table {number} {}: roles {roles:?}, and the document {wanted:?}",
+                        row.name
+                    ));
+                }
+                continue;
+            }
             let role = &row.roles[0];
             let presence = presence_of(&expected.presences);
             if row.ie_type != expected.key {

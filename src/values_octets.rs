@@ -9,10 +9,6 @@ gtpv2c_layout! {
     pub struct Pco "8.13" { fields { octets "Protocol Configuration Options (PCO)": Rest } }
     /// Flow Quality of Service (Flow QoS) (§8.16): its octets, which the crate does not split.
     pub struct FlowQualityOfService "8.16" { fields { octets "Flow Quality of Service (Flow QoS)": Rest } }
-    /// EPS Bearer Level Traffic Flow Template (Bearer TFT) (§8.19): its octets, which the crate does not split.
-    pub struct EpsBearerLevelTrafficFlowTemplate "8.19" { fields { octets "EPS Bearer Level Traffic Flow Template (Bearer TFT)": Rest } }
-    /// Traffic Aggregation Description (TAD) (§8.20): its octets, which the crate does not split.
-    pub struct Tad "8.20" { fields { octets "Traffic Aggregation Description (TAD)": Rest } }
     /// TMSI (§8.23): its octets, which the crate does not split.
     pub struct Tmsi "8.23" { fields { octets "TMSI": Rest } }
     /// Global CN-Id (§8.24): its octets, which the crate does not split.
@@ -21,8 +17,6 @@ gtpv2c_layout! {
     pub struct S103pdf "8.25" { fields { octets "S103 PDN Data Forwarding Info (S103PDF)": Rest } }
     /// S1-U Data Forwarding Info (S1UDF) (§8.26): its octets, which the crate does not split.
     pub struct S1udf "8.26" { fields { octets "S1-U Data Forwarding Info (S1UDF)": Rest } }
-    /// Trace Information (§8.31): its octets, which the crate does not split.
-    pub struct TraceInformation "8.31" { fields { octets "Trace Information": Rest } }
     /// Procedure Transaction ID (§8.35): its octets, which the crate does not split.
     pub struct ProcedureTransactionId "8.35" { fields { octets "Procedure Transaction ID": Rest } }
     /// MM Context (GSM Key and Triplets) (§8.38): its octets, which the crate does not split.

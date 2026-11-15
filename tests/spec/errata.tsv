@@ -11,3 +11,6 @@ ie-type	7	TWMI	174	the abbreviation of Trusted WLAN Mode Indication (§8.105), w
 ie-type	7	Local Distinguished Name (LDN)Name	151	a cell of a table of clause 7 whose words run together
 message	7.1.3	(no table)	3	Version Not Supported Indication has the header alone (§7.1.3): a table of no rows
 expand	7	MM Context	103 104 105 106 107 108	a row of "MM Context" is one row per MM Context type (§8.38), each conditional, named by the row and the type: its Security Mode says which the sender writes; the check reports a mandatory one missing where none is there
+shared	7.2.4-1	MME/S4-SGSN Identifier, UE Local IP Address: IP Address 0	IP Address	two rows of one type and instance, which the wire does not tell apart (the NOTE of the table): one row of two roles, named by its type
+shared	7.2.10.2-1	MME/S4-SGSN Identifier, UE Local IP Address: IP Address 0	IP Address	two rows of one type and instance, which the wire does not tell apart (the NOTE of the table): one row of two roles, named by its type
+shared	7.2.16-1	MME/S4-SGSN Identifier, UE Local IP Address: IP Address 0	IP Address	two rows of one type and instance, which the wire does not tell apart (the NOTE of the table): one row of two roles, named by its type

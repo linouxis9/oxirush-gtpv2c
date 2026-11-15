@@ -19,6 +19,8 @@
 //! Request with a Bearer Context, an IE of an instance that its table does not have, and
 //! one with its spare bits set, each byte-exact through its tree.
 
+#[cfg(feature = "tree")]
+use oxirush_gtpv2c::tree;
 use oxirush_gtpv2c::*;
 
 fn round_trip(octets: &[u8]) -> Message {
@@ -175,5 +177,115 @@ fn a_rejection_names_its_offending_ie() {
     assert_eq!(
         message.to_tree()["ies"]["Cause"].to_string(),
         r#"{"Cause value":"Mandatory IE missing","Offending IE":{"Type":82,"Instance":0}}"#
+    );
+}
+
+#[test]
+fn ies_kept_as_octets_keep_their_order_through_a_tree() {
+    // Delete Bearer Command: a Bearer Context of instance 15 with its spare bits set, of
+    // no row, then one of the row whose content does not frame, both kept as octets
+    let octets = hex::decode(
+        "4842002e11223644000001005d000fffffffffffffffff01000a5c000100025d000f0049000100065c000100005d000f0049",
+    )
+    .unwrap();
+    let message = round_trip(&octets);
+    #[cfg(feature = "tree")]
+    {
+        let read = Message::from_tree(&message.to_tree()).unwrap();
+        assert_eq!(read.check(), message.check());
+    }
+}
+
+#[cfg(feature = "tree")]
+#[test]
+fn the_conditions_that_a_message_shows() {
+    let kinds = |tree: tree::Value| -> Vec<(String, &'static str, DeviationKind)> {
+        let found = Message::from_tree(&tree).unwrap().check();
+        found
+            .into_iter()
+            .map(|d| (d.path, d.clause, d.kind))
+            .collect()
+    };
+    // An accepting Forward Relocation Response has the target's Sender F-TEID (7.3.2-1)
+    let response = tree!({
+        "message": "Forward Relocation Response",
+        "header": {"TEID": 1, "Sequence Number": 1},
+        "ies": {"Cause": {"Cause value": "Request accepted"}}
+    });
+    assert_eq!(
+        kinds(response),
+        [(
+            "/gtpv2c/Sender's F-TEID for Control Plane".to_string(),
+            "7.7.6",
+            DeviationKind::ConditionalMissing { ie: (87, 0) }
+        )]
+    );
+    // A PGW Back-Off Time of a Create Session Response that is no rejection for "APN
+    // Congestion", and an Indication of no flag set (7.2.2-1)
+    let response = tree!({
+        "message": "Create Session Response",
+        "header": {"TEID": 1, "Sequence Number": 1},
+        "ies": {
+            "Cause": {"Cause value": "Request accepted"},
+            "Indication Flags": {},
+            "Bearer Contexts created": [{"EPS Bearer ID": 5, "Cause": {"Cause value": "Request accepted"}}],
+            "PGW Back-Off Time": {"Timer unit": 1, "Timer value": 3}
+        }
+    });
+    let found = kinds(response);
+    let excluded: Vec<&str> = found
+        .iter()
+        .filter(|(_, _, kind)| matches!(kind, DeviationKind::Excluded { .. }))
+        .map(|(path, ..)| &path[..])
+        .collect();
+    assert_eq!(
+        excluded,
+        ["/gtpv2c/PGW Back-Off Time", "/gtpv2c/Indication Flags"],
+        "{found:?}"
+    );
+}
+
+#[test]
+fn a_bearer_tft_by_its_packet_filters() {
+    // Create new TFT, one bidirectional packet filter of precedence 16: a protocol
+    // identifier 17 (UDP) and a single remote port 2152, then a parameter
+    let octets = [
+        0x31, 0x31, 0x10, 0x05, 0x30, 0x11, 0x50, 0x08, 0x68, 0x02, 0x01, 0x05,
+    ];
+    let tft = EpsBearerLevelTrafficFlowTemplate::decode(&octets).unwrap();
+    assert_eq!((tft.operation, tft.filters.len()), (1, 1));
+    assert_eq!(tft.filters[0].identifier, 0x31);
+    assert_eq!(tft.parameters.as_ref().map(|p| p[0].identifier), Some(2));
+    let mut again = Vec::new();
+    tft.encode(&mut again).unwrap();
+    assert_eq!(again, octets);
+    assert!(tft.deviations().is_empty());
+    #[cfg(feature = "tree")]
+    assert_eq!(
+        ie_type_info(84)
+            .unwrap()
+            .tree_of(&octets, None)
+            .unwrap()
+            .to_string(),
+        r#"{"TFT operation code":1,"Packet filters":[{"Packet filter identifier":1,"Packet filter direction":3,"Packet filter evaluation precedence":16,"Packet filter contents":"3011500868"}],"Parameters":[{"Parameter identifier":2,"Parameter contents":"05"}]}"#
+    );
+}
+
+#[test]
+fn two_rows_of_one_key_are_one_field() {
+    // Update Bearer Response: Cause, then an IP Address of instance 0, which is the
+    // MME/S4-SGSN Identifier or the UE Local IP Address (Table 7.2.16-1, NOTE 2)
+    let octets = hex::decode("4862001611223344000001000200020010004a000400c0a80001").unwrap();
+    let message = round_trip(&octets);
+    let Body::UpdateBearerResponse(response) = &message.body else {
+        panic!("{message}")
+    };
+    assert_eq!(response.ip_address.len(), 1);
+    // Its Bearer Contexts are left out
+    let found = message.check();
+    assert_eq!(found.len(), 1, "{found:?}");
+    assert_eq!(
+        found[0].kind,
+        DeviationKind::MandatoryMissing { ie: (93, 0) }
     );
 }

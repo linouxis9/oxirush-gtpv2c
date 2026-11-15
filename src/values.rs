@@ -21,10 +21,16 @@
 use core::net::{Ipv4Addr, Ipv6Addr};
 
 use crate::Octets;
-use crate::fields::{Digits, Rest, SecretRest, U40};
+use crate::fields::{Digits, Rest, SecretRest, U24, U40};
+
+/// Nine octets of a field.
+type Octets9 = [u8; 9];
+/// Twelve octets of a field.
+type Octets12 = [u8; 12];
 use crate::ie::listed_value;
 use crate::macros::gtpv2c_layout;
 use crate::mm_context::MmContextEpsSecurityContextQuadrupletsAndQuintuplets;
+use crate::tft::{EpsBearerLevelTrafficFlowTemplate, Tad};
 use crate::uli::Uli;
 use crate::values_hand::{Cause, FqCsid, Paa};
 use oxirush_utils::fields::{Fqdn as Labels, PlmnId as Plmn};
@@ -60,6 +66,19 @@ gtpv2c_layout! {
         teid "TEID / GRE Key": u32,
         ipv4 "IPv4 address": Ipv4Addr if v4,
         ipv6 "IPv6 address": Ipv6Addr if v6,
+    }
+    /// Trace Information (§8.31): the trace reference (the PLMN and the Trace ID) and what
+    /// TS 32.422 says to trace, and the address of the trace collection entity.
+    pub struct TraceInformation "8.31" {
+        fields {
+            plmn "PLMN": Plmn,
+            trace_id "Trace ID": U24,
+            triggering_events "Triggering Events": Octets9,
+            ne_types "List of NE Types": u16,
+            session_trace_depth "Session Trace Depth": u8,
+            interfaces "List of Interfaces": Octets12,
+            collection_entity "IP Address of Trace Collection Entity": Rest
+        }
     }
     /// Fully Qualified Domain Name (FQDN) (§8.66): its labels, each after its length.
     pub struct Fqdn "8.66" { fields { value "FQDN": Labels } }

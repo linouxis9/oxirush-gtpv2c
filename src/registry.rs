@@ -19,13 +19,30 @@
 //! one row each, by IE type and instance, which the macros expand into the types of the
 //! crate. A grouped IE has a type of the crate for each place, of its table there.
 
+use crate::enums::CauseValue;
 use crate::macros::{gtpv2c_ies, gtpv2c_table};
 use crate::mm_context::*;
+use crate::tft::{EpsBearerLevelTrafficFlowTemplate, Tad};
 use crate::uli::Uli;
 use crate::values::*;
 use crate::values_hand::*;
 
 pub use oxirush_utils::tables::Form;
+
+// The conditions of the rows that a scope alone shows (tests/spec/conditions.tsv).
+
+/// Whether the Cause accepts the request: "Request accepted" and the other acceptances
+/// (Table 8.4-1).
+fn accepted(cause: &Option<Cause>) -> bool {
+    cause
+        .as_ref()
+        .is_some_and(|cause| (16..=63).contains(&cause.value.value()))
+}
+
+/// Whether the Cause is `value`.
+fn cause_is(cause: &Option<Cause>, value: CauseValue) -> bool {
+    cause.as_ref().is_some_and(|cause| cause.value == value)
+}
 
 /// An IE type as Table 8.1-1 has it, of the same fields with every feature.
 ///

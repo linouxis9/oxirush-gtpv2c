@@ -94,6 +94,11 @@ def type_of(cell):
 MM_SUFFIX = {103: 'gsm_triplets', 104: 'umts_cipher_quintuplets', 105: 'gsm_cipher_quintuplets',
              106: 'umts_quintuplets', 107: 'eps', 108: 'umts_quadruplets_quintuplets'}
 
+def presence_of(ps):
+    presence = 'M' if all(p == 'M' for p in ps) else max((p for p in ps if p != 'M'), key=PRESENCE_RANK.get, default='C')
+    return 'C' if 'M' in ps and presence != 'M' else presence
+
+
 PRESENCE_RANK = {'M': 0, 'C': 1, 'CO': 2, 'O': 3}
 
 # The tables of clause 7, a row of several lines (the presences of other interfaces) once,
@@ -134,12 +139,29 @@ for line in tsv('tables.tsv'):
             last['several'] = last['several'] or several == 'several'
             continue
         rows.append(dict(name=name, presences=[presence], type=t, instance=instance, several=several == 'several'))
+# Rows of one type and instance, which the wire does not tell apart: one row of their
+# roles, named by the type (errata.tsv, `shared`)
+for table in tables.values():
+    merged = []
+    for row in table['rows']:
+        same = next((m for m in merged if (m['type'], m['instance']) == (row['type'], row['instance'])), None)
+        if same is None:
+            merged.append(row)
+            continue
+        if 'roles' not in same:
+            same['roles'] = [dict(same)]
+        same['roles'].append(row)
+    for row in merged:
+        if 'roles' in row:
+            row['name'] = re.sub(r'\s*\([^)]*\)\s*$', '', types[row['type']]['name'])
+            row['field'] = snake(row['name'])
+    table['rows'] = merged
 for table in tables.values():
     for row in table['rows']:
         ps = row['presences']
-        row['presence'] = 'M' if all(p == 'M' for p in ps) else max((p for p in ps if p != 'M'), key=PRESENCE_RANK.get, default='C')
-        if 'M' in ps and row['presence'] != 'M':
-            row['presence'] = 'C'
+        row['presence'] = presence_of(ps)
+        for role in row.get('roles', []):
+            role['presence'] = presence_of(role['presences'])
 
 order = list(tables)
 grouped_types = {int(t['prelude']) for t in tables.values() if t['prelude'].isdigit()}
@@ -194,6 +216,8 @@ for number in order:
     used.add(name)
     rust_names[number] = name
 
+conditions = [line for line in tsv('conditions.tsv')]
+
 placed = {}
 messages = []
 blocks = []
@@ -226,8 +250,19 @@ for number in order:
         else:
             ty = types[row['type']]['rust']
         repeat = '*' if row['several'] else ''
+        roles = ''
+        if 'roles' in row:
+            # The field holds the IEs of each of its roles
+            if not any(role['several'] for role in row['roles']):
+                repeat = f'*{len(row["roles"])}'
+            roles = ' roles [' + ', '.join(f'"{role["name"]}" {role["presence"]}{"*" if role["several"] else ""} []' for role in row['roles']) + ']'
         name = row['name'].replace('"', '\\"')
-        lines.append(f'        {field}: "{name}" {row["presence"]}{repeat} {ty} {row["instance"]} [],')
+        condition = ''
+        for table_of, row_name, kind, expression, _ in conditions:
+            if table_of in ('*', number) and row_name == row['name']:
+                expression = expression.replace('{field}', field)
+                condition = f' if |s| {expression}' if kind == 'if' else f' absent(|s| {expression})'
+        lines.append(f'        {field}: "{name}" {row["presence"]}{repeat} {ty} {row["instance"]} []{roles}{condition},')
     lines += ['    }', '}', '']
     blocks.append('\n'.join(lines))
 

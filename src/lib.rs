@@ -50,6 +50,7 @@ mod mm_context;
 pub mod paths;
 mod registry;
 mod table;
+mod tft;
 mod uli;
 mod values;
 mod values_hand;
@@ -70,6 +71,7 @@ pub use mm_context::{
 pub use oxirush_utils::fields::Octets;
 pub use registry::*;
 pub use table::{Interfaces, On, Presence, Repeat, Role, Row, Table};
+pub use tft::{EpsBearerLevelTrafficFlowTemplate, PacketFilter, Tad, TftParameter};
 pub use uli::{Location, Uli};
 pub use values::*;
 pub use values_hand::{Cause, FqCsid, NodeId, OffendingIe, Paa};
