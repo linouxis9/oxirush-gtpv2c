@@ -5,8 +5,6 @@ gtpv2c_layout! {
     pub struct SrvccCause "TS 29.280" { fields { octets "SRVCC Cause": Rest } }
     /// IP Address (§8.9): its octets, which the crate does not split.
     pub struct IpAddress "8.9" { fields { octets "IP Address": Rest } }
-    /// Indication (§8.12): its octets, which the crate does not split.
-    pub struct Indication "8.12" { fields { octets "Indication": Rest } }
     /// Protocol Configuration Options (PCO) (§8.13): its octets, which the crate does not split.
     pub struct Pco "8.13" { fields { octets "Protocol Configuration Options (PCO)": Rest } }
     /// PDN Address Allocation (PAA) (§8.14): its octets, which the crate does not split.
@@ -29,8 +27,6 @@ gtpv2c_layout! {
     pub struct S1udf "8.26" { fields { octets "S1-U Data Forwarding Info (S1UDF)": Rest } }
     /// Trace Information (§8.31): its octets, which the crate does not split.
     pub struct TraceInformation "8.31" { fields { octets "Trace Information": Rest } }
-    /// Bearer Flags (§8.32): its octets, which the crate does not split.
-    pub struct BearerFlags "8.32" { fields { octets "Bearer Flags": Rest } }
     /// Procedure Transaction ID (§8.35): its octets, which the crate does not split.
     pub struct ProcedureTransactionId "8.35" { fields { octets "Procedure Transaction ID": Rest } }
     /// MM Context (GSM Key and Triplets) (§8.38): its octets, which the crate does not split.
@@ -51,8 +47,6 @@ gtpv2c_layout! {
     pub struct PTmsiSignature "8.42" { fields { octets "P-TMSI Signature": Rest } }
     /// Hop Counter (§8.43): its octets, which the crate does not split.
     pub struct HopCounter "8.43" { fields { octets "Hop Counter": Rest } }
-    /// UE Time Zone (§8.44): its octets, which the crate does not split.
-    pub struct UeTimeZone "8.44" { fields { octets "UE Time Zone": Rest } }
     /// Trace Reference (§8.45): its octets, which the crate does not split.
     pub struct TraceReference "8.45" { fields { octets "Trace Reference": Rest } }
     /// Complete Request Message (§8.46): its octets, which the crate does not split.
@@ -113,18 +107,10 @@ gtpv2c_layout! {
     pub struct DetachType "8.81" { fields { octets "Detach Type": Rest } }
     /// Local Distinguished Name (LDN) (§8.82): its octets, which the crate does not split.
     pub struct Ldn "8.82" { fields { octets "Local Distinguished Name (LDN)": Rest } }
-    /// Node Features (§8.83): its octets, which the crate does not split.
-    pub struct NodeFeatures "8.83" { fields { octets "Node Features": Rest } }
     /// MBMS Time to Data Transfer (§8.84): its octets, which the crate does not split.
     pub struct MbmsTimeToDataTransfer "8.84" { fields { octets "MBMS Time to Data Transfer": Rest } }
     /// Throttling (§8.85): its octets, which the crate does not split.
     pub struct Throttling "8.85" { fields { octets "Throttling": Rest } }
-    /// Allocation/Retention Priority (ARP) (§8.86): its octets, which the crate does not split.
-    pub struct Arp "8.86" { fields { octets "Allocation/Retention Priority (ARP)": Rest } }
-    /// EPC Timer (§8.87): its octets, which the crate does not split.
-    pub struct EpcTimer "8.87" { fields { octets "EPC Timer": Rest } }
-    /// Signalling Priority Indication (§8.88): its octets, which the crate does not split.
-    pub struct SignallingPriorityIndication "8.88" { fields { octets "Signalling Priority Indication": Rest } }
     /// Temporary Mobile Group Identity (TMGI) (§8.89): its octets, which the crate does not split.
     pub struct Tmgi "8.89" { fields { octets "Temporary Mobile Group Identity (TMGI)": Rest } }
     /// Additional MM context for SRVCC (§8.90): its octets, which the crate does not split.

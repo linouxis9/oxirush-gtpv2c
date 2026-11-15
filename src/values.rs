@@ -129,4 +129,133 @@ gtpv2c_field! {
     NodeType(u8) "Node Type" "8.65";
 }
 
+crate::macros::gtpv2c_bits! {
+    /// Indication (§8.12): the flags of a request, in up to 10 octets, of which a sender
+    /// of an earlier release sends fewer.
+    pub struct Indication "8.12" octets 10 min 1 {
+        daf "DAF": 0 8 1,
+        dtf "DTF": 0 7 1,
+        hi "HI": 0 6 1,
+        dfi "DFI": 0 5 1,
+        oi "OI": 0 4 1,
+        isrsi "ISRSI": 0 3 1,
+        israi "ISRAI": 0 2 1,
+        sgwci "SGWCI": 0 1 1,
+        sqci "SQCI": 1 8 1,
+        uimsi "UIMSI": 1 7 1,
+        cfsi "CFSI": 1 6 1,
+        crsi "CRSI": 1 5 1,
+        p "P": 1 4 1,
+        pt "PT": 1 3 1,
+        si "SI": 1 2 1,
+        msv "MSV": 1 1 1,
+        retloc "RetLoc": 2 8 1,
+        pbic "PBIC": 2 7 1,
+        srni "SRNI": 2 6 1,
+        s6af "S6AF": 2 5 1,
+        s4af "S4AF": 2 4 1,
+        mbmdt "MBMDT": 2 3 1,
+        israu "ISRAU": 2 2 1,
+        ccrsi "CCRSI": 2 1 1,
+        cprai "CPRAI": 3 8 1,
+        arrl "ARRL": 3 7 1,
+        ppof "PPOF": 3 6 1,
+        ppon_ppei "PPON/PPEI": 3 5 1,
+        ppsi "PPSI": 3 4 1,
+        csfbi "CSFBI": 3 3 1,
+        clii "CLII": 3 2 1,
+        cpsr "CPSR": 3 1 1,
+        nsi "NSI": 4 8 1,
+        uasi "UASI": 4 7 1,
+        dtci "DTCI": 4 6 1,
+        bdwi "BDWI": 4 5 1,
+        psci "PSCI": 4 4 1,
+        pcri "PCRI": 4 3 1,
+        aosi "AOSI": 4 2 1,
+        aopi "AOPI": 4 1 1,
+        roaai "ROAAI": 5 8 1,
+        epcosi "EPCOSI": 5 7 1,
+        cpopci "CPOPCI": 5 6 1,
+        pmtsmi "PMTSMI": 5 5 1,
+        s11tf "S11TF": 5 4 1,
+        pnsi "PNSI": 5 3 1,
+        unaccsi "UNACCSI": 5 2 1,
+        wpmsi "WPMSI": 5 1 1,
+        n5gsnn26 "5GSNN26": 6 8 1,
+        reprefi "REPREFI": 6 7 1,
+        n5gsiwk "5GSIWK": 6 6 1,
+        eevrsi "EEVRSI": 6 5 1,
+        ltemui "LTEMUI": 6 4 1,
+        ltempi "LTEMPI": 6 3 1,
+        enbcrsi "ENBCRSI": 6 2 1,
+        tspcmi "TSPCMI": 6 1 1,
+        csrmfi "CSRMFI": 7 8 1,
+        mtedtn "MTEDTN": 7 7 1,
+        mtedta "MTEDTA": 7 6 1,
+        n5gnmi "N5GNMI": 7 5 1,
+        n5gcnrs "5GCNRS": 7 4 1,
+        n5gcnri "5GCNRI": 7 3 1,
+        n5srhoi "5SRHOI": 7 2 1,
+        ethpdn "ETHPDN": 7 1 1,
+        nspusi "NSPUSI": 8 8 1,
+        pgwrnsi "PGWRNSI": 8 7 1,
+        rppcsi "RPPCSI": 8 6 1,
+        pgwchi "PGWCHI": 8 5 1,
+        sissme "SISSME": 8 4 1,
+        nsenbi "NSENBI": 8 3 1,
+        idfupf "IDFUPF": 8 2 1,
+        emci "EMCI": 8 1 1,
+        disrei "DISREI": 9 6 1,
+        ppri "PPRI": 9 5 1,
+        lapcosi "LAPCOSI": 9 4 1,
+        ltemsai "LTEMSAI": 9 3 1,
+        srtpi "SRTPI": 9 2 1,
+        upipsi "UPIPSI": 9 1 1,
+    }
+}
+
+crate::macros::gtpv2c_bits! {
+    /// Bearer Flags (§8.32).
+    pub struct BearerFlags "8.32" octets 1 min 1 {
+        asi "ASI": 0 4 1, vind "Vind": 0 3 1, vb "VB": 0 2 1, ppc "PPC": 0 1 1,
+    }
+}
+
+crate::macros::gtpv2c_bits! {
+    /// UE Time Zone (§8.44): the time zone, as TS 24.008 clause 10.5.3.8 writes it, and the
+    /// adjustment for daylight saving time.
+    pub struct UeTimeZone "8.44" octets 2 min 2 {
+        time_zone "Time Zone": 0 1 8, daylight_saving_time "Daylight Saving Time": 1 1 2,
+    }
+}
+
+crate::macros::gtpv2c_bits! {
+    /// Node Features (§8.83): the features that the sender supports.
+    pub struct NodeFeatures "8.83" octets 1 min 1 {
+        prn "PRN": 0 1 1, mabr "MABR": 0 2 1, ntsr "NTSR": 0 3 1, ciot "CIOT": 0 4 1,
+        s1un "S1UN": 0 5 1, eth "ETH": 0 6 1, mtedt "MTEDT": 0 7 1, psset "PSSET": 0 8 1,
+    }
+}
+
+crate::macros::gtpv2c_bits! {
+    /// Allocation/Retention Priority (ARP) (§8.86).
+    pub struct Arp "8.86" octets 1 min 1 {
+        pci "PCI": 0 7 1, pl "PL": 0 3 4, pvi "PVI": 0 1 1,
+    }
+}
+
+crate::macros::gtpv2c_bits! {
+    /// EPC Timer (§8.87): a timer of a unit (Table 8.87-1) and a value.
+    pub struct EpcTimer "8.87" octets 1 min 1 {
+        timer_unit "Timer unit": 0 6 3, timer_value "Timer value": 0 1 5,
+    }
+}
+
+crate::macros::gtpv2c_bits! {
+    /// Signalling Priority Indication (§8.88): LAPI, the low access priority of the UE.
+    pub struct SignallingPriorityIndication "8.88" octets 1 min 1 {
+        lapi "LAPI": 0 1 1,
+    }
+}
+
 include!("values_octets.rs");
