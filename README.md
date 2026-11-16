@@ -22,11 +22,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let Body::EchoRequest(echo) = &message.body else { unreachable!() };
     assert_eq!(echo.recovery.as_ref().map(|recovery| recovery.value), Some(5));
 
-    // Its tree, which reads back to the same octets
-    let tree = message.to_tree();
-    let json = r#"{"message":"Echo Request","header":{"Sequence Number":1},"ies":{"Recovery":5}}"#;
-    assert_eq!(tree.to_string(), json);
-    assert_eq!(Message::from_tree(&tree)?.encode()?, octets);
+    // The SGW answers with its own Restart Counter, on the same sequence number
+    let response = Message::path(message.header.sequence, EchoResponse::new(Recovery::new(9)));
+    assert_eq!(hex::encode(response.encode()?), "40020009000001000300010009");
     Ok(())
 }
 ```
@@ -36,6 +34,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ```toml
 [dependencies]
 oxirush-gtpv2c = { git = "https://github.com/linouxis9/oxirush-gtpv2c", features = ["tree"] }
+oxirush-utils = { version = "0.3", features = ["fields"] } # for the name of an APN
 hex = "0.4" # for the examples of this page
 ```
 
@@ -46,50 +45,52 @@ hex = "0.4" # for the examples of this page
 The crate is `no_std` with `alloc`, and is written with the fields and tables
 of oxirush-utils 0.3. The minimum supported Rust version is 1.88.
 
-## Check a message, and answer a faulty one
+## Build a message, and check it
 
-`check()` compares a message with the table of clause 7 that its type has: an
-IE by its type and instance, each with its presence. Each deviation has its
-path, its clause and the Cause with which a receiver answers a request.
+A message is a struct with a field for each row of its table. `new()` takes
+the mandatory IEs, a `with_` method adds each other one, and a value is a
+struct of the fields of its figure. `check()` compares a message with its
+table of clause 7: each deviation has its path, its clause and the Cause with
+which a receiver answers a request.
 
 ```rust
+use std::net::Ipv4Addr;
+
 use oxirush_gtpv2c::*;
+use oxirush_utils::fields::Fqdn;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // A Create Session Request without its mandatory RAT Type
-    let mut tree = tree!({
-        "message": "Create Session Request",
-        "header": {"TEID": 0, "Sequence Number": 2},
-        "ies": {
-            "IMSI": "208930000000001",
-            "Sender F-TEID for Control Plane": {
-                "V4": true, "Interface Type": 10, "TEID / GRE Key": 1, "IPv4 address": "10.0.0.1"
-            },
-            "Access Point Name (APN)": "internet",
-            "Bearer Contexts to be created": [{
-                "EPS Bearer ID": 5,
-                "Bearer Level QoS": {
-                    "PL": 8, "Label (QCI)": 9,
-                    "Maximum bit rate for uplink": 0, "Maximum bit rate for downlink": 0,
-                    "Guaranteed bit rate for uplink": 0, "Guaranteed bit rate for downlink": 0
-                }
-            }]
-        }
-    });
-    let request = Message::from_tree(&tree)?;
-    let found = request.check();
-    assert_eq!(found.len(), 1);
+    // An MME asks its SGW for a session: the MME's F-TEID of S11 (interface type 10),
+    // the APN, and the default bearer, EBI 5 of QCI 9; RAT Type 6 is E-UTRAN
+    let control = FTeid {
+        v4: true, interface_type: 10, teid: 1, ipv4: Some(Ipv4Addr::new(10, 0, 0, 1)),
+        ..Default::default()
+    };
+    let apn = Apn { value: Fqdn::new("internet").ok_or("an APN")?, ..Default::default() };
+    let qos = BearerLevelQualityOfService { pl: 8, qci: 9, ..Default::default() };
+    let bearer = BearerContextToBeCreatedInCreateSessionRequest::new(Ebi::new(5), qos);
+    let imsi = Imsi { value: Digits::new("208930000000001")?, ..Default::default() };
+    let mut request = CreateSessionRequest::new(RatType::new(6), control, apn, bearer)
+        .with_imsi(imsi);
+    assert!(Message::tunnel(0, 2, request.clone()).check().is_empty());
+
+    // Without its mandatory RAT Type, the SGW answers "Mandatory IE missing", which
+    // names the IE by its type and instance
+    request.rat_type = None;
+    let found = Message::tunnel(0, 2, request).check();
     let missing = "the mandatory RAT Type is missing (TS 29.274 7.7.6), at /gtpv2c/RAT Type: \
                    the answer is \"Mandatory IE missing\"";
+    assert_eq!(found.len(), 1);
     assert_eq!(found[0].to_string(), missing);
-
-    // The Cause of the answer names the IE by its type and instance
     assert_eq!(found[0].cause, Some(CauseValue::MandatoryIeMissing));
     assert_eq!(found[0].offending_ie(), Some((82, 0)));
 
-    // paths::set() adds it, as E-UTRAN, and the request is then whole
-    paths::set(&mut tree, "/gtpv2c/RAT Type", 6)?;
-    assert!(Message::from_tree(&tree)?.check().is_empty());
+    // The answer of the SGW, a rejection with its Cause alone (§6.1.1)
+    let cause = Cause::new(CauseValue::MandatoryIeMissing);
+    let rejection = CreateSessionResponse { cause: Some(cause), ..Default::default() };
+    let response = Message::tunnel(1, 2, rejection);
+    assert!(response.check().is_empty());
+    assert_eq!(response.to_string(), "Create Session Response (TEID 0x1, sequence 2)");
     Ok(())
 }
 ```
@@ -100,47 +101,63 @@ rejection may carry (§6.1.1), and the conditions that the message shows alone.
 An IE that the table of its scope does not have, of another instance, with its
 spare bits set, or that does not decode is kept as its octets in its place.
 
-## Carry an MM Context on N26
+## Edit a message as JSON
 
-An AMF sends an MME the UE's EPS security context in the MM Context of a
-Forward Relocation Request. The tree has the keys, and `Debug` prints none of
-them.
+With the `tree` feature, a message is a tree: its name, its header and its IEs
+by the names of its table, in the order of the wire. `paths::set()` edits it,
+and `from_tree()` writes the message again.
 
 ```rust
 use oxirush_gtpv2c::*;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let kasme = "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f";
-    let nh = "a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebf";
-    let tree = tree!({
-        "message": "Forward Relocation Request",
-        "header": {"TEID": 0, "Sequence Number": 7},
-        "ies": {
-            "IMSI": "208930000000001",
-            "Sender's F-TEID for Control Plane": {
-                "V4": true, "Interface Type": 12, "TEID / GRE Key": 4097,
-                "IPv4 address": "10.0.0.1"
-            },
-            "MME/SGSN/AMF UE MM Context (EPS Security Context, Quadruplets and Quintuplets)": {
-                "Security Mode": 4, "KSIASME": 1,
-                "Used NAS integrity protection algorithm": 2, "Used NAS Cipher": 0,
-                "NAS Downlink Count": 5, "NAS Uplink Count": 3,
-                "KASME": kasme, "NH": nh, "NCC": 2,
-                "Uplink Subscribed UE AMBR": 100000, "Downlink Subscribed UE AMBR": 200000,
-                "UE Network Capability": "f0f0c0c0", "MS Network Capability": "",
-                "Mobile Equipment Identity (MEI)": "",
-                "Access restriction data": {"NBNA": true},
-                "Voice Domain Preference and UE's Usage Setting": "",
-                "UE Radio Capability for Paging information": "",
-                "Extended Access Restriction Data": "",
-                "UE additional security capability": "",
-                "UE NR security capability": "f0f0"
-            }
-        }
-    });
+    let echo = Message::path(1, EchoRequest::new(Recovery::new(5)));
+    let mut tree = echo.to_tree();
+    let json = r#"{"message":"Echo Request","header":{"Sequence Number":1},"ies":{"Recovery":5}}"#;
+    assert_eq!(tree.to_string(), json);
 
-    // The MME decodes the request, and reads the context as typed fields
-    let octets = Message::from_tree(&tree)?.encode()?;
+    // Another Restart Counter, set by its path
+    paths::set(&mut tree, "/gtpv2c/Recovery", 6)?;
+    let edited = Message::from_tree(&tree)?;
+    assert_eq!(hex::encode(edited.encode()?), "40010009000001000300010006");
+    Ok(())
+}
+```
+
+## Carry an MM Context on N26
+
+An AMF sends an MME the UE's EPS security context in the MM Context of a
+Forward Relocation Request. `Debug` prints none of its keys.
+
+```rust
+use std::net::Ipv4Addr;
+
+use oxirush_gtpv2c::*;
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // The context: Security Mode 4 (an EPS security context), KSIASME 1, 128-EIA2 and
+    // EEA0, the NAS COUNTs, KASME, and NH with its NCC
+    let context = MmContextEpsSecurityContextQuadrupletsAndQuintuplets {
+        security_mode: 4,
+        ksi_asme: 1,
+        used_nas_integrity: 2,
+        used_nas_cipher: 0,
+        nas_downlink_count: 5,
+        nas_uplink_count: 3,
+        kasme: [0x11; 32],
+        nh: Some(([0x22; 32], 2)),
+        subscribed_ue_ambr: Some((100_000, 200_000)),
+        ue_network_capability: Octets::copied(&[0xf0, 0xf0, 0xc0, 0xc0]),
+        ..Default::default()
+    };
+    let amf = FTeid {
+        v4: true, interface_type: 12, teid: 0x1001, ipv4: Some(Ipv4Addr::new(10, 0, 0, 1)),
+        ..Default::default()
+    };
+    let request = ForwardRelocationRequest::new(amf).with_mme_sgsn_amf_ue_mm_context_eps(context);
+    let octets = Message::tunnel(0, 7, request).encode()?;
+
+    // The MME decodes the request and reads the context
     let message = Message::decode(&octets)?;
     assert!(message.check().is_empty());
     let Body::ForwardRelocationRequest(request) = &message.body else { unreachable!() };
@@ -148,8 +165,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let ncc = context.nh.as_ref().map(|(_, ncc)| *ncc);
     assert_eq!((context.ksi_asme, context.nas_downlink_count, ncc), (1, 5, Some(2)));
 
-    // The keys are in the tree and the octets, and not in `Debug`
-    assert!(!format!("{message:?}").contains("a0a1a2"));
+    // The keys are in the octets, and not in `Debug`
+    assert!(!format!("{message:?}").contains("17, 17"));
     Ok(())
 }
 ```

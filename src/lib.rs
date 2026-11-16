@@ -45,9 +45,9 @@
 //! | Task | Items |
 //! |------|-------|
 //! | Decode a message and read its IEs | [`Message::decode`], [`Body`], [`Message::path`], [`Message::tunnel`] |
-//! | Check a message, and answer a faulty one | [`Message::check`], [`Deviation`], [`DeviationKind`], [`CauseValue`] |
+//! | Build a message, and check it | [`CreateSessionRequest::new`], [`FTeid`], [`BearerContextToBeCreatedInCreateSessionRequest`], [`Message::check`], [`Deviation`], [`Cause`] |
 //! | Edit a message as JSON | [`Message::to_tree`], [`Message::from_tree`], [`paths`] |
-//! | Carry an MM Context on N26 | [`MmContextEpsSecurityContextQuadrupletsAndQuintuplets`] |
+//! | Carry an MM Context on N26 | [`ForwardRelocationRequest`], [`MmContextEpsSecurityContextQuadrupletsAndQuintuplets`] |
 //!
 //! The facts of the specification are tables of macros: one line per IE type (Table
 //! 8.1-1), one row per IE of a table of clause 7, one layout per value. The codec, the
