@@ -289,3 +289,14 @@ fn two_rows_of_one_key_are_one_field() {
         DeviationKind::MandatoryMissing { ie: (93, 0) }
     );
 }
+
+#[test]
+fn a_cause_of_fewer_octets_than_an_offending_ie_encodes_back() {
+    // Create Bearer Response: a Bearer Context whose Cause has one octet after its flags,
+    // fewer than an offending IE, which a later release may write (found by fuzzing)
+    let octets = hex::decode(
+        "4823004611223344000001000200020010005d00180002000300100049310000055700090081ffffffff010101035d00180004000200100049000104065700090081ffffffff01010103",
+    )
+    .unwrap();
+    round_trip(&octets);
+}

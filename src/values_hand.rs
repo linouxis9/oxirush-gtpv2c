@@ -105,7 +105,9 @@ impl Codec for Cause {
                 field: "Spare",
             });
         }
-        if self.offending_ie.is_none() && !self.extra.is_empty() {
+        // Without an offending IE, four octets after the flags or more would read as one:
+        // fewer are the octets of a later release, which a Cause keeps
+        if self.offending_ie.is_none() && self.extra.len() >= 4 {
             return Err(Error::Inconsistent {
                 ie: "Cause",
                 field: "the octets of a later release",
