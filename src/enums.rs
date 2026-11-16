@@ -113,3 +113,121 @@ impl CauseValue {
         (64..=239).contains(&self.value())
     }
 }
+
+oxirush_utils::named_values! {
+    /// RAT Type (Table 8.17-1).
+    pub enum RatTypeValue "Table 8.17-1" bits 8 reserved [0] {
+        1 Utran "UTRAN",
+        2 Geran "GERAN",
+        3 Wlan "WLAN",
+        4 Gan "GAN",
+        5 HspaEvolution "HSPA Evolution",
+        6 Eutran "EUTRAN (WB-E-UTRAN)",
+        7 Virtual "Virtual",
+        8 EutranNbIot "EUTRAN-NB-IoT",
+        9 LteM "LTE-M",
+        10 Nr "NR",
+        11 WbEutranLeo "WB-E-UTRAN(LEO)",
+        12 WbEutranMeo "WB-E-UTRAN(MEO)",
+        13 WbEutranGeo "WB-E-UTRAN(GEO)",
+        14 WbEutranOthersat "WB-E-UTRAN(OTHERSAT)",
+        15 EutranNbIotLeo "EUTRAN-NB-IoT(LEO)",
+        16 EutranNbIotMeo "EUTRAN-NB-IoT(MEO)",
+        17 EutranNbIotGeo "EUTRAN-NB-IoT(GEO)",
+        18 EutranNbIotOthersat "EUTRAN-NB-IoT(OTHERSAT)",
+        19 LteMLeo "LTE-M(LEO)",
+        20 LteMMeo "LTE-M(MEO)",
+        21 LteMGeo "LTE-M(GEO)",
+        22 LteMOthersat "LTE-M(OTHERSAT)",
+    }
+    /// Interface Type of an F-TEID (§8.22).
+    pub enum InterfaceType "8.22" bits 6 {
+        0 S1uEnodebGtpU "S1-U eNodeB GTP-U interface",
+        1 S1uSgwGtpU "S1-U SGW GTP-U interface",
+        2 S12RncGtpU "S12 RNC GTP-U interface",
+        3 S12SgwGtpU "S12 SGW GTP-U interface",
+        4 S5S8SgwGtpU "S5/S8 SGW GTP-U interface",
+        5 S5S8PgwGtpU "S5/S8 PGW GTP-U interface",
+        6 S5S8SgwGtpC "S5/S8 SGW GTP-C interface",
+        7 S5S8PgwGtpC "S5/S8 PGW GTP-C interface",
+        8 S5S8SgwPmipv6 "S5/S8 SGW PMIPv6 interface",
+        9 S5S8PgwPmipv6 "S5/S8 PGW PMIPv6 interface",
+        10 S11MmeGtpC "S11 MME GTP-C interface",
+        11 S11S4SgwGtpC "S11/S4 SGW GTP-C interface",
+        12 S10N26MmeGtpC "S10/N26 MME GTP-C interface",
+        13 S3MmeGtpC "S3 MME GTP-C interface",
+        14 S3SgsnGtpC "S3 SGSN GTP-C interface",
+        15 S4SgsnGtpU "S4 SGSN GTP-U interface",
+        16 S4SgwGtpU "S4 SGW GTP-U interface",
+        17 S4SgsnGtpC "S4 SGSN GTP-C interface",
+        18 S16SgsnGtpC "S16 SGSN GTP-C interface",
+        19 EnodebGnodebGtpUDlForwarding "eNodeB/gNodeB GTP-U interface for DL data forwarding",
+        20 EnodebGtpUUlForwarding "eNodeB GTP-U interface for UL data forwarding",
+        21 RncGtpUForwarding "RNC GTP-U interface for data forwarding",
+        22 SgsnGtpUForwarding "SGSN GTP-U interface for data forwarding",
+        23 SgwUpfGtpUDlForwarding "SGW/UPF GTP-U interface for DL data forwarding",
+        24 SmMbmsGwGtpC "Sm MBMS GW GTP-C interface",
+        25 SnMbmsGwGtpC "Sn MBMS GW GTP-C interface",
+        26 SmMmeGtpC "Sm MME GTP-C interface",
+        27 SnSgsnGtpC "Sn SGSN GTP-C interface",
+        28 SgwGtpUUlForwarding "SGW GTP-U interface for UL data forwarding",
+        29 SnSgsnGtpU "Sn SGSN GTP-U interface",
+        30 S2bEpdgGtpC "S2b ePDG GTP-C interface",
+        31 S2bUEpdgGtpU "S2b-U ePDG GTP-U interface",
+        32 S2bPgwGtpC "S2b PGW GTP-C interface",
+        33 S2bUPgwGtpU "S2b-U PGW GTP-U interface",
+        34 S2aTwanGtpU "S2a TWAN GTP-U interface",
+        35 S2aTwanGtpC "S2a TWAN GTP-C interface",
+        36 S2aPgwGtpC "S2a PGW GTP-C interface",
+        37 S2aPgwGtpU "S2a PGW GTP-U interface",
+        38 S11MmeGtpU "S11 MME GTP-U interface",
+        39 S11SgwGtpU "S11 SGW GTP-U interface",
+        40 N26AmfGtpC "N26 AMF GTP-C interface",
+        41 N19mbUpfGtpU "N19mb UPF GTP-U interface",
+    }
+    /// PDN Type (§8.34, Table 8.14-1).
+    pub enum PdnTypeValue "8.34" bits 3 {
+        1 Ipv4 "IPv4",
+        2 Ipv6 "IPv6",
+        3 Ipv4v6 "IPv4v6",
+        4 NonIp "Non-IP",
+        5 Ethernet "Ethernet",
+    }
+    /// Selection Mode (Table 8.58-1): 3, of a later use, is read as 2.
+    pub enum SelectionModeValue "Table 8.58-1" bits 2 read [3 ..= 3 as 2] {
+        0 MsOrNetworkProvidedApnSubscriptionVerified "MS or network provided APN, subscription verified",
+        1 MsProvidedApnSubscriptionNotVerified "MS provided APN, subscription not verified",
+        2 NetworkProvidedApnSubscriptionNotVerified "Network provided APN, subscription not verified",
+    }
+    /// Security Mode of an MM Context (Table 8.38-1).
+    pub enum SecurityMode "Table 8.38-1" bits 3 {
+        0 GsmKeyAndTriplets "GSM Key and Triplets",
+        1 UmtsKeyUsedCipherAndQuintuplets "UMTS Key, Used Cipher and Quintuplets",
+        2 GsmKeyUsedCipherAndQuintuplets "GSM Key, Used Cipher and Quintuplets",
+        3 UmtsKeyAndQuintuplets "UMTS Key and Quintuplets",
+        4 EpsSecurityContextAndQuadruplets "EPS Security Context and Quadruplets",
+        5 UmtsKeyQuadrupletsAndQuintuplets "UMTS Key, Quadruplets and Quintuplets",
+    }
+    /// Used NAS integrity protection algorithm of an MM Context (Table 8.38-4).
+    pub enum NasIntegrity "Table 8.38-4" bits 3 {
+        0 None "No integrity protection",
+        1 Eia1 "128-EIA1",
+        2 Eia2 "128-EIA2",
+        3 Eia3 "128-EIA3",
+        4 Eia4 "EIA4",
+        5 Eia5 "EIA5",
+        6 Eia6 "EIA6",
+        7 Eia7 "EIA7",
+    }
+    /// Used NAS Cipher of an MM Context (Table 8.38-2).
+    pub enum NasCipher "Table 8.38-2" bits 4 {
+        0 None "No ciphering",
+        1 Eea1 "128-EEA1",
+        2 Eea2 "128-EEA2",
+        3 Eea3 "128-EEA3",
+        4 Eea4 "EEA4",
+        5 Eea5 "EEA5",
+        6 Eea6 "EEA6",
+        7 Eea7 "EEA7",
+    }
+}

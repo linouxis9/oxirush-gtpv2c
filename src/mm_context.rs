@@ -24,8 +24,43 @@ use core::fmt;
 
 use crate::Error;
 use crate::check::{Deviation, DeviationKind, Path, Rules};
+use crate::enums::{NasCipher, NasIntegrity, SecurityMode};
 use crate::ie::Codec;
 use oxirush_utils::fields::Octets;
+
+/// The octets of a key, which `Debug` does not print: their number alone.
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub struct Key<const N: usize>(pub [u8; N]);
+
+impl<const N: usize> Default for Key<N> {
+    fn default() -> Self {
+        Self([0; N])
+    }
+}
+
+impl<const N: usize> fmt::Debug for Key<N> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "Key({N} octets)")
+    }
+}
+
+impl<const N: usize> From<[u8; N]> for Key<N> {
+    fn from(octets: [u8; N]) -> Self {
+        Self(octets)
+    }
+}
+
+/// The Next Hop of an EPS security context and its chaining count (NHI): NH and the octet
+/// of NCC.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct NextHop {
+    /// NH.
+    pub nh: Key<32>,
+    /// NCC, of 3 bits.
+    pub ncc: u8,
+    /// The spare bits 8 to 4 of the octet of NCC.
+    pub spare: u8,
+}
 
 /// An authentication quadruplet (Figure 8.38-9).
 #[derive(Clone, Default, PartialEq, Eq)]
@@ -37,7 +72,7 @@ pub struct Quadruplet {
     /// AUTN, after its length.
     pub autn: Octets,
     /// KASME.
-    pub kasme: [u8; 32],
+    pub kasme: Key<32>,
 }
 
 /// An authentication quintuplet (Figure 8.38-8).
@@ -48,9 +83,9 @@ pub struct Quintuplet {
     /// XRES, after its length.
     pub xres: Octets,
     /// CK.
-    pub ck: [u8; 16],
+    pub ck: Key<16>,
     /// IK.
-    pub ik: [u8; 16],
+    pub ik: Key<16>,
     /// AUTN, after its length.
     pub autn: Octets,
 }
@@ -66,9 +101,9 @@ pub struct OldSecurityContext {
     /// The old NCC, of 3 bits, which a receiver ignores without the old NH.
     pub ncc: u8,
     /// The old KASME.
-    pub kasme: [u8; 32],
+    pub kasme: Key<32>,
     /// The old NH (NHI_old).
-    pub nh: Option<[u8; 32]>,
+    pub nh: Option<Key<32>>,
 }
 
 /// The access restriction data of octet r+1: each a RAT that the UE is not allowed.
@@ -155,27 +190,27 @@ pub struct Later {
 #[derive(Clone, Default, PartialEq, Eq)]
 pub struct MmContextEpsSecurityContextQuadrupletsAndQuintuplets {
     /// Security Mode, of Table 8.38-1: 4 for this context.
-    pub security_mode: u8,
+    pub security_mode: SecurityMode,
     /// KSIASME, of 3 bits.
     pub ksi_asme: u8,
     /// Used NAS integrity protection algorithm, of Table 8.38-4.
-    pub used_nas_integrity: u8,
+    pub used_nas_integrity: NasIntegrity,
     /// Used NAS Cipher, of Table 8.38-2.
-    pub used_nas_cipher: u8,
+    pub used_nas_cipher: NasCipher,
     /// NAS Downlink Count, of 24 bits.
     pub nas_downlink_count: u32,
     /// NAS Uplink Count, of 24 bits.
     pub nas_uplink_count: u32,
     /// KASME.
-    pub kasme: [u8; 32],
+    pub kasme: Key<32>,
     /// The authentication quadruplets, at most 7 by the 3 bits of their number.
     pub quadruplets: Vec<Quadruplet>,
     /// The authentication quintuplets, at most 7.
     pub quintuplets: Vec<Quintuplet>,
     /// DRX parameter (TS 24.008 clause 10.5.5.6): DRXI.
     pub drx_parameter: Option<[u8; 2]>,
-    /// NH and the octet of NCC: NHI. The NCC is bits 3 to 1, the others spare.
-    pub nh: Option<([u8; 32], u8)>,
+    /// NH and NCC: NHI.
+    pub nh: Option<NextHop>,
     /// Uplink and downlink Subscribed UE AMBR, in kbps: SAMBRI.
     pub subscribed_ue_ambr: Option<(u32, u32)>,
     /// Uplink and downlink Used UE AMBR, in kbps: UAMBRI.
@@ -277,13 +312,13 @@ impl Codec for MmContextEpsSecurityContextQuadrupletsAndQuintuplets {
         let (quintuplets, quadruplets) = (o6 >> 5, o6 >> 2 & 0x07);
         let (uambri, osci, sambri) = (o6 & 0x02 != 0, o6 & 0x01 != 0, o7 & 0x80 != 0);
         let mut value = Self {
-            security_mode: o5 >> 5,
+            security_mode: SecurityMode::from_value(o5 >> 5),
             ksi_asme: o5 & 0x07,
-            used_nas_integrity: o7 >> 4 & 0x07,
-            used_nas_cipher: o7 & 0x0f,
+            used_nas_integrity: NasIntegrity::from_value(o7 >> 4 & 0x07),
+            used_nas_cipher: NasCipher::from_value(o7 & 0x0f),
             nas_downlink_count: r.u24()?,
             nas_uplink_count: r.u24()?,
-            kasme: r.array()?,
+            kasme: Key(r.array()?),
             ..Self::default()
         };
         for _ in 0..quadruplets {
@@ -291,21 +326,26 @@ impl Codec for MmContextEpsSecurityContextQuadrupletsAndQuintuplets {
                 rand: r.array()?,
                 xres: r.lv8()?,
                 autn: r.lv8()?,
-                kasme: r.array()?,
+                kasme: Key(r.array()?),
             });
         }
         for _ in 0..quintuplets {
             value.quintuplets.push(Quintuplet {
                 rand: r.array()?,
                 xres: r.lv8()?,
-                ck: r.array()?,
-                ik: r.array()?,
+                ck: Key(r.array()?),
+                ik: Key(r.array()?),
                 autn: r.lv8()?,
             });
         }
         value.drx_parameter = if drxi { Some(r.array()?) } else { None };
         value.nh = if nhi {
-            Some((r.array()?, r.octet()?))
+            let (nh, octet) = (Key(r.array()?), r.octet()?);
+            Some(NextHop {
+                nh,
+                ncc: octet & 0x07,
+                spare: octet >> 3,
+            })
         } else {
             None
         };
@@ -329,9 +369,9 @@ impl Codec for MmContextEpsSecurityContextQuadrupletsAndQuintuplets {
                 rlos: s & 0x40 != 0,
                 ksi_asme: s >> 3 & 0x07,
                 ncc: s & 0x07,
-                kasme: r.array()?,
+                kasme: Key(r.array()?),
                 nh: if s & 0x80 != 0 {
-                    Some(r.array()?)
+                    Some(Key(r.array()?))
                 } else {
                     None
                 },
@@ -357,14 +397,14 @@ impl Codec for MmContextEpsSecurityContextQuadrupletsAndQuintuplets {
             0 => Ok(()),
             _ => Err(wide(field)),
         };
-        fits(self.security_mode.into(), 3, "Security Mode")?;
+        fits(self.security_mode.value().into(), 3, "Security Mode")?;
         fits(self.ksi_asme.into(), 3, "KSIASME")?;
         fits(
-            self.used_nas_integrity.into(),
+            self.used_nas_integrity.value().into(),
             3,
             "Used NAS integrity protection algorithm",
         )?;
-        fits(self.used_nas_cipher.into(), 4, "Used NAS Cipher")?;
+        fits(self.used_nas_cipher.value().into(), 4, "Used NAS Cipher")?;
         fits(self.nas_downlink_count, 24, "NAS Downlink Count")?;
         fits(self.nas_uplink_count, 24, "NAS Uplink Count")?;
         let count = |n: usize, field| u8::try_from(n).ok().filter(|n| *n < 8).ok_or(wide(field));
@@ -379,7 +419,7 @@ impl Codec for MmContextEpsSecurityContextQuadrupletsAndQuintuplets {
             return Err(wide("a field after a length of one octet"));
         }
         out.push(
-            self.security_mode << 5
+            self.security_mode.value() << 5
                 | u8::from(self.nh.is_some()) << 4
                 | u8::from(self.drx_parameter.is_some()) << 3
                 | self.ksi_asme,
@@ -392,31 +432,33 @@ impl Codec for MmContextEpsSecurityContextQuadrupletsAndQuintuplets {
         );
         out.push(
             u8::from(self.subscribed_ue_ambr.is_some()) << 7
-                | self.used_nas_integrity << 4
-                | self.used_nas_cipher,
+                | self.used_nas_integrity.value() << 4
+                | self.used_nas_cipher.value(),
         );
         out.extend_from_slice(&self.nas_downlink_count.to_be_bytes()[1..]);
         out.extend_from_slice(&self.nas_uplink_count.to_be_bytes()[1..]);
-        out.extend_from_slice(&self.kasme);
+        out.extend_from_slice(&self.kasme.0);
         for q in &self.quadruplets {
             out.extend_from_slice(&q.rand);
             lv8(&q.xres, out);
             lv8(&q.autn, out);
-            out.extend_from_slice(&q.kasme);
+            out.extend_from_slice(&q.kasme.0);
         }
         for q in &self.quintuplets {
             out.extend_from_slice(&q.rand);
             lv8(&q.xres, out);
-            out.extend_from_slice(&q.ck);
-            out.extend_from_slice(&q.ik);
+            out.extend_from_slice(&q.ck.0);
+            out.extend_from_slice(&q.ik.0);
             lv8(&q.autn, out);
         }
         if let Some(drx) = &self.drx_parameter {
             out.extend_from_slice(drx);
         }
-        if let Some((nh, ncc)) = &self.nh {
-            out.extend_from_slice(nh);
-            out.push(*ncc);
+        if let Some(next) = &self.nh {
+            fits(next.ncc.into(), 3, "NCC")?;
+            fits(next.spare.into(), 5, "the spare bits of NCC")?;
+            out.extend_from_slice(&next.nh.0);
+            out.push(next.spare << 3 | next.ncc);
         }
         for (uplink, downlink) in [self.subscribed_ue_ambr, self.used_ue_ambr]
             .into_iter()
@@ -438,9 +480,9 @@ impl Codec for MmContextEpsSecurityContextQuadrupletsAndQuintuplets {
                     | old.ksi_asme << 3
                     | old.ncc,
             );
-            out.extend_from_slice(&old.kasme);
+            out.extend_from_slice(&old.kasme.0);
             if let Some(nh) = &old.nh {
-                out.extend_from_slice(nh);
+                out.extend_from_slice(&nh.0);
             }
         }
         self.later.encode(out)?;
@@ -463,8 +505,9 @@ impl Codec for MmContextEpsSecurityContextQuadrupletsAndQuintuplets {
 }
 
 impl Later {
-    /// Write the fields that are there: each before it, as a receiver reads the octets
-    /// in order.
+    /// Write the fields that are there, in order, and those before the last of them that
+    /// are not, as an empty field: a receiver reads the octets in order, and a field of a
+    /// null length is one of no value (§8.38).
     fn encode(&self, out: &mut Vec<u8>) -> Result<(), Error> {
         let fields: [(Option<&Octets>, bool); 8] = [
             (self.voice_domain_preference.as_ref(), false),
@@ -476,46 +519,38 @@ impl Later {
             (self.core_network_restrictions.as_ref(), false),
             (self.ue_radio_capability_id.as_ref(), false),
         ];
-        let mut missing = false;
-        for (field, wide) in fields {
-            match field {
-                None => missing = true,
-                Some(_) if missing => {
-                    return Err(Error::Inconsistent {
-                        ie: IE,
-                        field: "a field of a later release after one that is missing",
-                        clause: "8.38",
-                    });
-                }
-                Some(octets) if octets.len() > if wide { 65535 } else { 255 } => {
-                    return Err(Error::FieldLength {
-                        ie: IE,
-                        field: "a field of a later release",
-                    });
-                }
-                Some(octets) if wide => lv16(octets, out),
-                Some(octets) => lv8(octets, out),
+        let written = match self.octet_a {
+            Some(_) => fields.len(),
+            None => fields
+                .iter()
+                .rposition(|(field, _)| field.is_some())
+                .map_or(0, |last| last + 1),
+        };
+        let empty = Octets::default();
+        for (field, wide) in &fields[..written] {
+            let octets = field.unwrap_or(&empty);
+            if octets.len() > if *wide { 65535 } else { 255 } {
+                return Err(Error::FieldLength {
+                    ie: IE,
+                    field: "a field of a later release",
+                });
+            }
+            match wide {
+                true => lv16(octets, out),
+                false => lv8(octets, out),
             }
         }
-        match self.octet_a {
-            Some(_) if missing => Err(Error::Inconsistent {
-                ie: IE,
-                field: "octet a",
-                clause: "8.38",
-            }),
-            Some(octet) => {
-                out.push(octet);
-                Ok(())
-            }
-            None => Ok(()),
+        if let Some(octet) = self.octet_a {
+            out.push(octet);
         }
+        Ok(())
     }
 }
 
 impl Rules for MmContextEpsSecurityContextQuadrupletsAndQuintuplets {
     fn check(&self, path: &Path<'_>, found: &mut Vec<Deviation>) {
         let rule = |what| Deviation::new(path, "8.38", DeviationKind::Rule(what));
-        if self.security_mode != 4 {
+        if self.security_mode != SecurityMode::EpsSecurityContextAndQuadruplets {
             found.push(rule(
                 "the Security Mode of an EPS security context is not 4 (Table 8.38-1)",
             ));
@@ -523,7 +558,7 @@ impl Rules for MmContextEpsSecurityContextQuadrupletsAndQuintuplets {
         if self.quadruplets.len() > 5 || self.quintuplets.len() > 5 {
             found.push(rule("more than 5 authentication vectors of a kind"));
         }
-        let spare_nh = self.nh.is_some_and(|(_, ncc)| ncc > 0x07);
+        let spare_nh = self.nh.is_some_and(|next| next.spare != 0);
         let spare_a = self.later.octet_a.is_some_and(|octet| octet > 0x07);
         if spare_nh || spare_a {
             found.push(Deviation::new(path, "8.38", DeviationKind::SpareBits));
@@ -580,6 +615,7 @@ impl MmContextEpsSecurityContextQuadrupletsAndQuintuplets {
 
 #[cfg(feature = "tree")]
 mod tree_form {
+    use oxirush_utils::fields::FieldTree;
     use oxirush_utils::tree::{self, Members, Reading, Refused, Tree, Value};
 
     use super::*;
@@ -604,23 +640,23 @@ mod tree_form {
         fn to_tree(&self) -> Value {
             let n = |value: u32| tree::unsigned(value.into());
             let mut m = Members::new();
-            m.put("Security Mode", n(self.security_mode.into()));
+            m.put("Security Mode", self.security_mode.to_tree());
             m.put("KSIASME", n(self.ksi_asme.into()));
             m.put(
                 "Used NAS integrity protection algorithm",
-                n(self.used_nas_integrity.into()),
+                self.used_nas_integrity.to_tree(),
             );
-            m.put("Used NAS Cipher", n(self.used_nas_cipher.into()));
+            m.put("Used NAS Cipher", self.used_nas_cipher.to_tree());
             m.put("NAS Downlink Count", n(self.nas_downlink_count));
             m.put("NAS Uplink Count", n(self.nas_uplink_count));
-            m.put("KASME", tree::octets(&self.kasme));
+            m.put("KASME", tree::octets(&self.kasme.0));
             if !self.quadruplets.is_empty() {
                 let entries = self.quadruplets.iter().map(|q| {
                     let mut e = Members::new();
                     e.put("RAND", tree::octets(&q.rand));
                     e.put("XRES", tree::octets(&q.xres));
                     e.put("AUTN", tree::octets(&q.autn));
-                    e.put("KASME", tree::octets(&q.kasme));
+                    e.put("KASME", tree::octets(&q.kasme.0));
                     e.finish()
                 });
                 m.put("Authentication Quadruplet", Value::Array(entries.collect()));
@@ -630,8 +666,8 @@ mod tree_form {
                     let mut e = Members::new();
                     e.put("RAND", tree::octets(&q.rand));
                     e.put("XRES", tree::octets(&q.xres));
-                    e.put("CK", tree::octets(&q.ck));
-                    e.put("IK", tree::octets(&q.ik));
+                    e.put("CK", tree::octets(&q.ck.0));
+                    e.put("IK", tree::octets(&q.ik.0));
                     e.put("AUTN", tree::octets(&q.autn));
                     e.finish()
                 });
@@ -641,9 +677,9 @@ mod tree_form {
                 "DRX parameter",
                 self.drx_parameter.map(|drx| tree::octets(&drx)),
             );
-            if let Some((nh, ncc)) = &self.nh {
-                m.put("NH", tree::octets(nh));
-                m.put("NCC", n((*ncc).into()));
+            if let Some(next) = &self.nh {
+                m.put("NH", tree::octets(&next.nh.0));
+                m.put("NCC", n(u32::from(next.spare) << 3 | u32::from(next.ncc)));
             }
             if let Some((uplink, downlink)) = self.subscribed_ue_ambr {
                 m.put("Uplink Subscribed UE AMBR", n(uplink));
@@ -670,8 +706,8 @@ mod tree_form {
                 }
                 e.put("old KSIASME", n(old.ksi_asme.into()));
                 e.put("old NCC", n(old.ncc.into()));
-                e.put("old KASME", tree::octets(&old.kasme));
-                e.put_optional("old NH", old.nh.map(|nh| tree::octets(&nh)));
+                e.put("old KASME", tree::octets(&old.kasme.0));
+                e.put_optional("old NH", old.nh.map(|nh| tree::octets(&nh.0)));
                 m.put("Old EPS Security Context", e.finish());
             }
             let l = &self.later;
@@ -717,14 +753,17 @@ mod tree_form {
                 reading.member(&read, name, |v, r| n(r, v, most))
             };
             let mut ctx = Self {
-                security_mode: small("Security Mode", 7, reading)? as u8,
+                security_mode: reading.member(&read, "Security Mode", SecurityMode::from_tree)?,
                 ksi_asme: small("KSIASME", 7, reading)? as u8,
-                used_nas_integrity: small("Used NAS integrity protection algorithm", 7, reading)?
-                    as u8,
-                used_nas_cipher: small("Used NAS Cipher", 15, reading)? as u8,
+                used_nas_integrity: reading.member(
+                    &read,
+                    "Used NAS integrity protection algorithm",
+                    NasIntegrity::from_tree,
+                )?,
+                used_nas_cipher: reading.member(&read, "Used NAS Cipher", NasCipher::from_tree)?,
                 nas_downlink_count: small("NAS Downlink Count", 0xff_ffff, reading)? as u32,
                 nas_uplink_count: small("NAS Uplink Count", 0xff_ffff, reading)? as u32,
-                kasme: reading.member(&read, "KASME", |v, r| r.octet_array(v))?,
+                kasme: Key(reading.member(&read, "KASME", |v, r| r.octet_array(v))?),
                 ..Self::default()
             };
             ctx.quadruplets = reading
@@ -735,7 +774,7 @@ mod tree_form {
                             rand: r.member(&q, "RAND", |v, r| r.octet_array(v))?,
                             xres: r.member(&q, "XRES", octets)?,
                             autn: r.member(&q, "AUTN", octets)?,
-                            kasme: r.member(&q, "KASME", |v, r| r.octet_array(v))?,
+                            kasme: Key(r.member(&q, "KASME", |v, r| r.octet_array(v))?),
                         })
                     })
                 })?
@@ -747,8 +786,8 @@ mod tree_form {
                         Ok(Quintuplet {
                             rand: r.member(&q, "RAND", |v, r| r.octet_array(v))?,
                             xres: r.member(&q, "XRES", octets)?,
-                            ck: r.member(&q, "CK", |v, r| r.octet_array(v))?,
-                            ik: r.member(&q, "IK", |v, r| r.octet_array(v))?,
+                            ck: Key(r.member(&q, "CK", |v, r| r.octet_array(v))?),
+                            ik: Key(r.member(&q, "IK", |v, r| r.octet_array(v))?),
                             autn: r.member(&q, "AUTN", octets)?,
                         })
                     })
@@ -759,7 +798,14 @@ mod tree_form {
             let nh = reading.optional(&read, "NH", |v, r| r.octet_array::<32>(v))?;
             let ncc = reading.optional(&read, "NCC", |v, r| n(r, v, 255))?;
             ctx.nh = match (nh, ncc) {
-                (Some(nh), ncc) => Some((nh, ncc.unwrap_or(0) as u8)),
+                (Some(nh), ncc) => {
+                    let octet = ncc.unwrap_or(0) as u8;
+                    Some(NextHop {
+                        nh: Key(nh),
+                        ncc: octet & 0x07,
+                        spare: octet >> 3,
+                    })
+                }
                 (None, None) => None,
                 (None, Some(_)) => {
                     return Err(reading.refuse(tree::ErrorKind::Value, "an NCC without its NH"));
@@ -809,8 +855,8 @@ mod tree_form {
                             .unwrap_or(false),
                         ksi_asme: r.member(&o, "old KSIASME", |v, r| n(r, v, 7))? as u8,
                         ncc: r.member(&o, "old NCC", |v, r| n(r, v, 7))? as u8,
-                        kasme: r.member(&o, "old KASME", |v, r| r.octet_array(v))?,
-                        nh: r.optional(&o, "old NH", |v, r| r.octet_array(v))?,
+                        kasme: Key(r.member(&o, "old KASME", |v, r| r.octet_array(v))?),
+                        nh: r.optional(&o, "old NH", |v, r| r.octet_array(v))?.map(Key),
                     })
                 })?;
             let mut later = |name| reading.optional(&read, name, octets);

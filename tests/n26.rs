@@ -81,7 +81,7 @@ fn an_eps_mm_context_is_byte_exact_through_its_tree() {
         (
             context.ksi_asme,
             context.nas_downlink_count,
-            context.nh.unwrap().1
+            context.nh.unwrap().ncc
         ),
         (1, 5, 2)
     );
@@ -131,4 +131,35 @@ fn a_forward_relocation_request_without_an_mm_context() {
         DeviationKind::MandatoryMissing { ie: (107, 0) }
     );
     assert_eq!(found[0].cause, Some(CauseValue::MandatoryIeMissing));
+}
+
+#[test]
+fn a_later_field_is_set_alone() {
+    // The UE NR security capability alone of the fields of later releases: the encoder
+    // writes the fields before it empty, as a sender of that release does
+    let mut tree = request();
+    let context = "MME/SGSN/AMF UE MM Context (EPS Security Context, Quadruplets and Quintuplets)";
+    let fields = tree["ies"][context].as_object_mut().unwrap();
+    fields.retain(|name, _| {
+        !name.contains("Voice")
+            && !name.contains("Paging")
+            && !name.contains("Extended")
+            && !name.contains("additional")
+    });
+    let message = Message::from_tree(&tree).unwrap();
+    let octets = message.encode().unwrap();
+    let decoded = Message::decode(&octets).unwrap();
+    let Some(request) = decoded.body.as_forward_relocation_request() else {
+        panic!()
+    };
+    let later = &request
+        .mme_sgsn_amf_ue_mm_context_eps
+        .as_ref()
+        .unwrap()
+        .later;
+    assert_eq!(
+        later.ue_nr_security_capability.as_deref(),
+        Some(&[0xf0, 0xf0][..])
+    );
+    assert_eq!(later.voice_domain_preference.as_deref(), Some(&[][..]));
 }

@@ -321,6 +321,17 @@ listed += ['impl Body {', '    /// Whether the message lacks its mandatory MM Co
 for number, fields in one_of.items():
     listed.append(f'            Self::{rust_names[number]}(body) => ' + ' && '.join(f'body.{f}.is_none()' for f in fields) + ',')
 listed += ['            _ => false,', '        }', '    }', '}', '']
+codes = {rust_names[n]: message_of(tables[n])[1] for n in order if not tables[n]['prelude'].isdigit() and message_of(tables[n])[1] is not None}
+for ty, field in with_cause:
+    # Of a response or another triggered message alone: an initial message is answered
+    if codes.get(ty) in initial:
+        continue
+    listed += [f'impl crate::registry::{ty} {{',
+               '    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a',
+               '    /// rejection may carry are added with their `with_` builders.',
+               '    pub fn rejected(cause: CauseValue) -> Self {',
+               f'        Self {{ {field}: Some(crate::Cause::new(cause)), ..Self::default() }}',
+               '    }', '}', '']
 listed += ['gtpv2c_messages! {'] + [f'    {code} {name} [],' for code, name in sorted(messages)] + ['}']
 open(f'{crate}/src/message_types.rs', 'w').write('\n'.join(listed) + '\n')
 

@@ -300,3 +300,23 @@ fn a_cause_of_fewer_octets_than_an_offending_ie_encodes_back() {
     .unwrap();
     round_trip(&octets);
 }
+
+#[test]
+fn new_takes_a_mandatory_list_as_its_values() {
+    // A Create Session Request of two bearers to be created, given together
+    let bearer = |ebi| {
+        BearerContextToBeCreatedInCreateSessionRequest::new(
+            Ebi::new(ebi),
+            BearerLevelQualityOfService::new(9, 8),
+        )
+    };
+    let request = CreateSessionRequest::new(
+        RatType::new(RatTypeValue::Eutran),
+        FTeid::ipv4(InterfaceType::S11MmeGtpC, 0, [10, 0, 0, 1].into()),
+        Apn::new("internet").unwrap(),
+        [bearer(5), bearer(6)],
+    );
+    assert_eq!(request.bearer_contexts_to_be_created.len(), 2);
+    let octets = Message::tunnel(0, 1, request).encode().unwrap();
+    round_trip(&octets);
+}

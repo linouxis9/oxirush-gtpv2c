@@ -109,7 +109,7 @@ pub use header::Header;
 pub use ie::{Codec, IeFault, IeType, Placed, RawIe};
 pub use message::{Body, MESSAGE_TYPES, Message, MessageTypeInfo, is_initial, message_type_info};
 pub use mm_context::{
-    AccessRestriction, Later, MmContextEpsSecurityContextQuadrupletsAndQuintuplets,
+    AccessRestriction, Key, Later, MmContextEpsSecurityContextQuadrupletsAndQuintuplets, NextHop,
     OldSecurityContext, Quadruplet, Quintuplet,
 };
 pub use oxirush_utils::fields::Octets;

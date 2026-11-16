@@ -24,7 +24,7 @@ use core::net::{Ipv4Addr, Ipv6Addr};
 
 use crate::Error;
 use crate::check::{Deviation, DeviationKind, Path, Rules};
-use crate::enums::CauseValue;
+use crate::enums::{CauseValue, PdnTypeValue};
 use crate::ie::Codec;
 use oxirush_utils::fields::Octets;
 
@@ -153,7 +153,7 @@ impl Rules for Cause {
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Paa {
     /// The PDN Type: 1 IPv4, 2 IPv6, 3 IPv4v6, 4 Non-IP, 5 Ethernet (Table 8.14-1).
-    pub pdn_type: u8,
+    pub pdn_type: PdnTypeValue,
     /// The spare bits 8 to 4 of octet 5.
     pub spare: u8,
     /// The IPv6 prefix length and the IPv6 prefix and interface identifier: of IPv6 and
@@ -169,17 +169,17 @@ impl Codec for Paa {
     fn decode(octets: &[u8]) -> Option<Self> {
         let (&first, mut rest) = octets.split_first()?;
         let mut paa = Self {
-            pdn_type: first & 0x07,
+            pdn_type: PdnTypeValue::from_value(first & 0x07),
             spare: first >> 3,
             ..Self::default()
         };
-        if matches!(paa.pdn_type, 2 | 3) {
+        if matches!(paa.pdn_type.value(), 2 | 3) {
             let (&length, after) = rest.split_first()?;
             let address: [u8; 16] = after.get(..16)?.try_into().ok()?;
             paa.ipv6 = Some((length, Ipv6Addr::from(address)));
             rest = &after[16..];
         }
-        if matches!(paa.pdn_type, 1 | 3) {
+        if matches!(paa.pdn_type.value(), 1 | 3) {
             let address: [u8; 4] = rest.get(..4)?.try_into().ok()?;
             paa.ipv4 = Some(Ipv4Addr::from(address));
             rest = &rest[4..];
@@ -190,10 +190,10 @@ impl Codec for Paa {
 
     fn encode(&self, out: &mut Vec<u8>) -> Result<(), Error> {
         let (v6, v4) = (
-            matches!(self.pdn_type, 2 | 3),
-            matches!(self.pdn_type, 1 | 3),
+            matches!(self.pdn_type.value(), 2 | 3),
+            matches!(self.pdn_type.value(), 1 | 3),
         );
-        if self.pdn_type > 7 || self.spare > 0x1f {
+        if self.pdn_type.value() > 7 || self.spare > 0x1f {
             return Err(Error::FieldLength {
                 ie: "PDN Address Allocation (PAA)",
                 field: "PDN Type",
@@ -206,7 +206,7 @@ impl Codec for Paa {
                 clause: "8.14",
             });
         }
-        out.push(self.spare << 3 | self.pdn_type);
+        out.push(self.spare << 3 | self.pdn_type.value());
         if let Some((length, address)) = &self.ipv6 {
             out.push(*length);
             out.extend_from_slice(&address.octets());
@@ -228,12 +228,12 @@ impl Rules for Paa {
         if self.spare != 0 {
             found.push(Deviation::new(path, "8.14", DeviationKind::SpareBits));
         }
-        if !(1..=5).contains(&self.pdn_type) {
+        if !(1..=5).contains(&self.pdn_type.value()) {
             found.push(Deviation::new(
                 path,
                 "8.14",
                 DeviationKind::ReservedValue {
-                    value: self.pdn_type.into(),
+                    value: self.pdn_type.value().into(),
                 },
             ));
         }
@@ -464,7 +464,7 @@ mod tree_form {
         const NAME: &'static str = "PDN Address Allocation (PAA)";
         fn to_tree(&self) -> Value {
             let mut m = Members::new();
-            m.put("PDN Type", tree::unsigned(self.pdn_type.into()));
+            m.put("PDN Type", self.pdn_type.to_tree());
             if self.spare != 0 {
                 m.put("Spare", tree::unsigned(self.spare.into()));
             }
@@ -482,7 +482,7 @@ mod tree_form {
         }
         fn from_tree(value: &Value, reading: &mut Reading) -> Result<Self, Refused> {
             let read = reading.members(value, Self::FIELDS)?;
-            let pdn_type = reading.member(&read, "PDN Type", |v, r| r.unsigned(v, 0, 7))? as u8;
+            let pdn_type = reading.member(&read, "PDN Type", PdnTypeValue::from_tree)?;
             let length =
                 reading.optional(&read, "IPv6 Prefix Length", |v, r| r.unsigned(v, 0, 255))?;
             let ipv6 = reading.optional(&read, "IPv6 address", |v, r| {

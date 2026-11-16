@@ -19,7 +19,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // The SGW decodes it and reads its IEs as typed fields
     let message = Message::decode(&octets)?;
     assert_eq!(message.to_string(), "Echo Request (sequence 1)");
-    let Body::EchoRequest(echo) = &message.body else { unreachable!() };
+    let echo = message.body.as_echo_request().ok_or("another message")?;
     assert_eq!(echo.recovery.as_ref().map(|recovery| recovery.value), Some(5));
 
     // The SGW answers with its own Restart Counter, on the same sequence number
@@ -58,23 +58,22 @@ use std::net::Ipv4Addr;
 use oxirush_gtpv2c::*;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // An MME asks its SGW for a session: the MME's F-TEID of S11 (interface type 10),
-    // the APN, and the default bearer, EBI 5 of QCI 9; RAT Type 6 is E-UTRAN
-    let control = FTeid {
-        v4: true, interface_type: 10, teid: 1, ipv4: Some(Ipv4Addr::new(10, 0, 0, 1)),
-        ..Default::default()
-    };
-    let apn = Apn::new("internet")?;
-    let qos = BearerLevelQualityOfService { pl: 8, qci: 9, ..Default::default() };
-    let bearer = BearerContextToBeCreatedInCreateSessionRequest::new(Ebi::new(5), qos);
-    let imsi = Imsi::new("208930000000001")?;
-    let mut request = CreateSessionRequest::new(RatType::new(6), control, apn, bearer)
-        .with_imsi(imsi);
+    // An MME asks its SGW for a session on S11: its F-TEID, the APN, and the default
+    // bearer, EBI 5 of QCI 9 and ARP priority level 8
+    let mme = FTeid::ipv4(InterfaceType::S11MmeGtpC, 1, Ipv4Addr::new(10, 0, 0, 1));
+    let bearer = BearerContextToBeCreatedInCreateSessionRequest::new(
+        Ebi::new(5),
+        BearerLevelQualityOfService::new(9, 8),
+    );
+    let mut request =
+        CreateSessionRequest::new(RatType::new(RatTypeValue::Eutran), mme, Apn::new("internet")?, [bearer])
+            .with_imsi(Imsi::new("208930000000001")?)
+            .with_pdn_type(PdnType::new(PdnTypeValue::Ipv4));
     assert!(Message::tunnel(0, 2, request.clone()).check().is_empty());
 
     // Without its mandatory RAT Type, the SGW answers "Mandatory IE missing", which
     // names the IE by its type and instance
-    request.rat_type = None;
+    request.clear_rat_type();
     let found = Message::tunnel(0, 2, request).check();
     let missing = "the mandatory RAT Type is missing (TS 29.274 7.7.6), at /gtpv2c/RAT Type: \
                    the answer is \"Mandatory IE missing\"";
@@ -84,9 +83,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     assert_eq!(found[0].offending_ie(), Some((82, 0)));
 
     // The answer of the SGW, a rejection with its Cause alone (§6.1.1)
-    let cause = Cause::new(CauseValue::MandatoryIeMissing);
-    let rejection = CreateSessionResponse { cause: Some(cause), ..Default::default() };
-    let response = Message::tunnel(1, 2, rejection);
+    let response = Message::tunnel(1, 2, CreateSessionResponse::rejected(CauseValue::MandatoryIeMissing));
     assert!(response.check().is_empty());
     assert_eq!(response.to_string(), "Create Session Response (TEID 0x1, sequence 2)");
     Ok(())
@@ -98,6 +95,54 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 rejection may carry (§6.1.1), and the conditions that the message shows alone.
 An IE that the table of its scope does not have, of another instance, with its
 spare bits set, or that does not decode is kept as its octets in its place.
+
+## Read and change the IEs of a message
+
+`as_<message>()` and `as_<message>_mut()` give the message that a decoded body
+is. Each row is a public field: an `Option` of a row there once, a `Vec` of a
+list, a struct of the content of a grouped IE. In place, `set_<row>()` gives a
+row its value, `push_<row>()` adds one to a list and `clear_<row>()` removes
+it; `with_<row>()` builds. Codes are named values, with `Other` for a number
+that their table does not name.
+
+```rust
+use std::net::Ipv4Addr;
+
+use oxirush_gtpv2c::*;
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // A Create Session Response of the SGW: accepted, the SGW's F-TEID of S11 and the
+    // bearer created, EBI 5, with its S1-U F-TEID
+    let sgw = Ipv4Addr::new(10, 0, 0, 2);
+    let s1u = FTeid::ipv4(InterfaceType::S1uSgwGtpU, 0x2001, sgw);
+    let created = BearerContextCreatedInCreateSessionResponse::new(Ebi::new(5), Cause::new(CauseValue::RequestAccepted))
+        .with_s1_u_sgw_f_teid(s1u);
+    let response = CreateSessionResponse::new(Cause::new(CauseValue::RequestAccepted), [created])
+        .with_sender_f_teid_for_control_plane(FTeid::ipv4(InterfaceType::S11S4SgwGtpC, 0x1001, sgw));
+    let octets = Message::tunnel(1, 2, response).encode()?;
+
+    // The MME reads the IEs that it needs: the TEID of S1-U of each bearer
+    let mut message = Message::decode(&octets)?;
+    let response = message.body.as_create_session_response().ok_or("another message")?;
+    assert_eq!(response.cause.as_ref().map(|cause| cause.value), Some(CauseValue::RequestAccepted));
+    let bearer = &response.bearer_contexts_created[0];
+    let teid = bearer.s1_u_sgw_f_teid.as_ref().map(|f_teid| (f_teid.interface_type, f_teid.teid));
+    assert_eq!(teid, Some((InterfaceType::S1uSgwGtpU, 0x2001)));
+
+    // A test changes it in place: another Cause, a second bearer, no F-TEID of S11
+    let response = message.body.as_create_session_response_mut().ok_or("another message")?;
+    response.set_cause(Cause::new(CauseValue::RequestAcceptedPartially));
+    response.push_bearer_contexts_created(BearerContextCreatedInCreateSessionResponse::new(
+        Ebi::new(6),
+        Cause::new(CauseValue::NoResourcesAvailable),
+    ));
+    response.clear_sender_f_teid_for_control_plane();
+    let found: Vec<String> = message.check().iter().map(ToString::to_string).collect();
+    assert_eq!(found, Vec::<String>::new());
+    assert_eq!(Message::decode(&message.encode()?)?, message);
+    Ok(())
+}
+```
 
 ## Edit a message as JSON
 
@@ -133,37 +178,36 @@ use std::net::Ipv4Addr;
 use oxirush_gtpv2c::*;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // The context: Security Mode 4 (an EPS security context), KSIASME 1, 128-EIA2 and
-    // EEA0, the NAS COUNTs, KASME, and NH with its NCC
+    // The context: an EPS security context of KSIASME 1, 128-EIA2 and EEA0, the NAS
+    // COUNTs, KASME, and NH with its NCC
     let context = MmContextEpsSecurityContextQuadrupletsAndQuintuplets {
-        security_mode: 4,
+        security_mode: SecurityMode::EpsSecurityContextAndQuadruplets,
         ksi_asme: 1,
-        used_nas_integrity: 2,
-        used_nas_cipher: 0,
+        used_nas_integrity: NasIntegrity::Eia2,
+        used_nas_cipher: NasCipher::None,
         nas_downlink_count: 5,
         nas_uplink_count: 3,
-        kasme: [0x11; 32],
-        nh: Some(([0x22; 32], 2)),
+        kasme: Key([0x11; 32]),
+        nh: Some(NextHop { nh: Key([0x22; 32]), ncc: 2, ..Default::default() }),
         subscribed_ue_ambr: Some((100_000, 200_000)),
         ue_network_capability: Octets::copied(&[0xf0, 0xf0, 0xc0, 0xc0]),
         ..Default::default()
     };
-    let amf = FTeid {
-        v4: true, interface_type: 12, teid: 0x1001, ipv4: Some(Ipv4Addr::new(10, 0, 0, 1)),
-        ..Default::default()
-    };
+    let amf = FTeid::ipv4(InterfaceType::N26AmfGtpC, 0x1001, Ipv4Addr::new(10, 0, 0, 1));
     let request = ForwardRelocationRequest::new(amf).with_mme_sgsn_amf_ue_mm_context_eps(context);
     let octets = Message::tunnel(0, 7, request).encode()?;
 
     // The MME decodes the request and reads the context
     let message = Message::decode(&octets)?;
     assert!(message.check().is_empty());
-    let Body::ForwardRelocationRequest(request) = &message.body else { unreachable!() };
+    let request = message.body.as_forward_relocation_request().ok_or("another message")?;
     let context = request.mme_sgsn_amf_ue_mm_context_eps.as_ref().ok_or("no MM Context")?;
-    let ncc = context.nh.as_ref().map(|(_, ncc)| *ncc);
+    let ncc = context.nh.map(|next| next.ncc);
     assert_eq!((context.ksi_asme, context.nas_downlink_count, ncc), (1, 5, Some(2)));
+    assert_eq!(context.used_nas_integrity, NasIntegrity::Eia2);
 
     // The keys are in the octets, and not in `Debug`
+    assert_eq!(format!("{:?}", context.kasme), "Key(32 octets)");
     assert!(!format!("{message:?}").contains("17, 17"));
     Ok(())
 }

@@ -21,6 +21,7 @@
 use core::net::{Ipv4Addr, Ipv6Addr};
 
 use crate::Octets;
+use crate::enums::{InterfaceType, PdnTypeValue, RatTypeValue, SelectionModeValue};
 use crate::fields::{Rest, SecretRest, U24, U40};
 
 /// Nine octets of a field.
@@ -53,7 +54,7 @@ gtpv2c_layout! {
     /// Fully Qualified TEID (F-TEID) (§8.22): a TEID or a GRE key with the addresses of its
     /// node, and the interface of the tunnel.
     pub struct FTeid "8.22" {
-        flags(u8) { v4 "V4": 8, v6 "V6": 7, interface_type "Interface Type": 1 / 6 }
+        flags(u8) { v4 "V4": 8, v6 "V6": 7, interface_type "Interface Type": 1 / 6 as InterfaceType }
         teid "TEID / GRE Key": u32,
         ipv4 "IPv4 address": Ipv4Addr if v4,
         ipv6 "IPv6 address": Ipv6Addr if v6,
@@ -83,14 +84,14 @@ crate::macros::gtpv2c_bits! {
 crate::macros::gtpv2c_bits! {
     /// PDN Type (§8.34): 1 IPv4, 2 IPv6, 3 IPv4v6, 4 Non-IP, 5 Ethernet.
     pub struct PdnType "8.34" octets 1 min 1 {
-        value "PDN Type": 0 1 3,
+        value "PDN Type": 0 1 3 as PdnTypeValue,
     }
 }
 
 crate::macros::gtpv2c_bits! {
     /// Selection Mode (§8.58): how the APN was selected, of Table 8.58-1.
     pub struct SelectionMode "8.58" octets 1 min 1 {
-        value "Selection Mode": 0 1 2,
+        value "Selection Mode": 0 1 2 as SelectionModeValue,
     }
 }
 
@@ -116,7 +117,7 @@ gtpv2c_field! {
     /// Recovery (§8.5): the Restart Counter of the sender.
     Recovery(u8) "Recovery (Restart Counter)" "8.5";
     /// RAT Type (§8.17), of Table 8.17-1.
-    RatType(u8) "RAT Type" "8.17";
+    RatType(RatTypeValue) "RAT Type" "8.17";
     /// Delay Value (§8.27): a delay in multiples of 50 milliseconds.
     DelayValue(u8) "Delay Value" "8.27";
     /// Charging ID (§8.29).
@@ -385,6 +386,74 @@ named_octets! {
     Msisdn "MSISDN" "8.11" digits;
     /// Fully Qualified Domain Name (FQDN) (§8.66): its labels, each after its length.
     Fqdn "FQDN" "8.66" name;
+}
+
+impl FTeid {
+    /// The F-TEID of a TEID or a GRE key of an interface at an IPv4 address: V4 set.
+    pub fn ipv4(interface_type: InterfaceType, teid: u32, address: Ipv4Addr) -> Self {
+        Self {
+            v4: true,
+            interface_type,
+            teid,
+            ipv4: Some(address),
+            ..Self::default()
+        }
+    }
+
+    /// The F-TEID of a TEID or a GRE key of an interface at an IPv6 address: V6 set.
+    pub fn ipv6(interface_type: InterfaceType, teid: u32, address: Ipv6Addr) -> Self {
+        Self {
+            v6: true,
+            interface_type,
+            teid,
+            ipv6: Some(address),
+            ..Self::default()
+        }
+    }
+
+    /// The F-TEID of a TEID or a GRE key of an interface at an IPv4 and an IPv6 address.
+    pub fn dual(interface_type: InterfaceType, teid: u32, ipv4: Ipv4Addr, ipv6: Ipv6Addr) -> Self {
+        Self {
+            v4: true,
+            v6: true,
+            interface_type,
+            teid,
+            ipv4: Some(ipv4),
+            ipv6: Some(ipv6),
+            ..Self::default()
+        }
+    }
+}
+
+impl BearerLevelQualityOfService {
+    /// The QoS of a bearer of a QCI and of the priority level of its ARP, whose
+    /// pre-emption flags are clear and whose bitrates are 0: those of a non-GBR bearer.
+    /// A GBR bearer adds its bitrates with [`with_bitrates`](Self::with_bitrates).
+    pub fn new(qci: u8, priority_level: u8) -> Self {
+        Self {
+            qci,
+            pl: priority_level,
+            ..Self::default()
+        }
+    }
+
+    /// The same QoS with its maximum and guaranteed bitrates of each direction, in kbps.
+    pub fn with_bitrates(mut self, mbr: (u64, u64), gbr: (u64, u64)) -> Self {
+        (self.mbr_uplink, self.mbr_downlink) = (U40(mbr.0), U40(mbr.1));
+        (self.gbr_uplink, self.gbr_downlink) = (U40(gbr.0), U40(gbr.1));
+        self
+    }
+}
+
+impl Ambr {
+    /// The APN-AMBR of each direction, in kbps.
+    pub fn new(uplink: u32, downlink: u32) -> Self {
+        Self {
+            uplink,
+            downlink,
+            ..Self::default()
+        }
+    }
 }
 
 include!("values_octets.rs");

@@ -67,6 +67,302 @@ impl Body {
     }
 }
 
+impl crate::registry::CreateSessionResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::CreateBearerResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::BearerResourceFailureIndication {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::ModifyBearerResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::DeleteSessionResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::DeleteBearerResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::DownlinkDataNotificationAcknowledge {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::DeleteIndirectDataForwardingTunnelResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::ModifyBearerFailureIndication {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::UpdateBearerResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::DeleteBearerFailureIndication {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::CreateIndirectDataForwardingTunnelResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::ReleaseAccessBearersResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::ModifyAccessBearersResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::RemoteUeReportAcknowledge {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::ForwardRelocationResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::ForwardRelocationCompleteAcknowledge {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::ContextResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::ContextAcknowledge {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::IdentificationResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::ForwardAccessContextAcknowledge {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::DetachAcknowledge {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::ChangeNotificationResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::RelocationCancelResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::UeRegistrationQueryResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::SuspendAcknowledge {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::ResumeAcknowledge {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::AlertMmeAcknowledge {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::UeActivityAcknowledge {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::CreateForwardingTunnelResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::DeletePdnConnectionSetResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::UpdatePdnConnectionSetResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::PgwRestartNotificationAcknowledge {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::PgwDownlinkTriggeringAcknowledge {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::MbmsSessionStartResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::MbmsSessionUpdateResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
+impl crate::registry::MbmsSessionStopResponse {
+    /// The response of its Cause alone, as a rejection is (§6.1.1): the other IEs that a
+    /// rejection may carry are added with their `with_` builders.
+    pub fn rejected(cause: CauseValue) -> Self {
+        Self { cause: Some(crate::Cause::new(cause)), ..Self::default() }
+    }
+}
+
 gtpv2c_messages! {
     1 EchoRequest [],
     2 EchoResponse [],
