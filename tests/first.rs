@@ -320,3 +320,53 @@ fn new_takes_a_mandatory_list_as_its_values() {
     let octets = Message::tunnel(0, 1, request).encode().unwrap();
     round_trip(&octets);
 }
+
+#[test]
+fn a_mandatory_ie_of_a_received_message_is_required_by_name() {
+    // A Create Session Request of all its mandatory IEs, then the same without its RAT Type
+    let bearer = BearerContextToBeCreatedInCreateSessionRequest::new(
+        Ebi::new(5),
+        BearerLevelQualityOfService::new(9, 8),
+    );
+    let mme = FTeid::ipv4(InterfaceType::S11MmeGtpC, 1, [10, 0, 0, 1].into());
+    let mut request = CreateSessionRequest::new(
+        RatType::new(RatTypeValue::Eutran),
+        mme,
+        Apn::new("internet").unwrap(),
+        [bearer],
+    );
+    assert_eq!(
+        request.rat_type().map(|rat| rat.value),
+        Ok(RatTypeValue::Eutran)
+    );
+    assert_eq!(
+        request.bearer_contexts_to_be_created().map(<[_]>::len),
+        Ok(1)
+    );
+    request.clear_rat_type();
+    let missing = request.rat_type().unwrap_err();
+    assert_eq!(
+        missing.to_string(),
+        "the mandatory RAT Type of the Create Session Request (Table 7.2.1-1) is missing"
+    );
+    let error: Error = missing.into();
+    assert_eq!(
+        error.to_string(),
+        "the mandatory RAT Type of the Create Session Request (Table 7.2.1-1) is missing"
+    );
+}
+
+#[test]
+fn the_cause_and_the_recovery_are_read_of_any_message() {
+    let echo = Message::path(1, EchoRequest::new(Recovery::new(5)));
+    assert_eq!((echo.cause(), echo.recovery()), (None, Some(5)));
+    let rejected = Message::tunnel(
+        7,
+        2,
+        CreateSessionResponse::rejected(CauseValue::MandatoryIeMissing),
+    );
+    assert_eq!(
+        (rejected.cause(), rejected.recovery()),
+        (Some(CauseValue::MandatoryIeMissing), None)
+    );
+}

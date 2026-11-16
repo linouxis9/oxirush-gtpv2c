@@ -113,6 +113,7 @@ pub use mm_context::{
     OldSecurityContext, Quadruplet, Quintuplet,
 };
 pub use oxirush_utils::fields::Octets;
+pub use oxirush_utils::tables::Missing;
 pub use registry::*;
 pub use table::{Interfaces, On, Presence, Repeat, Role, Row, Table};
 pub use tft::{EpsBearerLevelTrafficFlowTemplate, PacketFilter, Tad, TftParameter};
@@ -218,6 +219,8 @@ pub enum Error {
         /// Its value.
         value: u64,
     },
+    /// A mandatory IE that a message lacks, which its accessor requires (`rat_type()`).
+    Missing(oxirush_utils::tables::Missing),
     /// A text that is no value of its field: digits of an IMSI that TBCD does not have, a
     /// name of an APN of an empty label or of a label of more than 63 octets.
     FieldValue {
@@ -281,6 +284,7 @@ impl fmt::Display for Error {
                 f,
                 "{length} octets of message type {message_type} are more than a Message Length says (TS 29.274 5.5.1)"
             ),
+            Self::Missing(missing) => write!(f, "{missing}"),
             Self::FieldValue { ie, field } => write!(f, "the text is no {field} of {ie}"),
             Self::FieldLength { ie, field } => {
                 write!(f, "{field} of {ie} is longer than its length can say")
@@ -294,6 +298,12 @@ impl fmt::Display for Error {
 }
 
 impl core::error::Error for Error {}
+
+impl From<oxirush_utils::tables::Missing> for Error {
+    fn from(missing: oxirush_utils::tables::Missing) -> Self {
+        Self::Missing(missing)
+    }
+}
 
 /// The name of an IE in the tree of a scope of `table`: the name of its row, of its type,
 /// or its number. An IE of a known type whose name is that of a row of another type goes

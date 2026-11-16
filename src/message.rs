@@ -95,6 +95,17 @@ impl Message {
         }
     }
 
+    /// The Cause of the message at its level, of instance 0, whichever message it is.
+    pub fn cause(&self) -> Option<CauseValue> {
+        self.body.cause()
+    }
+
+    /// The restart counter of the Recovery of the message, of instance 0, whichever
+    /// message it is (§8.5).
+    pub fn recovery(&self) -> Option<u8> {
+        self.body.recovery()
+    }
+
     /// Decode one message, which `octets` are whole.
     ///
     /// # Errors

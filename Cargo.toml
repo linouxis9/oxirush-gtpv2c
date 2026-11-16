@@ -61,4 +61,4 @@ rustdoc-args = ["--cfg", "docsrs"]
 
 # oxirush-utils 0.4.0 is not released yet: the build takes it from this revision until it is.
 [patch.crates-io]
-oxirush-utils = { git = "https://github.com/linouxis9/oxirush-utils", rev = "7ce1fcc979a4dea736f2962ed25f9f940e956f3e" }
+oxirush-utils = { git = "https://github.com/linouxis9/oxirush-utils", rev = "1c3d321dbacfd4a93a05db9c2ac40da0cded62fb" }

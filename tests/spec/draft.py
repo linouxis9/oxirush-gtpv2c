@@ -316,6 +316,18 @@ listed += ['impl Body {', '    /// The Cause of the message at its level, of ins
            '    pub fn cause(&self) -> Option<CauseValue> {', '        let cause = match self {']
 listed += [f'            Self::{ty}(body) => &body.{field},' for ty, field in with_cause]
 listed += ['            _ => return None,', '        };', '        cause.as_ref().map(|cause| cause.value)', '    }', '}', '']
+with_recovery = []
+for number in order:
+    table = tables[number]
+    if table['prelude'].isdigit() or message_of(table)[1] is None:
+        continue
+    for row in table['rows']:
+        if row['type'] == 3 and row['instance'] == '0' and not row['several']:
+            with_recovery.append((rust_names[number], snake(re.sub(r'\s*\([^)]*\)', '', row['name']))))
+listed += ['impl Body {', '    /// The restart counter of the Recovery of the message, of instance 0 (§8.5).',
+           '    pub fn recovery(&self) -> Option<u8> {', '        let recovery = match self {']
+listed += [f'            Self::{ty}(body) => &body.{field},' for ty, field in with_recovery]
+listed += ['            _ => return None,', '        };', '        recovery.as_ref().map(|recovery| recovery.value)', '    }', '}', '']
 listed += ['impl Body {', '    /// Whether the message lacks its mandatory MM Context, of whichever type (§8.38).',
            '    pub(crate) fn lacks_mm_context(&self) -> bool {', '        match self {']
 for number, fields in one_of.items():

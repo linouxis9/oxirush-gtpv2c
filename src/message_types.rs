@@ -58,6 +58,45 @@ impl Body {
 }
 
 impl Body {
+    /// The restart counter of the Recovery of the message, of instance 0 (§8.5).
+    pub fn recovery(&self) -> Option<u8> {
+        let recovery = match self {
+            Self::EchoRequest(body) => &body.recovery,
+            Self::EchoResponse(body) => &body.recovery,
+            Self::CreateSessionRequest(body) => &body.recovery,
+            Self::CreateSessionResponse(body) => &body.recovery,
+            Self::CreateBearerResponse(body) => &body.recovery,
+            Self::BearerResourceFailureIndication(body) => &body.recovery,
+            Self::ModifyBearerRequest(body) => &body.recovery,
+            Self::ModifyBearerResponse(body) => &body.recovery,
+            Self::DeleteSessionResponse(body) => &body.recovery,
+            Self::DeleteBearerResponse(body) => &body.recovery,
+            Self::DownlinkDataNotificationAcknowledge(body) => &body.recovery,
+            Self::DeleteIndirectDataForwardingTunnelResponse(body) => &body.recovery,
+            Self::ModifyBearerFailureIndication(body) => &body.recovery,
+            Self::UpdateBearerResponse(body) => &body.recovery,
+            Self::DeleteBearerFailureIndication(body) => &body.recovery,
+            Self::CreateIndirectDataForwardingTunnelRequest(body) => &body.recovery,
+            Self::CreateIndirectDataForwardingTunnelResponse(body) => &body.recovery,
+            Self::ReleaseAccessBearersResponse(body) => &body.recovery,
+            Self::ModifyAccessBearersRequest(body) => &body.recovery,
+            Self::ModifyAccessBearersResponse(body) => &body.recovery,
+            Self::ForwardRelocationRequest(body) => &body.recovery,
+            Self::ForwardRelocationCompleteAcknowledge(body) => &body.recovery,
+            Self::DetachAcknowledge(body) => &body.recovery,
+            Self::DeletePdnConnectionSetResponse(body) => &body.recovery,
+            Self::UpdatePdnConnectionSetResponse(body) => &body.recovery,
+            Self::MbmsSessionStartRequest(body) => &body.recovery,
+            Self::MbmsSessionStartResponse(body) => &body.recovery,
+            Self::MbmsSessionUpdateResponse(body) => &body.recovery,
+            Self::MbmsSessionStopResponse(body) => &body.recovery,
+            _ => return None,
+        };
+        recovery.as_ref().map(|recovery| recovery.value)
+    }
+}
+
+impl Body {
     /// Whether the message lacks its mandatory MM Context, of whichever type (§8.38).
     pub(crate) fn lacks_mm_context(&self) -> bool {
         match self {

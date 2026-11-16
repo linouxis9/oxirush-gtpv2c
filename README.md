@@ -100,7 +100,10 @@ spare bits set, or that does not decode is kept as its octets in its place.
 
 `as_<message>()` and `as_<message>_mut()` give the message that a decoded body
 is. Each row is a public field: an `Option` of a row there once, a `Vec` of a
-list, a struct of the content of a grouped IE. In place, `set_<row>()` gives a
+list, a struct of the content of a grouped IE. A mandatory row also has an
+accessor of its name, `cause()`, which a received message may lack: it gives
+the value, or an error that names the row and its table. `message.cause()` and
+`message.recovery()` read those IEs of any message. In place, `set_<row>()` gives a
 row its value, `push_<row>()` adds one to a list and `clear_<row>()` removes
 it; `with_<row>()` builds. Codes are named values, with `Other` for a number
 that their table does not name.
@@ -123,9 +126,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // The MME reads the IEs that it needs: the TEID of S1-U of each bearer
     let mut message = Message::decode(&octets)?;
+    assert_eq!(message.cause(), Some(CauseValue::RequestAccepted));
     let response = message.body.as_create_session_response().ok_or("another message")?;
-    assert_eq!(response.cause.as_ref().map(|cause| cause.value), Some(CauseValue::RequestAccepted));
-    let bearer = &response.bearer_contexts_created[0];
+    let bearer = &response.bearer_contexts_created()?[0];
     let teid = bearer.s1_u_sgw_f_teid.as_ref().map(|f_teid| (f_teid.interface_type, f_teid.teid));
     assert_eq!(teid, Some((InterfaceType::S1uSgwGtpU, 0x2001)));
 
@@ -140,6 +143,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let found: Vec<String> = message.check().iter().map(ToString::to_string).collect();
     assert_eq!(found, Vec::<String>::new());
     assert_eq!(Message::decode(&message.encode()?)?, message);
+
+    // Without its Cause, the response is refused by name
+    let response = message.body.as_create_session_response_mut().ok_or("another message")?;
+    response.clear_cause();
+    let missing = response.cause().unwrap_err().to_string();
+    assert_eq!(missing, "the mandatory Cause of the Create Session Response (Table 7.2.2-1) is missing");
     Ok(())
 }
 ```
