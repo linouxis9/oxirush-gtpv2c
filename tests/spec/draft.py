@@ -43,6 +43,7 @@ def norm(text):
 
 errata = {(kind, table): read for kind, table, _, read, _ in tsv('errata.tsv') if kind in ('number', 'grouped')}
 names = {written: read for kind, _, written, read, _ in tsv('errata.tsv') if kind == 'ie-name'}
+renames = {(table, written): read for kind, table, written, read, _ in tsv('errata.tsv') if kind == 'rename'}
 aliases = {written: int(read) for kind, _, written, read, _ in tsv('errata.tsv') if kind == 'ie-type'}
 expanded = {written: [int(t) for t in read.split()] for kind, _, written, read, _ in tsv('errata.tsv') if kind == 'expand'}
 
@@ -134,6 +135,8 @@ for line in tsv('tables.tsv'):
             instance = last['instance']
         if not instance.isdigit():
             sys.exit(f'no instance of {name} in Table {current["number"]}')
+        # A row of the name of another of the table, by errata.tsv
+        name = renames.get((current['number'], f'{name} {instance}'), name)
         if last and (last['name'], last['type'], last['instance']) == (name, t, instance):
             last['presences'].append(presence)
             last['several'] = last['several'] or several == 'several'

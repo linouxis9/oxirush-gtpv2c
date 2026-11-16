@@ -218,6 +218,14 @@ pub enum Error {
         /// Its value.
         value: u64,
     },
+    /// A text that is no value of its field: digits of an IMSI that TBCD does not have, a
+    /// name of an APN of an empty label or of a label of more than 63 octets.
+    FieldValue {
+        /// The IE type.
+        ie: &'static str,
+        /// The field.
+        field: &'static str,
+    },
     /// A field longer than its length, its number or its type can say.
     FieldLength {
         /// The IE type.
@@ -273,6 +281,7 @@ impl fmt::Display for Error {
                 f,
                 "{length} octets of message type {message_type} are more than a Message Length says (TS 29.274 5.5.1)"
             ),
+            Self::FieldValue { ie, field } => write!(f, "the text is no {field} of {ie}"),
             Self::FieldLength { ie, field } => {
                 write!(f, "{field} of {ie} is longer than its length can say")
             }

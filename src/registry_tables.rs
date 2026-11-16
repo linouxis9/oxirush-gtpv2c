@@ -1865,7 +1865,7 @@ gtpv2c_table! {
         source_rnc_pdcp_context_info: "Source RNC PDCP context Info" C SourceRncPdcpContextInfo 0 [],
         pdu_numbers: "PDU Numbers" C PduNumbers 0 [],
         e_utran_transparent_container: "E-UTRAN Transparent Container" C FContainer 0 [],
-        e_utran_transparent_container_1: "E-UTRAN Transparent Container" C FContainer 1 [],
+        e_utran_transparent_container_1: "E-UTRAN Transparent Container (eNB Early Status Transfer)" C FContainer 1 [],
     }
 }
 

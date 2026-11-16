@@ -21,32 +21,23 @@
 use core::net::{Ipv4Addr, Ipv6Addr};
 
 use crate::Octets;
-use crate::fields::{Digits, Rest, SecretRest, U24, U40};
+use crate::fields::{Rest, SecretRest, U24, U40};
 
 /// Nine octets of a field.
 type Octets9 = [u8; 9];
 /// Twelve octets of a field.
 type Octets12 = [u8; 12];
-use crate::ie::listed_value;
+use crate::ie::{Codec, listed_value};
 use crate::macros::gtpv2c_layout;
 use crate::mm_context::MmContextEpsSecurityContextQuadrupletsAndQuintuplets;
 use crate::tft::{EpsBearerLevelTrafficFlowTemplate, Tad};
 use crate::uli::Uli;
 use crate::values_hand::{Cause, FqCsid, Paa};
-use oxirush_utils::fields::{Fqdn as Labels, PlmnId as Plmn};
+use oxirush_utils::fields::PlmnId as Plmn;
 
 gtpv2c_layout! {
-    /// International Mobile Subscriber Identity (IMSI) (§8.3): its digits, as TBCD.
-    pub struct Imsi "8.3" { fields { value "IMSI": Digits } }
-    /// Access Point Name (APN) (§8.6): its labels, each after its length (TS 23.003 clause
-    /// 9.1).
-    pub struct Apn "8.6" { fields { value "Access Point Name (APN)": Labels } }
     /// Aggregate Maximum Bit Rate (AMBR) (§8.7): the APN-AMBR of each direction, in kbps.
     pub struct Ambr "8.7" { fields { uplink "APN-AMBR for uplink": u32, downlink "APN-AMBR for downlink": u32 } }
-    /// Mobile Equipment Identity (MEI) (§8.10): an IMEI or an IMEISV, as TBCD.
-    pub struct Mei "8.10" { fields { value "MEI": Digits } }
-    /// MSISDN (§8.11): its digits, as TBCD.
-    pub struct Msisdn "8.11" { fields { value "MSISDN": Digits } }
     /// Bearer Level Quality of Service (Bearer QoS) (§8.15): the ARP, the QCI, and the
     /// bitrates of each direction in kbps.
     pub struct BearerLevelQualityOfService "8.15" {
@@ -80,8 +71,6 @@ gtpv2c_layout! {
             collection_entity "IP Address of Trace Collection Entity": Rest
         }
     }
-    /// Fully Qualified Domain Name (FQDN) (§8.66): its labels, each after its length.
-    pub struct Fqdn "8.66" { fields { value "FQDN": Labels } }
 }
 
 crate::macros::gtpv2c_bits! {
@@ -269,6 +258,133 @@ crate::macros::gtpv2c_bits! {
     pub struct SignallingPriorityIndication "8.88" octets 1 min 1 {
         lapi "LAPI": 0 1 1,
     }
+}
+
+/// A value that is the octets of a name or of digits to the end of its IE, which no
+/// figure splits: its tree is the name or the digits, or, for octets that are none, the
+/// object of the name of its field and the octets, `{"FQDN": "00"}`: never
+/// `{"octets": ...}`, which is an IE that its scope keeps as octets, of its own instance.
+macro_rules! named_octets {
+    ($($(#[$meta:meta])* $ty:ident $field:literal $clause:literal $kind:ident;)*) => {$(
+        $(#[$meta])*
+        #[derive(Debug, Clone, Default, PartialEq, Eq)]
+        pub struct $ty(pub Octets);
+
+        impl Codec for $ty {
+            fn decode(octets: &[u8]) -> Option<Self> {
+                Some(Self(Octets::copied(octets)))
+            }
+            fn encode(&self, out: &mut alloc::vec::Vec<u8>) -> Result<(), crate::Error> {
+                out.extend_from_slice(&self.0);
+                Ok(())
+            }
+            fn encoded_len(&self) -> usize {
+                self.0.len()
+            }
+        }
+
+        impl crate::check::Rules for $ty {
+            fn check(&self, path: &crate::check::Path<'_>, found: &mut alloc::vec::Vec<crate::check::Deviation>) {
+                named_octets!(@check $kind self path found $clause);
+            }
+        }
+
+        impl $ty {
+            /// The value of a text, its digits or its name: `"208930000000001"`,
+            /// `"internet"`.
+            ///
+            /// # Errors
+            ///
+            /// [`Error::FieldValue`](crate::Error::FieldValue) for a text that is no value of
+            /// its field: a character that TBCD does not have, an empty label, a label of more
+            /// than 63 octets, or a name of more than 253.
+            pub fn new(text: &str) -> Result<Self, crate::Error> {
+                named_octets!(@new $kind text)
+                    .map(|octets| Self(octets.into()))
+                    .ok_or(crate::Error::FieldValue { ie: $field, field: $field })
+            }
+
+            /// Its text: the digits or the name, `None` for octets that are none.
+            pub fn text(&self) -> Option<alloc::string::String> {
+                named_octets!(@text $kind self)
+            }
+
+            /// The name of its field.
+            pub(crate) const FIELDS: &'static [&'static str] = &[$field];
+            /// Its field, which its tree is of octets that are no name or digits: its tree
+            /// is the name or the digits otherwise.
+            pub(crate) const MEMBERS: &'static [&'static str] = Self::FIELDS;
+            /// What its tree takes.
+            #[cfg(feature = "tree")]
+            pub(crate) const TAKES: &'static oxirush_utils::tree::Takes = &oxirush_utils::tree::Takes::OneOf(&[
+                named_octets!(@takes $kind),
+                &oxirush_utils::tree::Takes::Members(None, &[($field, &oxirush_utils::tree::Takes::Octets(None))]),
+            ]);
+            /// Its layout, which the test spec does not compare yet.
+            #[doc(hidden)]
+            #[cfg(feature = "spec")]
+            pub const LAYOUT: Option<&'static oxirush_utils::fields::Layout> = None;
+        }
+
+        #[cfg(feature = "tree")]
+        impl oxirush_utils::tree::Tree for $ty {
+            const NAME: &'static str = $field;
+            fn to_tree(&self) -> oxirush_utils::tree::Value {
+                named_octets!(@to_tree $kind self $field)
+            }
+            fn from_tree(
+                value: &oxirush_utils::tree::Value,
+                reading: &mut oxirush_utils::tree::Reading,
+            ) -> Result<Self, oxirush_utils::tree::Refused> {
+                named_octets!(@from_tree $kind value reading $field).map(|octets| Self(octets.into()))
+            }
+        }
+    )*};
+    (@check name $self:ident $path:ident $found:ident $clause:literal) => {
+        oxirush_utils::fields::Field::check(&oxirush_utils::fields::Fqdn($self.0.clone()), $path, $clause, $found)
+    };
+    (@check digits $self:ident $path:ident $found:ident $clause:literal) => {{
+        let _ = ($self, $path, $found);
+    }};
+    (@new name $text:ident) => { oxirush_utils::fields::Fqdn::new($text).map(|labels| labels.0.to_vec()) };
+    (@new digits $text:ident) => { oxirush_utils::identity::tbcd::encode($text).ok() };
+    (@text name $self:ident) => { oxirush_utils::fields::Fqdn($self.0.clone()).name() };
+    (@text digits $self:ident) => { oxirush_utils::fields::Digits($self.0.clone()).digits() };
+    (@takes name) => { &oxirush_utils::tree::Takes::Name };
+    (@takes digits) => { &oxirush_utils::tree::Takes::Digits };
+    (@to_tree name $self:ident $field:literal) => { oxirush_utils::fields::name_tree(&$self.0, &[$field]) };
+    (@to_tree digits $self:ident $field:literal) => {
+        match oxirush_utils::fields::Digits($self.0.clone()).digits() {
+            Some(digits) => oxirush_utils::tree::text(digits),
+            None => oxirush_utils::tree::alternative($field, oxirush_utils::tree::octets(&$self.0)),
+        }
+    };
+    (@from_tree name $value:ident $reading:ident $field:literal) => {
+        oxirush_utils::fields::name_from_tree($value, $reading, &[$field])
+    };
+    (@from_tree digits $value:ident $reading:ident $field:literal) => {
+        match $value.as_str() {
+            Some(text) => oxirush_utils::identity::tbcd::encode(text).map_err(|_| $reading.mismatch("digits", $value)),
+            None => {
+                let (_, octets) = $reading.alternative($value, &[$field])?;
+                $reading.within($field, octets, |octets, reading| reading.octets(octets))
+            }
+        }
+    };
+}
+
+named_octets! {
+    /// International Mobile Subscriber Identity (IMSI) (§8.3): its digits, as TBCD.
+    Imsi "IMSI" "8.3" digits;
+    /// Access Point Name (APN) (§8.6): its labels, each after its length (TS 23.003 clause
+    /// 9.1).
+    Apn "Access Point Name (APN)" "8.6" name;
+    /// Mobile Equipment Identity (MEI) (§8.10): an IMEI or an IMEISV, as TBCD.
+    Mei "MEI" "8.10" digits;
+    /// MSISDN (§8.11): its digits, as TBCD.
+    Msisdn "MSISDN" "8.11" digits;
+    /// Fully Qualified Domain Name (FQDN) (§8.66): its labels, each after its length.
+    Fqdn "FQDN" "8.66" name;
 }
 
 include!("values_octets.rs");

@@ -34,7 +34,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ```toml
 [dependencies]
 oxirush-gtpv2c = { git = "https://github.com/linouxis9/oxirush-gtpv2c", features = ["tree"] }
-oxirush-utils = { version = "0.3", features = ["fields"] } # for the name of an APN
 hex = "0.4" # for the examples of this page
 ```
 
@@ -57,7 +56,6 @@ which a receiver answers a request.
 use std::net::Ipv4Addr;
 
 use oxirush_gtpv2c::*;
-use oxirush_utils::fields::Fqdn;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // An MME asks its SGW for a session: the MME's F-TEID of S11 (interface type 10),
@@ -66,10 +64,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         v4: true, interface_type: 10, teid: 1, ipv4: Some(Ipv4Addr::new(10, 0, 0, 1)),
         ..Default::default()
     };
-    let apn = Apn { value: Fqdn::new("internet").ok_or("an APN")?, ..Default::default() };
+    let apn = Apn::new("internet")?;
     let qos = BearerLevelQualityOfService { pl: 8, qci: 9, ..Default::default() };
     let bearer = BearerContextToBeCreatedInCreateSessionRequest::new(Ebi::new(5), qos);
-    let imsi = Imsi { value: Digits::new("208930000000001")?, ..Default::default() };
+    let imsi = Imsi::new("208930000000001")?;
     let mut request = CreateSessionRequest::new(RatType::new(6), control, apn, bearer)
         .with_imsi(imsi);
     assert!(Message::tunnel(0, 2, request.clone()).check().is_empty());

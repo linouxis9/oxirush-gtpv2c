@@ -233,8 +233,10 @@ fn expected_tables() -> Vec<(String, String, Option<u16>, Vec<Expected>)> {
                 if instance == "VS" {
                     continue;
                 }
-                let rows = &mut tables.last_mut().unwrap().3;
+                let (number, _, _, rows) = tables.last_mut().unwrap();
                 let name = without_notes(name);
+                // A row of the name of another of the table goes by the name of errata.tsv
+                let name = errata_rename(number, &format!("{name} {instance}")).unwrap_or(name);
                 // A row of "MM Context" is one conditional row per MM Context type
                 if let Some(expanded) = errata("expand").get(cell) {
                     for ie_type in expanded.split(' ').map(|t| t.parse::<u16>().unwrap()) {
@@ -275,6 +277,14 @@ fn expected_tables() -> Vec<(String, String, Option<u16>, Vec<Expected>)> {
         }
     }
     tables
+}
+
+/// The name that errata.tsv gives the row of `written` ("NAME INSTANCE") in `table`.
+fn errata_rename(table: &str, written: &str) -> Option<String> {
+    records(ERRATA_TSV)
+        .into_iter()
+        .find(|line| line[0] == "rename" && line[1] == table && line[2] == written)
+        .map(|line| line[3].to_string())
 }
 
 fn presence_of(presences: &[&str]) -> Presence {

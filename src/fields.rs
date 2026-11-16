@@ -27,7 +27,7 @@ pub(crate) use oxirush_utils::fields::*;
 #[cfg(feature = "spec")]
 #[doc(hidden)]
 pub use oxirush_utils::fields::{Bits, Layout, Member, NarrowCell};
-pub use oxirush_utils::fields::{Digits, Rest, SecretRest, U24, U40};
+pub use oxirush_utils::fields::{Rest, SecretRest, U24, U40};
 
 /// Write `field`, named `name`, of a value of the IE `ie`: refused where its length, its
 /// number or its type do not fit the bits that say them.
