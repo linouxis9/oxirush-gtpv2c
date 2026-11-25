@@ -40,6 +40,7 @@ oxirush-utils = { version = "0.4.0", default-features = false, features = ["allo
 
 [dev-dependencies]
 hex = "0.4.3"
+serde_json = "1.0.154"
 
 [lints.rust]
 # docs.rs sets `docsrs`. The table macros of oxirush-utils write the accounting of the
@@ -53,6 +54,10 @@ required-features = ["tree"]
 
 [[test]]
 name = "n26"
+required-features = ["tree"]
+
+[[test]]
+name = "wireshark"
 required-features = ["tree"]
 
 [package.metadata.docs.rs]

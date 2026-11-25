@@ -17,6 +17,8 @@
 
 //! What comparing the crate with Wireshark's dissector of the same octets found: each test
 //! is a value on which the two read a field otherwise, and what the clause says of it.
+//! tests/wireshark/compare.py runs the comparison, and tests/wireshark/known.tsv lists the
+//! differences that remain.
 
 use oxirush_gtpv2c::*;
 

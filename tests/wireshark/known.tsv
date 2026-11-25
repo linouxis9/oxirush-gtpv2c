@@ -1,0 +1,33 @@
+# The differences between Wireshark and the crate that were triaged, which do not fail the run
+# (compare.py). A difference that no row explains fails it, and each row has its test in
+# tests/differential.rs, of the crate's reading.
+#
+# Columns, separated by tabs: what (the kind of difference, `*` for any: header, ie, field,
+# ws-malformed, crate-refuses, class), where (a regular expression over the text of the
+# difference), verdict (wireshark: Wireshark reads the octets otherwise than the clause;
+# crate-by-clause: the crate does what the clause says and Wireshark shows something else;
+# both: both find fault, or read them as the clause allows; gap: Wireshark 4.6.4 does not
+# dissect or name them; crate-octets: the crate keeps the value as its octets and does not
+# judge them; crate: the crate reads them otherwise than the clause, held for the owner),
+# and the reference: the clause of TS 29.274 V19.6.0, and why.
+ws-malformed	^no GTPv2-C$	both	§5.5.1: a message whose Version is not 2; Wireshark dissects it as another version of GTP, the crate decodes it, and check() tells the Version
+ws-malformed	\(the crate discards it\)$	crate-by-clause	§7.7.9, §7.7.10: an IE that the receiver discards, of an instance or a type that the table does not have, or repeated, which check() tells; Wireshark dissects it and finds it malformed
+ws-malformed	(Less data left than indicated by length|Not enough data left for IE and length).*\(the crate (reads its IEs|stops there|keeps it as octets|decodes it)\)$	both	§7.7.7: an IE whose Length runs past the grouped IE or the message that holds it, which both find: the crate's framing of the IEs stops there, and check() tells it of an IE of a row
+ws-malformed	Malformed Packet \(Exception occurred\) \(the crate (keeps it as octets|stops there|reads its IEs|reads a message of no IE)\)$	both	§7.7.7, §7.7.8: a value that does not decode as its type, which the crate keeps as its octets and check() tells of an IE of a row, or IEs that do not frame; Wireshark's dissector raises an exception in it
+ws-malformed	^IE (\d+/)*(74|78|81|88|89|90|91|100|103|104|105|106|108|110|111|112|113|115|116|117|118|119|120|121|123|124|125|129|131|133|134|137|138|139|140|141|142|143|144|145|146|147|148|149|150|151|153|154|158|159|160|162|163|164|165|166|167|168|169|170|171|172|173|174|175|176|177|178|179|182|183|184|185|186|187|188|189|190|192|193|194|196|197|198|199|200|201|202|203|204|205|206|207|210|211|212|213|215|216|217|218|219|220|221|222|223|255): .*\(the crate decodes it\)$	crate-octets	the crate keeps the value of this IE type as its octets, which it does not split, and check() does not judge their content (README, Limits); Wireshark finds them malformed
+ws-malformed	^IE (\d+/)*1: \(Error/Malformed\): Malformed Packet \(Exception occurred\) \(the crate decodes it\)$	both	§8.3: an IMSI of fewer digits than an MCC and an MNC; Wireshark's dissector of E.212 raises an exception, the crate reads its digits, and check() does not judge their count
+ws-malformed	^IE (\d+/)*77: \(Error/Protocol\): Older version\?, should be 2 octets	both	§7.7.7, Table 8.1-1: an Indication of one octet, fewer than its 2 fixed octets, which check() tells
+ws-malformed	^IE (\d+/)*99: \(Error/Protocol\): Wrong length indicated\. Expected 1, got \d+ \(the crate decodes it\)$	wireshark	§7.7.7, Table 8.1-1: a PDN Type is extendable, of 1 fixed octet, and the receiver discards the octets after it; Wireshark finds a longer one malformed
+ws-malformed	Wrong Node-ID Type \d+, should be 0-2	both	§8.62: an FQ-CSID of a Node-ID Type that Table 8.62-1 does not have, which the crate keeps as octets
+ws-malformed	(Wrong length indicated\. Expected \d+, got \d+|Trying to fetch an unsigned integer with length 0) \(the crate keeps it as octets\)$	both	§7.7.7: a value of a length that its type does not have, which the crate keeps as its octets, and check() tells of an IE of a row
+crate-refuses	the IEs do not fit the message	crate-by-clause	§7.7.7: an IE whose Length runs past the message, or octets after the IEs that are fewer than an IE header; the crate refuses the message, Wireshark dissects what it can
+crate-refuses	the Message Length is \d+, and \d+ octets follow the first four	crate-by-clause	§5.5.1, §7.7.3: a Message Length that is not the octets after the first four; the crate refuses the message, Wireshark dissects the octets that there are
+field	^86 gtpv2.ecgi_eci: 	wireshark	§8.21.5, Figure 8.21.5-1: the ECI is 28 bits, after 4 spare bits; Wireshark 4.6.4 shows the spare bits in the ECI
+field	^111 (gtpv2.p_tmsi|3gpp.tmsi): 	wireshark	§8.41, §7.7.7: Wireshark 4.6.4 reads four octets of a P-TMSI whatever its Length, past the IE
+field	^112 gtpv2.p_tmsi_sig: 	wireshark	§8.42, §7.7.7: Wireshark 4.6.4 reads three octets of a P-TMSI Signature whatever its Length, past the IE
+field	^170 gtpv2.uli_timestamp: 	wireshark	§8.101, §7.7.7: a ULI Timestamp of fewer than its 4 fixed octets is an error; Wireshark 4.6.4 reads four octets, past the IE
+field	^113 gtpv2.hop_counter: Wireshark '0' \(0\), crate ""	wireshark	§8.43: a Hop Counter of a null length; Wireshark 4.6.4 shows the value 0
+field	^71 gtpv2.apn: 	wireshark	§8.6: Wireshark 4.6.4 shows the APN up to its first zero octet, and an octet that is no printable character as \xNN; the crate has every octet
+field	^84 gsm_a.gm.sm.tft.param_id: 	wireshark	TS 24.008 §10.5.6.12: Wireshark 4.6.4 shows no parameter of a null length of a TFT, so that those after it are compared with the entries of the crate's list before them
+ie	^message/(208|191) IE \d+ at \d+: only the crate$	gap	§8.139, §8.122: the V2X Context and the Remote UE Context are grouped IEs (Table 8.1-1 has them extendable); Wireshark 4.6.4 does not dissect their IEs
+ws-malformed	\(the crate keeps it out of its row, for the spare bits of its header\)$	crate	§8.2.1: the receiver ignores the spare bits of octet 4 of an IE header and reads the IE as its instance; the crate keeps an IE whose spare bits are set as octets out of its row, and tells the spare bits alone, also of an instance that the table does not have (§7.7.9). A finding for the owner

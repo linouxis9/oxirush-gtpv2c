@@ -18,3 +18,6 @@ V19.6.0 (2026-03):
   the wire, and reads and edits by path.
 - The MM Context of N26 (EPS security context) is laid out field by field, and
   `Debug` prints none of its keys.
+- The tests compare the crate with Wireshark 4.6.4's dissector of GTPv2-C, field by
+  field, on go-gtp's vectors, the lab captures and the corpora of the fuzz targets, each
+  week.

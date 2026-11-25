@@ -1,0 +1,320 @@
+# What Wireshark shows of an IE of GTPv2-C, and what of the crate it is compared with
+# (compare.py).
+#
+# Columns, separated by tabs:
+#   field  IE type, Wireshark's field, the member of the crate's tree of the value, and the
+#          comparison; and a note where the two name the field otherwise. The member is `.`
+#          for the tree itself, where it is a scalar; `A > B` for the member B of the
+#          member A; `A | B` for A where Wireshark shows the field first and B where it
+#          shows it next, of those of the two that the tree has; `A > * > B` for B of the
+#          entry of the list A at the place where Wireshark shows the field. The comparison
+#          is bool (a flag, which the tree has where it is set), int (a number, decimal or
+#          0x), ip (an address), text (the same text), name (a coded value, by Wireshark's
+#          label and the crate's name), hex (the octets), mcc or mnc (the MCC or the MNC of
+#          the crate's PLMN, MCC-MNC), octet (a coded octet as it is written), or tbcd
+#          (digits of TBCD, which Wireshark shows as ? where they are no decimal digit);
+#   none   IE type (`*` for any), Wireshark's field (`*` for any that no other row of the
+#          IE type names), and why it is compared with nothing;
+#   value  Wireshark's field, a code, and the crate's name of it, where Wireshark labels the
+#          code otherwise.
+# A field that no row names is counted in coverage.tsv as unlisted, and a spare field as spare.
+none	*	gtpv2.ie_data_not_decoded	octets that Wireshark does not dissect, which the crate keeps as the unknown octets of the value
+field	1	e212.assoc.imsi	.	tbcd
+field	1	e212.imsi	.	tbcd
+none	1	e212.mcc	part of the IMSI, which is compared whole
+none	1	e212.mnc	part of the IMSI, which is compared whole
+field	2	gtpv2.bce	BCE	bool
+field	2	gtpv2.cause	Cause value	name
+field	2	gtpv2.cs	CS	bool
+field	2	gtpv2.pce	PCE	bool
+field	3	gtpv2.rec	.	int
+field	71	gtpv2.apn	.	text
+field	72	gtpv2.ambr_down	APN-AMBR for downlink	int
+field	72	gtpv2.ambr_up	APN-AMBR for uplink	int
+field	73	gtpv2.ebi	.	int
+field	74	gtpv2.ip_address_ipv4	.	text
+field	75	gtpv2.mei	.	tbcd
+none	76	e164.country_code	part of the MSISDN, which is compared whole
+field	76	e164.msisdn	.	tbcd
+field	77	gtpv2.5gcnri	5GCNRI	bool
+field	77	gtpv2.5gcnrs	5GCNRS	bool
+field	77	gtpv2.5gsiwk	5GSIWK	bool
+field	77	gtpv2.5gsnn26	5GSNN26	bool
+field	77	gtpv2.5srhoi	5SRHOI	bool
+field	77	gtpv2.aopi	AOPI	bool
+field	77	gtpv2.aosi	AOSI	bool
+field	77	gtpv2.arrl	ARRL	bool
+field	77	gtpv2.bdwi	BDWI	bool
+field	77	gtpv2.ccrsi	CCRSI	bool
+field	77	gtpv2.cfsi	CFSI	bool
+field	77	gtpv2.clii	CLII	bool
+field	77	gtpv2.cpopci	CPOPCI	bool
+field	77	gtpv2.cprai	CPRAI	bool
+field	77	gtpv2.cpsr	CPSR	bool
+field	77	gtpv2.crsi	CRSI	bool
+field	77	gtpv2.csfbi	CSFBI	bool
+field	77	gtpv2.csrmfi	CSRMFI	bool
+field	77	gtpv2.daf	DAF	bool
+field	77	gtpv2.dfi	DFI	bool
+field	77	gtpv2.dtci	DTCI	bool
+field	77	gtpv2.dtf	DTF	bool
+field	77	gtpv2.eevrsi	EEVRSI	bool
+field	77	gtpv2.emci	EMCI	bool
+field	77	gtpv2.enbcrsi	ENBCRSI	bool
+field	77	gtpv2.epcosi	EPCOSI	bool
+field	77	gtpv2.ethpdn	ETHPDN	bool
+field	77	gtpv2.hi	HI	bool
+field	77	gtpv2.idfupf	IDFUPF	bool
+field	77	gtpv2.israi	ISRAI	bool
+field	77	gtpv2.israu	ISRAU	bool
+field	77	gtpv2.isrsi	ISRSI	bool
+field	77	gtpv2.lapcosi	LAPCOSI	bool
+field	77	gtpv2.ltempi	LTEMPI	bool
+field	77	gtpv2.ltemsai	LTEMSAI	bool
+field	77	gtpv2.ltemui	LTEMUI	bool
+field	77	gtpv2.mbmdt	MBMDT	bool
+field	77	gtpv2.msv	MSV	bool
+field	77	gtpv2.mtedta	MTEDTA	bool
+field	77	gtpv2.mtedtn	MTEDTN	bool
+field	77	gtpv2.n5gnmi	N5GNMI	bool
+field	77	gtpv2.nsenbi	NSENBI	bool
+field	77	gtpv2.nsi	NSI	bool
+field	77	gtpv2.nspusi	NSPUSI	bool
+field	77	gtpv2.oi	OI	bool
+field	77	gtpv2.pbic	PBIC	bool
+field	77	gtpv2.pcri	PCRI	bool
+field	77	gtpv2.pgwchi	PGWCHI	bool
+field	77	gtpv2.pgwrnsi	PGWRNSI	bool
+field	77	gtpv2.pmtsmi	PMTSMI	bool
+field	77	gtpv2.pnsi	PNSI	bool
+field	77	gtpv2.ppof	PPOF	bool
+field	77	gtpv2.ppon_ppei	PPON/PPEI	bool
+field	77	gtpv2.ppsi	PPSI	bool
+field	77	gtpv2.ps	P	bool	Wireshark names the flag of Piggybacking Supported PS, §8.12 P
+field	77	gtpv2.psci	PSCI	bool
+field	77	gtpv2.pt	PT	bool
+field	77	gtpv2.reprefi	REPREFI	bool
+field	77	gtpv2.retloc	RetLoc	bool
+field	77	gtpv2.roaai	ROAAI	bool
+field	77	gtpv2.rppcsi	RPPCSI	bool
+field	77	gtpv2.s11tf	S11TF	bool
+field	77	gtpv2.s4af	S4AF	bool
+field	77	gtpv2.s6af	S6AF	bool
+field	77	gtpv2.sgwci	SGWCI	bool
+field	77	gtpv2.si	SI	bool
+field	77	gtpv2.sissme	SISSME	bool
+field	77	gtpv2.snri	SRNI	bool
+field	77	gtpv2.sqci	SQCI	bool
+field	77	gtpv2.srtpi	SRTPI	bool
+field	77	gtpv2.tspcmi	TSPCMI	bool
+field	77	gtpv2.uasi	UASI	bool
+field	77	gtpv2.uimsi	UIMSI	bool
+field	77	gtpv2.unaccsi	UNACCSI	bool
+field	77	gtpv2.upipsi	UPIPSI	bool
+field	77	gtpv2.wpmsi	WPMSI	bool
+field	79	gtpv2.pdn_addr_and_prefix.ipv4	IPv4 address	ip
+field	79	gtpv2.pdn_type	PDN Type	name
+field	80	gtpv2.bearer_qos_gbr_down	Guaranteed bit rate for downlink	int
+field	80	gtpv2.bearer_qos_gbr_up	Guaranteed bit rate for uplink	int
+field	80	gtpv2.bearer_qos_label_qci	Label (QCI)	int
+field	80	gtpv2.bearer_qos_mbr_down	Maximum bit rate for downlink	int
+field	80	gtpv2.bearer_qos_mbr_up	Maximum bit rate for uplink	int
+field	80	gtpv2.bearer_qos_pci	PCI	bool
+field	80	gtpv2.bearer_qos_pl	PL	int
+field	80	gtpv2.bearer_qos_pvi	PVI	bool
+field	82	gtpv2.rat_type	.	name
+field	83	e212.serv_net.mcc	.	mcc
+field	83	e212.serv_net.mnc	.	mnc
+none	84	*	a field of the contents of a packet filter or a parameter of the TFT of TS 24.008 §10.5.6.12, which the crate keeps as their octets
+field	84	gsm_a.gm.sm.tft.op_code	TFT operation code	int
+field	86	e212.cgi.mcc	CGI > PLMN	mcc
+field	86	e212.cgi.mnc	CGI > PLMN	mnc
+field	86	e212.ecgi.mcc	ECGI > PLMN	mcc
+field	86	e212.ecgi.mnc	ECGI > PLMN	mnc
+field	86	e212.lai.mcc	LAI > PLMN	mcc
+field	86	e212.lai.mnc	LAI > PLMN	mnc
+field	86	e212.mcc	Macro eNodeB ID > PLMN | Extended Macro eNodeB ID > PLMN	mcc
+field	86	e212.mnc	Macro eNodeB ID > PLMN | Extended Macro eNodeB ID > PLMN	mnc
+field	86	e212.rai.mcc	RAI > PLMN	mcc
+field	86	e212.rai.mnc	RAI > PLMN	mnc
+field	86	e212.sai.mcc	SAI > PLMN	mcc
+field	86	e212.sai.mnc	SAI > PLMN	mnc
+field	86	e212.tai.mcc	TAI > PLMN	mcc
+field	86	e212.tai.mnc	TAI > PLMN	mnc
+none	86	gtpv2.cellid	part of the ECI, which is compared whole
+field	86	gtpv2.ecgi_eci	ECGI > ECI	int
+none	86	gtpv2.enodebid	part of the ECI, which is compared whole
+field	86	gtpv2.ext_macro_enodeb_id	Extended Macro eNodeB ID > Extended Macro eNodeB ID	int
+field	86	gtpv2.macro_enodeb_id	Macro eNodeB ID > Macro eNodeB ID	int
+field	86	gtpv2.rai_lac	RAI > LAC	int
+field	86	gtpv2.rai_rac	RAI > RAC	int
+field	86	gtpv2.sai_lac	SAI > LAC	int
+field	86	gtpv2.sai_sac	SAI > SAC	int
+field	86	gtpv2.tai_tac	TAI > TAC	int
+field	86	gtpv2.uli_cgi_ci	CGI > CI	int
+field	86	gtpv2.uli_cgi_flg	CGI	bool
+field	86	gtpv2.uli_cgi_lac	CGI > LAC	int
+field	86	gtpv2.uli_ecgi_flg	ECGI	bool
+none	86	gtpv2.uli_flags	the flags of the ULI, which the crate gives by the identities that it has
+field	86	gtpv2.uli_lai_flg	LAI	bool
+field	86	gtpv2.uli_lai_lac	LAI > LAC	int
+field	86	gtpv2.uli_rai_flg	RAI	bool
+field	86	gtpv2.uli_sai_flg	SAI	bool
+field	86	gtpv2.uli_tai_flg	TAI	bool
+field	87	gtpv2.f_teid_gre_key	TEID / GRE Key	int
+field	87	gtpv2.f_teid_interface_type	Interface Type	name
+field	87	gtpv2.f_teid_ipv4	IPv4 address	ip
+field	87	gtpv2.f_teid_v4	V4	bool
+field	87	gtpv2.f_teid_v6	V6	bool
+field	92	gtpv2.delay_value	.	int
+field	94	gtpv2.charging_id	.	int
+field	99	gtpv2.pdn_type	.	name
+field	111	3gpp.tmsi	.	name
+field	111	gtpv2.p_tmsi	.	name
+field	112	gtpv2.p_tmsi_sig	.	name
+field	113	gtpv2.hop_counter	.	text
+field	114	gsm_a.dtap.timezone	Time Zone	octet	the crate gives the octet of TS 24.008 §10.5.3.8 as it is written, Wireshark its semi-octets
+field	114	gtpv2.ue_time_zone_dst	Daylight Saving Time	int
+field	126	gtpv2.port_number	.	int
+field	127	gtpv2.apn_rest	.	int
+field	128	gtpv2.selec_mode	.	name
+field	132	gtpv2.fq_csid_id	PDN Connection Set Identifier (CSID) > *	int
+field	132	gtpv2.fq_csid_ipv4	Node-ID	ip
+none	132	gtpv2.fq_csid_nr	the length of the list of PDN Connection Set Identifiers
+none	132	gtpv2.fq_csid_type	the Node-ID Type, which the crate gives by the form of the Node-ID
+field	135	gtpv2.node_type	.	int
+none	145	gtpv2.cui_csg_id	the crate keeps the User CSG Information as its octets
+none	145	gtpv2.uci_access_mode	the crate keeps the User CSG Information as its octets
+none	145	gtpv2.uci_csg_membership	the crate keeps the User CSG Information as its octets
+none	145	gtpv2.uci_leave_csg	the crate keeps the User CSG Information as its octets
+field	150	gtpv2.detach_type	.	text
+field	152	gtpv2.node_features_ciot	CIOT	bool
+field	152	gtpv2.node_features_eth	ETH	bool
+field	152	gtpv2.node_features_mabr	MABR	bool
+field	152	gtpv2.node_features_mtedt	MTEDT	bool
+field	152	gtpv2.node_features_ntsr	NTSR	bool
+field	152	gtpv2.node_features_prn	PRN	bool
+field	152	gtpv2.node_features_psset	PSSET	bool
+field	152	gtpv2.node_features_s1un	S1UN	bool
+none	154	gtpv2.throttling_delay_unit	the crate keeps the Throttling as its octets
+none	154	gtpv2.throttling_delay_value	the crate keeps the Throttling as its octets
+none	154	gtpv2.throttling_factor	the crate keeps the Throttling as its octets
+field	155	gtpv2.arp_pci	PCI	bool
+field	155	gtpv2.arp_pl	PL	int
+field	155	gtpv2.arp_pvi	PVI	bool
+field	156	gtpv2.timer_unit	Timer unit	int
+field	156	gtpv2.timer_value	Timer value	int
+field	170	gtpv2.uli_timestamp	.	text
+none	186	gtpv2.ebi	the crate keeps the Paging and Service Information as its octets
+none	186	gtpv2.ppi_flag	the crate keeps the Paging and Service Information as its octets
+none	186	gtpv2.ppi_value	the crate keeps the Paging and Service Information as its octets
+field	187	gtpv2.dl_buf_sug_pkt_cnt	.	name
+field	187	gtpv2.integer_number_val	.	name
+none	255	gtpv2.enterprise_id	the crate keeps a Private Extension as its octets, the Enterprise ID and the value
+none	255	gtpv2.proprietary_value	the crate keeps a Private Extension as its octets, the Enterprise ID and the value
+none	78	*	a field of the PCO of TS 24.008 §10.5.6.3, which the crate keeps as its octets
+none	145	gtpv2.uci_lcsg	the crate keeps the User CSG Information as its octets
+none	145	gtpv2.uci_cmi	the crate keeps the User CSG Information as its octets
+value	gtpv2.selec_mode	0	MS or network provided APN, subscription verified
+value	gtpv2.f_teid_interface_type	12	S10/N26 MME GTP-C interface
+none	145	*	a field of the User CSG Information, which the crate keeps as its octets
+field	86	gtpv2.uli_macro_enb_id_flg	Macro eNodeB ID	bool
+field	86	gtpv2.uli_ext_macro_enb_id_flg	Extended Macro eNodeB ID	bool
+field	86	gtpv2.smenb	Extended Macro eNodeB ID > SMeNB	bool
+field	84	gsm_a.gm.sm.tft.e_bit	Parameters	bool
+field	84	gsm_a.gm.sm.tft.pkt_flt_dir	Packet filters > * > Packet filter direction	int
+field	84	gsm_a.gm.sm.tft.pkt_flt_id	Packet filters > * > Packet filter identifier	int	Wireshark labels the identifier one more than its code
+field	84	gsm_a.gm.sm.tft.packet_evaluation_precedence	Packet filters > * > Packet filter evaluation precedence	int
+field	84	gsm_a.gm.sm.tft.param_id	Parameters > * > Parameter identifier	int
+none	84	gsm_a.gm.sm.tft.pkt_flt	the number of the packet filters, which is the length of the crate's list
+none	84	gsm_a.gm.sm.tft.packet_filter	the place of a packet filter in the list
+none	84	gsm_a.gm.sm.tft.packet_filter_length	the length of the contents of a packet filter, which the crate gives as their octets
+value	gtpv2.pdn_type	3	IPv4v6
+value	gtpv2.f_teid_interface_type	23	SGW/UPF GTP-U interface for DL data forwarding
+none	0	*	an IE of type 0, which Table 8.1-1 has reserved
+none	81	*	a field of a value that the crate keeps as its octets
+none	88	*	a field of a value that the crate keeps as its octets
+none	89	*	a field of a value that the crate keeps as its octets
+none	100	*	a field of a value that the crate keeps as its octets
+none	103	*	a field of a value that the crate keeps as its octets
+none	104	*	a field of a value that the crate keeps as its octets
+none	105	*	a field of a value that the crate keeps as its octets
+none	106	*	a field of a value that the crate keeps as its octets
+none	108	*	a field of a value that the crate keeps as its octets
+none	110	*	a field of a value that the crate keeps as its octets
+none	115	*	a field of a value that the crate keeps as its octets
+none	117	*	a field of a value that the crate keeps as its octets
+none	118	*	a field of a value that the crate keeps as its octets
+none	119	*	a field of a value that the crate keeps as its octets
+none	120	*	a field of a value that the crate keeps as its octets
+none	123	*	a field of a value that the crate keeps as its octets
+none	124	*	a field of a value that the crate keeps as its octets
+none	125	*	a field of a value that the crate keeps as its octets
+none	129	*	a field of a value that the crate keeps as its octets
+none	131	*	a field of a value that the crate keeps as its octets
+none	133	*	a field of a value that the crate keeps as its octets
+none	134	*	a field of a value that the crate keeps as its octets
+none	138	*	a field of a value that the crate keeps as its octets
+none	139	*	a field of a value that the crate keeps as its octets
+none	140	*	a field of a value that the crate keeps as its octets
+none	143	*	a field of a value that the crate keeps as its octets
+none	144	*	a field of a value that the crate keeps as its octets
+none	146	*	a field of a value that the crate keeps as its octets
+none	147	*	a field of a value that the crate keeps as its octets
+none	148	*	a field of a value that the crate keeps as its octets
+none	149	*	a field of a value that the crate keeps as its octets
+none	151	*	a field of a value that the crate keeps as its octets
+none	153	*	a field of a value that the crate keeps as its octets
+none	158	*	a field of a value that the crate keeps as its octets
+none	159	*	a field of a value that the crate keeps as its octets
+none	160	*	a field of a value that the crate keeps as its octets
+none	162	*	a field of a value that the crate keeps as its octets
+none	163	*	a field of a value that the crate keeps as its octets
+none	164	*	a field of a value that the crate keeps as its octets
+none	165	*	a field of a value that the crate keeps as its octets
+none	166	*	a field of a value that the crate keeps as its octets
+none	167	*	a field of a value that the crate keeps as its octets
+none	168	*	a field of a value that the crate keeps as its octets
+none	169	*	a field of a value that the crate keeps as its octets
+none	171	*	a field of a value that the crate keeps as its octets
+none	173	*	a field of a value that the crate keeps as its octets
+none	174	*	a field of a value that the crate keeps as its octets
+none	175	*	a field of a value that the crate keeps as its octets
+none	176	*	a field of a value that the crate keeps as its octets
+none	177	*	a field of a value that the crate keeps as its octets
+none	178	*	a field of a value that the crate keeps as its octets
+none	179	*	a field of a value that the crate keeps as its octets
+none	182	*	a field of a value that the crate keeps as its octets
+none	183	*	a field of a value that the crate keeps as its octets
+none	184	*	a field of a value that the crate keeps as its octets
+none	185	*	a field of a value that the crate keeps as its octets
+none	187	*	a field of a value that the crate keeps as its octets
+none	188	*	a field of a value that the crate keeps as its octets
+none	189	*	a field of a value that the crate keeps as its octets
+none	190	*	a field of a value that the crate keeps as its octets
+none	192	*	a field of a value that the crate keeps as its octets
+none	193	*	a field of a value that the crate keeps as its octets
+none	194	*	a field of a value that the crate keeps as its octets
+none	196	*	a field of a value that the crate keeps as its octets
+none	197	*	a field of a value that the crate keeps as its octets
+none	198	*	a field of a value that the crate keeps as its octets
+none	199	*	a field of a value that the crate keeps as its octets
+none	200	*	a field of a value that the crate keeps as its octets
+none	201	*	a field of a value that the crate keeps as its octets
+none	202	*	a field of a value that the crate keeps as its octets
+none	203	*	a field of a value that the crate keeps as its octets
+none	204	*	a field of a value that the crate keeps as its octets
+none	206	*	a field of a value that the crate keeps as its octets
+none	207	*	a field of a value that the crate keeps as its octets
+none	210	*	a field of a value that the crate keeps as its octets
+none	211	*	a field of a value that the crate keeps as its octets
+none	212	*	a field of a value that the crate keeps as its octets
+none	213	*	a field of a value that the crate keeps as its octets
+none	215	*	a field of a value that the crate keeps as its octets
+none	216	*	a field of a value that the crate keeps as its octets
+none	217	*	a field of a value that the crate keeps as its octets
+none	218	*	a field of a value that the crate keeps as its octets
+none	219	*	a field of a value that the crate keeps as its octets
+none	221	*	a field of a value that the crate keeps as its octets
+none	222	*	a field of a value that the crate keeps as its octets
+none	223	*	a field of a value that the crate keeps as its octets
