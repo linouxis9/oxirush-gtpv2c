@@ -101,9 +101,17 @@ fn the_tree_of_a_rai_has_the_rac_alone() {
 fn an_extendable_ie_shorter_than_its_fixed_octets_is_told() {
     // A Create Session Request of go-gtp's vectors with Indication Flags of one octet
     let request = hex::decode("482000e711223344000001000100080021431532547698f04c00080021430521436587f94b00080021430521436587f956000d001821f354000121f354000001015300030021f35452000100064d000100a1570009008affffffff010101015700090187ffffffff010101024700110004736f6d650361706e076578616d706c65800001000063000100014f00050001020202027f000100014800080011111111222222225d001f0049000100055000160049ff11111111112222222222111111111122222222225d001f0049000100065000160049ff1111111111222222222211111111112222222222").unwrap();
-    let found: Vec<(&str, DeviationKind)> = Message::decode(&request)
-        .unwrap()
-        .check()
+    let deviations = Message::decode(&request).unwrap().check();
+    // A conditional IE of a request: the Cause of the answer names it
+    let of_ie = deviations
+        .iter()
+        .find(|d| matches!(d.kind, DeviationKind::FixedLength { .. }));
+    assert_eq!(
+        of_ie.and_then(Deviation::offending_ie),
+        Some((77, 0)),
+        "{deviations:?}"
+    );
+    let found: Vec<(&str, DeviationKind)> = deviations
         .into_iter()
         .map(|deviation| (deviation.clause, deviation.kind))
         .collect();

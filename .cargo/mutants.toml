@@ -6,3 +6,15 @@
 # the codec of each table and layout, are not mutated: cargo-mutants leaves
 # `macro_rules!` alone.
 all_features = true
+
+exclude_re = [
+    # The octets of a code of a ULI, shifted into a number of no bit below them: `^` joins
+    # them as `|` does. So are the flags of the identities, each of its own bit, and the
+    # spare bits above a code that is checked to fit its bits (src/uli.rs).
+    "src/uli\\.rs:\\d+:\\d+: replace \\| with \\^ in <impl Codec for Uli>::(decode|encode)$",
+    # The spare bits of an identity are 0, 3 or 4, never 8: `<= 8` is `< 8` (src/uli.rs).
+    "src/uli\\.rs:\\d+:\\d+: replace < with <= in <impl Codec for Uli>::encode$",
+    # Deviations of the value of an IE that check_field gives it, at their place in the
+    # list: `>=` also gives it an empty list, which changes nothing (src/check.rs).
+    "src/check\\.rs:\\d+:\\d+: replace > with >= in check_field$",
+]
