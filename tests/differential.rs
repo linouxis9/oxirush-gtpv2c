@@ -125,3 +125,22 @@ fn an_extendable_ie_shorter_than_its_fixed_octets_is_told() {
         "{found:?}"
     );
 }
+
+/// §8.4: "Cause is a variable length IE, which may have either of the following two
+/// lengths values": 2, or 6 with the offending IE. Wireshark finds a Cause of 3 octets
+/// malformed; the crate read it with an octet after the flags and told nothing of it.
+#[test]
+fn a_cause_of_neither_two_nor_six_octets_is_told() {
+    let rule = DeviationKind::Rule("a Cause of neither 2 nor 6 octets");
+    for (octets, told) in [
+        ("1000", false),
+        ("10000a000000", false),
+        ("1000ff", true),
+        ("1000ffffff", true),
+        ("10000a000000ff", true),
+    ] {
+        let cause = Cause::decode(&hex::decode(octets).unwrap()).unwrap();
+        let found: Vec<DeviationKind> = cause.deviations().into_iter().map(|d| d.kind).collect();
+        assert_eq!(found.contains(&rule), told, "{octets}: {found:?}");
+    }
+}

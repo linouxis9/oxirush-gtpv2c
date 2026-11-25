@@ -106,7 +106,7 @@ impl Codec for Cause {
             });
         }
         // Without an offending IE, four octets after the flags or more would read as one:
-        // fewer are the octets of a later release, which a Cause keeps
+        // fewer are kept as they came
         if self.offending_ie.is_none() && self.extra.len() >= 4 {
             return Err(Error::Inconsistent {
                 ie: "Cause",
@@ -144,6 +144,14 @@ impl Rules for Cause {
                 path,
                 "8.4",
                 DeviationKind::Rule("the Length of the offending IE is not 0"),
+            ));
+        }
+        // The two lengths of §8.4: the Cause value and its flags, and the offending IE
+        if !self.extra.is_empty() {
+            found.push(Deviation::new(
+                path,
+                "8.4",
+                DeviationKind::Rule("a Cause of neither 2 nor 6 octets"),
             ));
         }
     }
