@@ -439,10 +439,12 @@ pub(crate) fn check_field<T: crate::ie::Listed + crate::ie::IeType + crate::tabl
     let from = found.len();
     value.check_in(path, context.within(presence), found);
     value.check_placed(table, path, found);
-    if let Some(fixed) = T::FIXED {
+    // The fixed octets that Table 8.1-1 gives a fixed-length IE, and an extendable one
+    // before its extended fields: more are a later release's, which the receiver discards,
+    // and fewer are an error (§7.7.7).
+    let fixed = T::FIXED.or_else(|| crate::ie_type_info(T::IE_TYPE).and_then(|info| info.fixed));
+    if let Some(fixed) = fixed {
         let length = value.encoded_len();
-        // More octets than fixed are a later release's, which the receiver discards
-        // (§7.7.7).
         if length < usize::from(fixed) {
             found.push(Deviation::new(
                 path,

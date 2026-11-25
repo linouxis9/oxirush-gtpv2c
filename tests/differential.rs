@@ -89,3 +89,39 @@ fn the_tree_of_a_rai_has_the_rac_alone() {
     let wide = r#"{"RAI":{"PLMN":"123-45","LAC":1,"RAC":256}}"#;
     assert!(from_value::<Uli>(&wide.parse().unwrap()).is_err());
 }
+
+/// §7.7.7: "If the received value of the Length field and the actual length of the
+/// extendable length IE are consistent, but the length is less than the number of fixed
+/// octets defined for that IE, preceding the extended field(s), this shall be considered an
+/// error". Table 8.1-1 gives the Indication 2 fixed octets; Wireshark finds one of one octet
+/// of an older version, and the crate told nothing of it.
+#[test]
+fn an_extendable_ie_shorter_than_its_fixed_octets_is_told() {
+    // A Create Session Request of go-gtp's vectors with Indication Flags of one octet
+    let request = hex::decode("482000e711223344000001000100080021431532547698f04c00080021430521436587f94b00080021430521436587f956000d001821f354000121f354000001015300030021f35452000100064d000100a1570009008affffffff010101015700090187ffffffff010101024700110004736f6d650361706e076578616d706c65800001000063000100014f00050001020202027f000100014800080011111111222222225d001f0049000100055000160049ff11111111112222222222111111111122222222225d001f0049000100065000160049ff1111111111222222222211111111112222222222").unwrap();
+    let found: Vec<(&str, DeviationKind)> = Message::decode(&request)
+        .unwrap()
+        .check()
+        .into_iter()
+        .map(|deviation| (deviation.clause, deviation.kind))
+        .collect();
+    let short = DeviationKind::FixedLength {
+        ie: (77, 0),
+        length: 1,
+    };
+    assert!(found.contains(&("7.7.7", short)), "{found:?}");
+    // Two octets, and more, are the Indication as Table 8.1-1 has it
+    let mut longer = request.clone();
+    let at = 77;
+    assert_eq!(&longer[at..at + 3], [77, 0, 1]);
+    longer[at + 2] = 2;
+    longer.insert(at + 5, 0);
+    longer[3] += 1;
+    let found = Message::decode(&longer).unwrap().check();
+    assert!(
+        found
+            .iter()
+            .all(|deviation| !matches!(deviation.kind, DeviationKind::FixedLength { .. })),
+        "{found:?}"
+    );
+}
