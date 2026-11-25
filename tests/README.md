@@ -52,4 +52,5 @@ Cause is of 2 or 6 octets (§8.4). The other rows are Wireshark 4.6.4's (fixed f
 past the Length of the IE, the spare bits of an ECI shown in it, a label shown up to a zero
 octet), both's, the IEs of two grouped IEs that Wireshark does not dissect, the values
 that the crate keeps as octets, and one of the crate that is held: an IE whose spare bits
-of octet 4 are set is kept out of its row (§8.2.1).
+of octet 4 are set is kept out of its row (§8.2.1), where check() tells its spare bits, or
+that it is unexpected for an instance that its table does not have (§7.7.9).

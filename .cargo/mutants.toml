@@ -17,4 +17,7 @@ exclude_re = [
     # Deviations of the value of an IE that check_field gives it, at their place in the
     # list: `>=` also gives it an empty list, which changes nothing (src/check.rs).
     "src/check\\.rs:\\d+:\\d+: replace > with >= in check_field$",
+    # An IE of octet 4 of 0x0f, no spare bit, reaches of_no_row only where its table has
+    # no row of instance 15, which it would be placed in: `>=` then finds no row either.
+    "src/check\\.rs:\\d+:\\d+: replace > with >= in <impl oxirush_utils::tables::Checking for crate::Gtpv2c>::of_no_row$",
 ]

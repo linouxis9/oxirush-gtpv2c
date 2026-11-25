@@ -680,12 +680,16 @@ impl oxirush_utils::tables::Checking for crate::Gtpv2c {
     ) {
     }
 
-    fn of_no_row(path: &str, ie: &crate::ie::RawIe) -> Option<Deviation> {
-        let key = (ie.ie_type, ie.instance);
+    fn of_no_row(path: &str, table: &'static Table, ie: &crate::ie::RawIe) -> Option<Deviation> {
+        // The instance, bits 4 to 1 of octet 4: the receiver ignores the spare bits 8 to 5
+        // (§8.2.1), and the scope keeps an IE whose spare bits are set out of its row
+        let key = (ie.ie_type, ie.instance & 0x0f);
         let (clause, kind) = match ie.ie_type {
             // A Private Extension of any instance is no IE of a table of its own.
             255 => return None,
-            _ if ie.instance > 0x0f => ("8.2.1", DeviationKind::SpareBits),
+            _ if ie.instance > 0x0f && table.row_of(key).is_some() => {
+                ("8.2.1", DeviationKind::SpareBits)
+            }
             known if ie_type_info(known).is_some() => {
                 ("7.7.9", DeviationKind::Unexpected { ie: key })
             }

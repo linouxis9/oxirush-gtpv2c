@@ -154,3 +154,38 @@ fn a_cause_of_neither_two_nor_six_octets_is_told() {
         assert_eq!(found.contains(&rule), told, "{octets}: {found:?}");
     }
 }
+
+/// §8.2.1 has the receiver ignore the spare bits of octet 4 of an IE header; §7.7.9 has it
+/// discard an IE of an instance that its table does not have. The crate keeps an IE whose
+/// spare bits are set as octets out of its row, and told its spare bits alone, also of an
+/// instance that the table does not have; Wireshark dissects it as its instance.
+#[test]
+fn an_instance_of_no_row_is_unexpected_whatever_its_spare_bits() {
+    // A Context Acknowledge of go-gtp's vectors, its first Bearer Context of octet 4
+    // `octet`: the spare bits 8 to 5 and the instance
+    let found = |ie_type: u8, octet: u8| -> Vec<(&str, DeviationKind)> {
+        let mut message = hex::decode(
+            "488400471122334400000100020002001000570009008fffffffff010101015d00120049000100\
+             055700090080ffffffff010101045d00120049000100065700090080ffffffff01010104",
+        )
+        .unwrap();
+        assert_eq!(&message[31..34], [0x5d, 0x00, 0x12]);
+        message[31] = ie_type;
+        message[34] = octet;
+        let message = Message::decode(&message).unwrap();
+        message
+            .check()
+            .into_iter()
+            .map(|d| (d.clause, d.kind))
+            .collect()
+    };
+    let unexpected = DeviationKind::Unexpected { ie: (93, 8) };
+    assert_eq!(found(93, 0x08), [("7.7.9", unexpected.clone())]);
+    // The spare bits set: an instance that the table does not have is unexpected still
+    assert_eq!(found(93, 0x18), [("7.7.9", unexpected)]);
+    // And one that the table has: its spare bits
+    assert_eq!(found(93, 0x10), [("8.2.1", DeviationKind::SpareBits)]);
+    // An IE type that Table 8.1-1 does not have, whatever its octet 4
+    let unknown = DeviationKind::UnknownType { ie: (249, 8) };
+    assert_eq!(found(249, 0x18), [("7.7.9", unknown)]);
+}
