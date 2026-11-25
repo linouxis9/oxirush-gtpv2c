@@ -34,12 +34,19 @@ pub struct Location {
     /// Its first code: the LAC (CGI, SAI, RAI, LAI), the TAC (TAI), the ECI (ECGI), or
     /// the eNodeB ID (Macro and Extended Macro eNodeB ID).
     pub code: u32,
-    /// Its second code: the CI (CGI), the SAC (SAI), the RAC (RAI); 0 for the others.
+    /// Its second code: the CI (CGI), the SAC (SAI), the RAC (RAI), which is octet c+5
+    /// alone (§8.21.3); 0 for the others.
     pub second: u16,
     /// The bits of the identity that its figure has spare, or SMeNB (bit 8 of the first
-    /// octet after the PLMN of an Extended Macro eNodeB ID), as written.
+    /// octet after the PLMN of an Extended Macro eNodeB ID), as written. Of an RAI, the
+    /// bits of octet c+6 that are 0, where Figure 8.21.3-1 has the octet all 1's: 0 is the
+    /// octet as the figure codes it.
     pub spare: u8,
 }
+
+/// The place of the RAI in [`KINDS`], whose second code is one octet, after which octet
+/// c+6 is all 1's (§8.21.3).
+const RAI: usize = 2;
 
 /// The kinds of identities of a ULI, in the order of their flags from bit 1: the octets
 /// after the PLMN, the names of their codes, and the bits of the first code.
@@ -105,6 +112,10 @@ impl Codec for Uli {
                 .fold(0u32, |n, octet| n << 8 | u32::from(*octet));
             location.code = number & ((1u32 << bits) - 1);
             location.spare = (number >> bits) as u8;
+            if at == RAI {
+                location.second = codes[2].into();
+                location.spare = !codes[3];
+            }
             value.locations[at] = Some(location);
         }
         value.extra = Octets::copied(rest);
@@ -118,7 +129,9 @@ impl Codec for Uli {
             .enumerate()
             .fold(0u8, |flags, (at, l)| flags | u8::from(l.is_some()) << at);
         out.push(flags);
-        for (location, (name, size, _, second, bits)) in self.locations.iter().zip(KINDS) {
+        for (at, (location, (name, size, _, second, bits))) in
+            self.locations.iter().zip(KINDS).enumerate()
+        {
             let Some(location) = location else { continue };
             let width = if second.is_some() {
                 16
@@ -126,17 +139,24 @@ impl Codec for Uli {
                 8 * size as u32
             };
             let spare_bits = width - bits;
-            if location.code >> bits != 0 || (spare_bits < 8 && location.spare >> spare_bits != 0) {
+            // The spare of an RAI is octet c+6, after its RAC of one octet
+            let spare = if at == RAI { 0 } else { location.spare };
+            if location.code >> bits != 0
+                || (spare_bits < 8 && spare >> spare_bits != 0)
+                || (at == RAI && location.second > 0xff)
+            {
                 return Err(Error::FieldLength {
                     ie: "User Location Information (ULI)",
                     field: name,
                 });
             }
             out.extend_from_slice(&location.plmn.0);
-            let number = u32::from(location.spare) << bits | location.code;
+            let number = u32::from(spare) << bits | location.code;
             let octets = width as usize / 8;
             out.extend_from_slice(&number.to_be_bytes()[4 - octets..]);
-            if second.is_some() {
+            if at == RAI {
+                out.extend_from_slice(&[location.second as u8, !location.spare]);
+            } else if second.is_some() {
                 out.extend_from_slice(&location.second.to_be_bytes());
             }
         }
@@ -156,8 +176,10 @@ impl Codec for Uli {
 
 impl Rules for Uli {
     fn check(&self, path: &Path<'_>, found: &mut Vec<Deviation>) {
-        // The spare bits, but SMeNB of an Extended Macro eNodeB ID (bit 8 of its octet)
+        // The spare bits, but SMeNB of an Extended Macro eNodeB ID (bit 8 of its octet) and
+        // octet c+6 of an RAI
         let spare = |at: usize, location: &Location| match at {
+            RAI => false,
             7 => location.spare & 0x03 != 0,
             _ => location.spare != 0,
         };
@@ -168,6 +190,10 @@ impl Rules for Uli {
             .any(|(at, l)| l.as_ref().is_some_and(|l| spare(at, l)));
         if set {
             found.push(Deviation::new(path, "8.21", DeviationKind::SpareBits));
+        }
+        if self.locations[RAI].is_some_and(|rai| rai.spare != 0) {
+            let rule = DeviationKind::Rule("octet c+6 of an RAI is not all 1's");
+            found.push(Deviation::new(path, "8.21.3", rule));
         }
     }
 }
@@ -199,7 +225,8 @@ impl Uli {
 
 /// `{"TAI": {"PLMN": "208-93", "TAC": 1}, "ECGI": {"PLMN": "208-93", "ECI": 257}}`: each
 /// identity that is there, its spare bits where they are set, and SMeNB of an Extended
-/// Macro eNodeB ID.
+/// Macro eNodeB ID. The `Spare` of an RAI is octet c+6 as written, where it is not all
+/// 1's.
 #[cfg(feature = "tree")]
 mod tree_form {
     use oxirush_utils::fields::FieldTree;
@@ -236,12 +263,13 @@ mod tree_form {
                 if let Some(second) = second {
                     e.put(second, tree::unsigned(location.second.into()));
                 }
-                let spare = if at == 7 {
-                    location.spare & 0x03
-                } else {
-                    location.spare
+                // Octet c+6 of an RAI as written, where it is not all 1's
+                let (set, spare) = match at {
+                    RAI => (location.spare != 0, !location.spare),
+                    7 => (location.spare & 0x03 != 0, location.spare & 0x03),
+                    _ => (location.spare != 0, location.spare),
                 };
-                if spare != 0 {
+                if set {
                     e.put("Spare", tree::unsigned(spare.into()));
                 }
                 m.put(name, e.finish());
@@ -261,13 +289,19 @@ mod tree_form {
                     let plmn = r.member(&e, "PLMN", PlmnId::from_tree)?;
                     let code =
                         r.member(&e, code, |v, r| r.unsigned(v, 0, (1u64 << bits) - 1))? as u32;
+                    let upper = if at == RAI { 0xff } else { 0xffff };
                     let second = match second {
-                        Some(name) => r.member(&e, name, |v, r| r.unsigned(v, 0, 0xffff))? as u16,
+                        Some(name) => r.member(&e, name, |v, r| r.unsigned(v, 0, upper))? as u16,
                         None => 0,
                     };
-                    let mut spare = r
+                    let written = r
                         .optional(&e, "Spare", |v, r| r.unsigned(v, 0, 0xff))?
-                        .unwrap_or(0) as u8;
+                        .map(|spare| spare as u8);
+                    // Octet c+6 of an RAI, as written
+                    let mut spare = match at {
+                        RAI => !written.unwrap_or(0xff),
+                        _ => written.unwrap_or(0),
+                    };
                     if at == 7
                         && r.optional(&e, "SMeNB", |v, r| r.boolean(v))?
                             .unwrap_or(false)
